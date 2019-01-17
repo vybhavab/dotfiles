@@ -14,3 +14,6 @@ ln -s ${BASEDIR}/hyper.js ~/.hyper.js
 
 #i3
 ln -s ${BASEDIR}/config/i3/config ~/.config/i3/config
+
+#polybar
+ln -s ${BASEDIR}/config/polybar/config ~/.config/polybar/config

@@ -6,10 +6,10 @@ module.exports = {
     config: {
         // choose either `'stable'` for receiving highly polished,
         // or `'canary'` for less polished but more frequent updates
-        updateChannel: 'stable',
+        updateChannel: 'canary',
 
         // default font size in pixels for all tabs
-        fontSize: 10,
+        fontSize: 13,
 
         // font family with optional fallbacks Menlo
         fontFamily: '"DejaVu Sans Mono for Powerline", "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
@@ -40,7 +40,7 @@ module.exports = {
         backgroundColor: '#000',
 
         // terminal selection color
-        selectionColor: 'rgba(248,28,229,0.3)',
+        selectionColor: 'rgba(82,148,226,0.2)',
 
         // border color (window, tabs)
         borderColor: '#333',
@@ -53,7 +53,7 @@ module.exports = {
 
         // if you're using a Linux setup which show native menus, set to false
         // default: `true` on Linux, `true` on Windows, ignored on macOS
-        showHamburgerMenu: false,
+        showHamburgerMenu: true,
 
         // set to `false` (without backticks and without quotes) if you want to hide the minimize, maximize and close buttons
         // additionally, set to `'left'` if you want them on the left, like in Ubuntu
@@ -125,10 +125,8 @@ module.exports = {
         // for advanced config flags please refer to https://hyper.is/#cfg
         materialBox: {
             scheme: 'material-darker'
-        }
-        // hyperline: {
-        //     plugins: ['ip', 'cpu', 'memory', 'battery']
-        // }
+        },
+
     },
 
     // a list of plugins to fetch and install from npm
@@ -138,7 +136,9 @@ module.exports = {
     //   `@company/project`
     //   `project#1.0.1`
     // 'hyperline'
-    plugins: ['hyper-material-box', 'hyperterm-paste', 'hypercwd','hyperminimal'],
+    //'hyper-material-box'
+    //hyperminimal
+    plugins: ['hyperminimal','hyper-material-box','hyperterm-paste', 'hypercwd'],
 
     // in development, you can create a directory under
     // `~/.hyper_plugins/local/` and include it here
@@ -146,7 +146,6 @@ module.exports = {
     localPlugins: [],
 
     keymaps: {
-        // Example
-        // 'window:devtools': 'cmd+alt+o',
+        'window:devtools': 'ctrl+alt+o',
     }
 };

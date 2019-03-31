@@ -110,9 +110,31 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias uxssh="ssh vacharbh@unix.ucsc.edu"
 alias gg="lazygit"
-alias vi="vim"
+alias vi="nvim"
+alias vim="nvim"
 alias ud="cd ~/Documents/Programming"
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
-source /usr/share/nvm/init-nvm.sh
-source /home/vybhavb/Downloads/InstalledApps/anaconda3/etc/profile.d/conda.sh
+alias ls='lsd'
+nvm() {
+    unset -f nvm
+    export NVM_DIR=~/.nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    nvm "$@"
+}
+
+node() {
+    unset -f node
+    export NVM_DIR=~/.nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    node "$@"
+}
+
+npm() {
+    unset -f npm
+    export NVM_DIR=~/.nvm
+    [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+    npm "$@"
+}
+
+#source /home/vybhavb/Downloads/InstalledApps/anaconda3/etc/profile.d/conda.sh

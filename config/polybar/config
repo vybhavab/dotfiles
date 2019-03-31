@@ -27,19 +27,21 @@ primary = #5294e2
 secondary = #5294e2
 alert = #bd2c40
 
+
 [bar/top]
 ;monitor = ${env:MONITOR:DP1}
 width = 100%
-height = 27
+height = 25
 ;offset-x = 1%
 ;offset-y = 1%
 radius = 1.0
-fixed-center = false
+fixed-center = true
+bottom = false
 
 background = ${colors.background}
 foreground = ${colors.foreground}
 
-line-size = 3
+line-size = 1
 line-color = #f00
 
 border-size = 0
@@ -48,21 +50,19 @@ border-color = #00000000
 padding-left = 2
 padding-right = 2
 
-module-margin-left = 1
+module-margin-left = 0
 module-margin-right = 2
 
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-;font-2 = siji:pixelsize=10;1
 font-2 = "Wuncon Siji:style=Regular:pixelsize=10;1"
 font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
 font-4 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
 font-5 = "Font Awesome 5 Brands:pixelsize=8;1"
 
-
 modules-left = i3
-modules-center = mpd
-modules-right = xbacklight pulseaudio memory cpu wlan eth battery temperature date powermenu
+modules-center = date
+modules-right = xbacklight pulseaudio powermenu
 
 tray-position = right
 tray-padding = 2
@@ -82,9 +82,59 @@ scroll-down = i3wm-wsprev
 cursor-click = pointer
 cursor-scroll = ns-resize
 
+[bar/bottom]
+;monitor = ${env:MONITOR:DP1}
+width = 100%
+height = 25
+;offset-x = 1%
+;offset-y = 1%
+radius = 1.0
+fixed-center = true
+bottom = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+line-size = 1
+line-color = #f00
+
+border-size = 0
+border-color = #00000000
+
+padding-left = 2
+padding-right = 2
+
+module-margin-left = 0
+module-margin-right = 2
+
+font-0 = fixed:pixelsize=10;1
+font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
+font-2 = "Wuncon Siji:style=Regular:pixelsize=10;1"
+font-3 = "Font Awesome 5 Free:style=Regular:pixelsize=8;1"
+font-4 = "Font Awesome 5 Free:style=Solid:pixelsize=8;1"
+font-5 = "Font Awesome 5 Brands:pixelsize=8;1"
+
+
+modules-left = cpu temperature
+modules-center = wlan usb_eth eth
+modules-right = battery
+
+tray-position = right
+tray-padding = 2
+;tray-background = #0063ff
+
+;wm-restack = bspwm
+
+;override-redirect = true
+
+;scroll-up = bspwm-desknext
+;scroll-down = bspwm-deskprev
+
+wm-restack = i3
+
 [module/xwindow]
 type = internal/xwindow
-label = %title:0:30:...%
+label = %title:0:50:...%
 
 [module/xkeyboard]
 type = internal/xkeyboard
@@ -149,13 +199,13 @@ label-mode-foreground = #000
 label-mode-background = ${colors.primary}
 
 ; focused = Active workspace on focused monitor
-label-focused = %index%: %icon%
+label-focused = %icon%
 label-focused-background = ${module/bspwm.label-focused-background}
 label-focused-underline = ${module/bspwm.label-focused-underline}
 label-focused-padding = ${module/bspwm.label-focused-padding}
 
 ; unfocused = Inactive workspace on any monitor
-label-unfocused = %index%: %icon%
+label-unfocused = %index% %icon%
 label-unfocused-padding = ${module/bspwm.label-occupied-padding}
 
 ; visible = Active workspace on unfocused monitor
@@ -163,21 +213,21 @@ label-unfocused-padding = ${module/bspwm.label-occupied-padding}
 ;label-visible-background = ${self.label-focused-background}
 ;label-visible-underline = ${self.label-focused-underline}
 ;label-visible-padding = ${self.label-focused-padding}
-label-visible = %index%: %icon%
+label-visible = %index% %icon%
 label-visible-padding = ${module/bspwm.label-occupied-padding}
 
 ; urgent = Workspace with urgency hint set
-label-urgent = %index%: %icon%
+label-urgent = %index% %icon%
 label-urgent-background = ${module/bspwm.label-urgent-background}
 label-urgent-padding = ${module/bspwm.label-urgent-padding}
 
 ; Separator in between workspaces
 ; label-separator = |
-ws-icon-0 = 1;chrome
-ws-icon-1 = 2;code
-ws-icon-2 = 3;terminal
-ws-icon-3 = 4;spotify
-ws-icon-4 = 5;♞
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+
 [module/mpd]
 type = internal/mpd
 format-online = <label-song>  <icon-prev> <icon-stop> <toggle> <icon-next>
@@ -190,6 +240,15 @@ icon-next = 
 
 label-song-maxlen = 25
 label-song-ellipsis = true
+
+[module/player-mpris-tail]
+type = custom/script
+exec = ~/.config/polybar/player-mpris-tail.py -f '{icon} {artist} - {title}' 
+tail = true
+label = %output%
+click-left = ~/.config/polybar/player-mpris-tail.py previous
+click-right = ~/.config/polybar/player-mpris-tail.py next
+click-middle = ~/.config/polybar/player-mpris-tail.py play-pause
 
 [module/xbacklight]
 type = internal/xbacklight
@@ -251,13 +310,14 @@ ramp-signal-3 = 
 ramp-signal-4 = 
 ramp-signal-foreground = ${colors.foreground-alt}
 
+
 [module/eth]
 type = internal/network
 interface = enp61s0
 interval = 3.0
 
 format-connected-underline = #55aa55
-format-connected-prefix = " "
+format-connected-prefix = "PCI: "
 format-connected-prefix-foreground = ${colors.foreground-alt}
 label-connected = %local_ip%
 
@@ -271,7 +331,6 @@ format-disconnected =
 ;type = internal/date
 ;date =    %%{F#99} %m/%d/%Y %%{F-}  %%{F#fff} %I:%M%p%{F-}
 ;date-alt =    %%{F#fff} %A, %B %d, %Y %%{F-} %%{F#fff} %I:%M%p %{F#666} %%{F#fba922}%S%%{F-}
-
 ;time = %H:%M
 ;time-alt = %H:%M:%S
 
@@ -279,14 +338,28 @@ format-disconnected =
 ;format-prefix-foreground = ${colors.foreground-alt}
 ;format-underline = #0a6cf5
 
-;label = %date% %time%
+[module/usb_eth]
+type = internal/network
+interface = enp59s0u1u4
+interval = 3.0
+
+format-connected-underline = #55aa55
+format-connected-prefix = "USB: "
+format-connected-prefix-foreground = ${colors.foreground-alt}
+label-connected = %local_ip%
+
+format-disconnected =
+;format-disconnected = <label-disconnected>
+;format-disconnected-underline = ${self.format-connected-underline}
+;label-disconnected = %ifname% disconnected
+;label-disconnected-foreground = ${colors.foreground-alt}
 
 [module/date]
 type = internal/date
-format-prefix = "   "
+format-prefix =
 label = %{F#99}%date%%{F-}   %{F#fff}%time%%{F-}
-date-alt = %m/%d/%Y
-date = %A, %B %d, %Y
+date = %m/%d/%Y
+date-alt = %A, %B %d, %Y
 time = %I:%M %p
 time-alt = ${self.time}
 
@@ -300,12 +373,12 @@ label-volume-foreground = ${root.foreground}
 label-muted = 
 label-muted-foreground = #666
 
-bar-volume-width = 10
-bar-volume-foreground-0 = #55aa55
-bar-volume-foreground-1 = #55aa55
-bar-volume-foreground-2 = #55aa55
-bar-volume-foreground-3 = #55aa55
-bar-volume-foreground-4 = #55aa55
+bar-volume-width = 50
+bar-volume-foreground-0 = #FFFFFF
+bar-volume-foreground-1 = #FFFFFF
+bar-volume-foreground-2 = #FFFFFF
+bar-volume-foreground-3 = #FFFFFF
+bar-volume-foreground-4 = #FFFFFF
 bar-volume-foreground-5 = #f5a70a
 bar-volume-foreground-6 = #ff5555
 bar-volume-gradient = false
@@ -316,6 +389,11 @@ bar-volume-fill-font = 2
 bar-volume-empty = ─
 bar-volume-empty-font = 2
 bar-volume-empty-foreground = ${colors.foreground-alt}
+
+; Only applies if <ramp-volume> is used
+ramp-volume-0 = 🔈
+ramp-volume-1 = 🔉
+ramp-volume-2 = 🔊
 
 [module/battery]
 type = internal/battery
@@ -422,12 +500,17 @@ menu-0-1-exec = menu-open-2
 menu-1-0 = cancel
 menu-1-0-exec = menu-open-0
 menu-1-1 = reboot
-menu-1-1-exec = sudo reboot --now
+menu-1-1-exec = reboot --now
 
 menu-2-0 = power off
-menu-2-0-exec = sudo poweroff --now
+menu-2-0-exec = shutdown now
 menu-2-1 = cancel
 menu-2-1-exec = menu-open-0
+
+[module/info-hackspeed]
+type = custom/script
+exec = ~/.config/polybar/info-hackspeed.sh
+tail = true
 
 [settings]
 screenchange-reload = true

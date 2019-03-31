@@ -8,6 +8,6 @@ while pgrep -u $UID -x polybar >/dev/null; do sleep 1; done
 
 # Launch bar1 and bar2
 MONITOR=$(polybar -m|head -1|sed -e 's/:.*$//g')
-polybar top &
-polybar bottom;
+polybar -r top &
+polybar -r bottom &
 echo "Bars launched..."

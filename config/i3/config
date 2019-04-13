@@ -251,8 +251,8 @@ bindsym $mod+c exec google-chrome-stable --new-tab
 # Fallback to available display if the current active display gets disconnected
 #exec --no-startup-id "~/.i3/fallbackToConnectedDisplay"
 
-bindsym XF86MonBrightnessDown exec "xbacklight -dec 20"
-bindsym XF86MonBrightnessUp exec "xbacklight -inc 20"
+bindsym XF86MonBrightnessDown exec "xbacklight -dec 50"
+bindsym XF86MonBrightnessUp exec "xbacklight -inc 50"
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -5% #decrease sound volume
@@ -261,7 +261,7 @@ bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute s
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-exec_always --no-startup-id ~/.screenlayout/display.sh
+#exec_always --no-startup-id ~/.screenlayout/display.sh
 exec_always --no-startup-id ~/.dotfiles/config/polybar/launch.sh
 #exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg)
 
@@ -277,7 +277,7 @@ exec --no-startup-id conky -c ~/.config/conky/conkyrc
 #exec --no-startup-id blueman-applet
 
 # Restore GNOME's settings
-#exec --no-startup-id /usr/libexec/gnome-settings-daemon-localeexec
+exec --no-startup-id /usr/libexec/gnome-settings-daemon-localeexec
 
 exec --no-startup-id /usr/lib/gnome-settings-daemon/gsd-xsettings
 
@@ -288,12 +288,12 @@ exec --no-startup-id gnome-flashback
 exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 # Fix a bug in gnome-settings-daemon: http://feeding.cloud.geek.nz/posts/creating-a-modern-tiling-desktop-environment-using-i3/
-#exec --no-startup-id dconf write /org/gnome/settings-daemon/plugins/cursor/active false
+exec --no-startup-id dconf write /org/gnome/settings-daemon/plugins/cursor/active false
 
 exec --no-startup-id megasync
 
 exec --no-startup-id xautolock -time 1 -locker 'betterlockscreen -l dim'
 
-exec --no-startup-id xrdb -merge ~/.Xresources
-
+#exec --no-startup-id xrdb -merge ~/.Xresources
+exec_always --no-startup-id setxkbmap -option caps:super
 exec --no-startup-id nitrogen --restore

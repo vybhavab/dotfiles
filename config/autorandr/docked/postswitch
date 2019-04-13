@@ -1,0 +1,44 @@
+#!/bin/bash -x
+
+config="$1"
+
+primary="DP1"
+secondary="eDP1"
+
+case "$config" in
+    docked)
+        primary="DP1"
+        secondary="eDP1"
+        ;;
+esac
+
+move_workspace () {
+    workspace="$1"
+    output="$2"
+
+    sed -i "/^workspace $workspace output/ c \\workspace $workspace output $output" $HOME/.i3/config
+
+    # is this needed ? yes !
+    i3-msg workspace "$workspace"
+    i3-msg move workspace to output "$output"
+    i3-msg workspace 1
+}
+export -f move_workspace
+
+# worspace 0 is on secondary screen
+move_workspace 5 "$secondary"
+move_workspace 4 "$secondary"
+move_workspace 3 "$secondary"
+# all other workspaces are on the primary display
+# this is just a 'for i in 1 2 ... 10' loop ;)
+parallel -kj1 move_workspace "{}" "$primary" ::: $(seq 1 2)
+
+# got to sane default after moving everything
+i3-msg workspace 1
+
+# Is reload sufficient to remap workspaces ? Yes
+# ! Neither reload nor restart do change the worspace location.
+# ! Reload does not create missing (i3)bars.
+i3-msg reload
+i3-msg restart
+sh ~/.config/polybar/launch.sh

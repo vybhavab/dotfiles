@@ -11,6 +11,8 @@ ln -s ${BASEDIR}/zshrc ~/.zshrc
 #tmux
 ln -s ${BASEDIR}/tmux.conf ~/.tmux.conf
 
+ln -s ${BASEDIR}/config/autorandr ~/.config/autorandr
+
 #termite
 ln -s ${BASEDIR}/config/termite/config ~/.config/termite/config
 

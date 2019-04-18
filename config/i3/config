@@ -227,6 +227,7 @@ mode "$mode_gaps_outer" {
 
 #assign workspace
 assign [class="Google-chrome"] $ws1
+
 bindsym $mod+l exec betterlockscreen -l dimblur -- --timestr '%l:%H:%S %p'
 
 #Screenshot
@@ -253,12 +254,15 @@ bindsym $mod+c exec google-chrome-stable --new-tab
 # Fallback to available display if the current active display gets disconnected
 #exec --no-startup-id "~/.i3/fallbackToConnectedDisplay"
 
+
+#My shortcuts
 bindsym XF86MonBrightnessDown exec "xbacklight -dec 50"
 bindsym XF86MonBrightnessUp exec "xbacklight -inc 50"
 
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5% #increase sound volume
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -5% #decrease sound volume
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+
 
 
 # Start i3bar to display a workspace bar (plus the system information i3status
@@ -294,7 +298,7 @@ exec --no-startup-id dconf write /org/gnome/settings-daemon/plugins/cursor/activ
 
 exec --no-startup-id megasync
 
-exec --no-startup-id xautolock -time 1 -locker 'betterlockscreen -l dimblur -- --timestr "%l:%H:%S %p"'
+#exec --no-startup-id xautolock -time 1 -locker 'betterlockscreen -l dimblur -- --timestr "%l:%H:%S %p"'
 
 #exec --no-startup-id xrdb -merge ~/.Xresources
 exec_always --no-startup-id setxkbmap -option caps:super

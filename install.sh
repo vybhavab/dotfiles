@@ -25,8 +25,8 @@ ln -s ${BASEDIR}/hyper.js ~/.hyper.js
 #i3
 ln -s ${BASEDIR}/config/i3 ~/.config/
 
-#sway
-ln -s ${BASEDIR}/config/i3/config ~/.config/sway/config
+#ranger
+ln -s ${BASEDIR}/config/ranger ~/.config/
 
 #polybar
 ln -s ${BASEDIR}/config/polybar ~/.config/

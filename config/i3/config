@@ -182,7 +182,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 #Gaps
-gaps inner 10
+gaps inner 7
 gaps outer 5
 
 smart_gaps on

@@ -3,12 +3,11 @@
 config="$1"
 
 primary="DP1"
-secondary="eDP1"
+#secondary="eDP1"
 
 case "$config" in
-    docked)
+      mobile)
         primary="DP1"
-        secondary="eDP1"
         ;;
 esac
 
@@ -26,19 +25,19 @@ move_workspace () {
 export -f move_workspace
 
 # worspace 0 is on secondary screen
-move_workspace 1 "$primary"
-move_workspace 2 "$primary"
+#move_workspace 1 "$primary"
+#move_workspace 2 "$primary"
 # all other workspaces are on the primary display
 # this is just a 'for i in 1 2 ... 10' loop ;)
-parallel -kj1 move_workspace "{}" "$secondary" ::: $(seq 3 10)
+#parallel -kj1 move_workspace "{}" "$secondary" ::: $(seq 3 10)
 
 # got to sane default after moving everything
-i3-msg workspace 1
+#i3-msg workspace 1
 
 # Is reload sufficient to remap workspaces ? Yes
 # ! Neither reload nor restart do change the worspace location.
 # ! Reload does not create missing (i3)bars.
-i3-msg reload
+#i3-msg reload
 i3-msg restart
-setxkbmap -option caps:super
+#setxkbmap -option caps:super
 #sh ~/.config/polybar/launch.sh

@@ -11,7 +11,10 @@ ln -s ${BASEDIR}/zshrc ~/.zshrc
 #tmux
 ln -s ${BASEDIR}/tmux.conf ~/.tmux.conf
 
-ln -s ${BASEDIR}/config/autorandr ~/.config/autorandr
+#autorandr
+ln -s ${BASEDIR}/config/autorandr/docked/postswitch ~/.config/autorandr/docked/
+
+ln -s ${BASEDIR}/config/autorandr/mobile/postswitch ~/.config/autorandr/mobile/
 
 #termite
 ln -s ${BASEDIR}/config/termite/config ~/.config/termite/config
@@ -33,6 +36,9 @@ ln -s ${BASEDIR}/config/polybar ~/.config/
 
 #rofi
 ln -s ${BASEDIR}/config/rofi ~/.config/
+
+#compton
+ln -s ${BASEDIR}/config/compton ~/.config/
 
 #dunst
 #ln -s ${BASEDIR}/config/dunst/dunstrc ~/.config/dunst/dunstrc

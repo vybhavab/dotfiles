@@ -39,7 +39,6 @@ dmraid
 dnsmasq
 dosbox
 dosfstools
-dragon-drag-and-drop-git
 e2fsprogs
 ecryptfs-utils
 efibootmgr

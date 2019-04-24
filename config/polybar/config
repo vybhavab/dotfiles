@@ -360,7 +360,7 @@ format-prefix =
 label = %{F#99}%date%%{F-}   %{F#fff}%time%%{F-}
 date-alt = %m/%d/%Y
 date = %A, %B %d, %Y
-time = %I:%M %p
+time = %I:%M:%S %p
 time-alt = ${self.time}
 
 [module/pulseaudio]
@@ -487,7 +487,7 @@ format-spacing = 1
 
 label-open = 
 label-open-foreground = ${colors.secondary}
-label-close = 
+label-close = cancel
 label-close-foreground = ${colors.secondary}
 label-separator = |
 label-separator-foreground = ${colors.foreground-alt}

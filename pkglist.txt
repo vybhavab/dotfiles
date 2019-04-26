@@ -126,6 +126,7 @@ gvfs-smb
 gzip
 haveged
 hexchat
+i3-battery-popup-git
 i3-gaps
 i3-gnome
 i3exit
@@ -263,6 +264,7 @@ pulseaudio-ctl
 pulseaudio-jack
 pulseaudio-zeroconf
 python-neovim
+ramme
 ranger
 reiserfsprogs
 rofi

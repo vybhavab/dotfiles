@@ -302,3 +302,4 @@ exec --no-startup-id megasync
 #exec --no-startup-id xrdb -merge ~/.Xresources
 exec_always --no-startup-id setxkbmap -option caps:super
 exec --no-startup-id nitrogen --restore
+exec --no-startup-id i3-battery-popup -L 12 -t 3m -n

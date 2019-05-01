@@ -44,5 +44,8 @@ ln -s ${BASEDIR}/config/compton ~/.config/
 #ln -s ${BASEDIR}/config/dunst/dunstrc ~/.config/dunst/dunstrc
 ln -s ${BASEDIR}/config/dunst ~/.config
 
+#conky
+ln -s ${BASEDIR}/config/conky ~/.config
+
 #chrome
 ln -sv ${BASEDIR}/config/chrome-flags.conf ~/.config/chrome-flags.conf

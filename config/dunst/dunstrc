@@ -1,5 +1,5 @@
 [global]
-    font = Monospace 8
+    font = System San Francisco Display 8
 
     # allow a small subset of html markup:
     # <b>bold</b>
@@ -63,7 +63,7 @@
 
     # The transparency of the window. range: [0; 100]
     # This option will only work if a compositing windowmanager is present (e.g. xcompmgr, compiz, etc..)
-    transparency = 0
+    transparency = .8
 
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.

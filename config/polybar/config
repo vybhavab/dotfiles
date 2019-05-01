@@ -117,7 +117,7 @@ font-5 = "Font Awesome 5 Brands:pixelsize=8;1"
 
 modules-left = cpu temperature
 modules-center = wlan usb_eth eth
-modules-right = battery
+modules-right = time_remaining battery
 
 tray-position = right
 tray-padding = 2
@@ -399,7 +399,7 @@ ramp-volume-2 = 🔊
 type = internal/battery
 battery = BAT1
 adapter = ADP1
-full-at = 95
+full-at = 98
 format-charging = <animation-charging> <label-charging>
 
 ; Available tags:
@@ -448,7 +448,7 @@ animation-charging-2 = 
 animation-charging-3 = 
 animation-charging-4 = 
 ; Framerate in milliseconds
-animation-charging-framerate = 750
+animation-charging-framerate = 60
 
 ; Only applies if <animation-discharging> is used
 animation-discharging-0 = 
@@ -458,6 +458,12 @@ animation-discharging-3 = 
 animation-discharging-4 = 
 ; Framerate in milliseconds
 animation-discharging-framerate = 500
+
+[module/time_remaining]
+type = custom/script
+exec = ~/.config/polybar/power.sh
+interval = 5
+label =  %output%
 
 [module/temperature]
 type = internal/temperature

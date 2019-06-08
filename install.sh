@@ -3,6 +3,9 @@ BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 # vim
 ln -s ${BASEDIR}/vimrc ~/.vimrc
 
+#nvim 
+ln -s ${BASEDIR}/config/nvim ~/.config/
+
 ln -s ${BASEDIR}/config/betterlockscreenrc ~/.config/betterlockscreenrc
 
 # zsh
@@ -49,3 +52,9 @@ ln -s ${BASEDIR}/config/conky ~/.config
 
 #chrome
 ln -sv ${BASEDIR}/config/chrome-flags.conf ~/.config/chrome-flags.conf
+
+#devilspie
+ln -s ${BASEDIR}/devilspie/vscode_transparent.ds ~/.devilspie/vscode_transparent.ds
+
+#fusuma
+ln -s ${BASEDIR}/config/fusuma ~/.config/fusuma

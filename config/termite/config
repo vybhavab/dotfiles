@@ -8,6 +8,8 @@ dynamic_title = true
 urgent_on_bell = true
 clickable_url = true
 font = Hack Nerd Font Mono 10
+cursor_shape = ibeam
+
 
 #[colors]
 #cursor = #d8dee9
@@ -82,7 +84,8 @@ font = Hack Nerd Font Mono 10
 foreground      = #e9e9e9
 foreground_bold = #e9e9e9
 cursor          = #e9e9e9
-background      = rgba(23, 23, 24, .7)
+background      = rgba(10,14,23,.7) 
+#rgba(23, 23, 24, .7)
 
 # black
 color0  = #555a62
@@ -116,4 +119,6 @@ color14 = #8abeb7
 color7  = #5f6266
 color15 = #c5c8c6
 
-vim: ft=dosini cms=#%s
+border = #e47b32
+
+#vim: ft=dosini cms=#%s

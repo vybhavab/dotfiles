@@ -1,0 +1,9 @@
+; generated_rule vscode_transparent
+( if 
+( begin 
+) 
+( begin 
+( opacity 65 )
+( println "match" )
+)
+)

@@ -10,7 +10,7 @@ export ZSH="/home/vybhavb/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
 ZSH_THEME="robbyrussell"
-#ZSH_THEME="spaceship"
+#ZSH_THEME="hyperzsh"
 
 
 # Set list of themes to pick from when loading at random
@@ -109,12 +109,12 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias uxssh="ssh vacharbh@unix.ucsc.edu"
 alias gg="lazygit"
-alias vi="nvim"
-alias vim="nvim"
+#alias vi="nvim"
+#alias vim="nvim"
 alias ud="cd ~/Documents/Programming"
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
-alias ls='lsd'
+alias open="xdg-open"
 nvm() {
     unset -f nvm
     export NVM_DIR=~/.nvm
@@ -136,4 +136,3 @@ npm() {
     npm "$@"
 }
 
-#source /home/vybhavb/Downloads/InstalledApps/anaconda3/etc/profile.d/conda.sh

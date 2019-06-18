@@ -9,16 +9,16 @@ export ZSH="/home/vybhavb/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/robbyrussell/oh-my-zsh/wiki/Themes
-ZSH_THEME="robbyrussell"
-#ZSH_THEME="hyperzsh"
-
+#ZSH_THEME=random
+ZSH_THEME="hyperzsh"
+#ZSH_THEME=random
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in ~/.oh-my-zsh/themes/
 # If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
+#ZSH_THEME_RANDOM_CANDIDATES=( "3den" "fino-time" "kiwi" "rkj-repos" "adben" "fino" "kolo" "rkj" "af-magic" "fishy" "kphoen" "robbyrussell" "afowler" "flazz" "lambda" "sammy" "agnoster" "fletcherm" "linuxonly" "simonoff" "alanpeabody" "fox" "lukerandall" "simple" "amuse" "frisk" "macovsky-ruby" "skaro" "apple" "frontcube" "macovsky" "smt" "arrow" "funky" "maran" "Soliah" "aussiegeek" "fwalch" "mgutz" "sonicradish" "avit" "gallifrey" "mh" "sorin" "awesomepanda" "gallois" "michelebologna" "sporty_256" "bira" "garyblessington" "mikeh" "steeef" "blinks" "gentoo" "miloshadzic" "strug" "bureau" "geoffgarside" "minimal" "sunaku" "candy-kingdom" "gianu" "mira" "sunrise" "candy" "gnzh" "mortalscumbag" "superjarin" "clean" "gozilla" "mrtazz" "suvash" "cloud" "half-life" "murilasso" "takashiyoshida" "crcandy" "humza" "muse" "terminalparty" "crunch" "imajes" "nanotech" "theunraveler" "cypher" "intheloop" "nebirhos" "tjkirch_mod" "dallas" "itchy" "nicoulaj" "tjkirch" "darkblood" "jaischeema" "norm" "tonotdo" "daveverwer" "jbergantine" "obraun" "trapd00r" "dieter" "jispwoso" "oxide" "wedisagree" "dogenpunk" "jnrowe" "peepcode" "wezm+" "dpoggi" "jonathan" "philips" "wezm" "dstufft" "josh" "pmcgee" "wuffers" "dst" "jreese" "pygmalion-virtualenv" "xiong-chiamiov-plus" "duellj" "jtriley" "pygmalion" "xiong-chiamiov" "eastwood" "juanghurtado" "re5et" "ys" "edvardm" "junkfood" "refined" "zhann" "emotty" "kafeitu" "rgm" "essembeh" "kardan" "risto" "evan" "kennethreitz" "rixius")
+#ZSH_THEME_RANDOM_CANDIDATES=("oxide" "robbyrussell" "hyperzsh")
 # Uncomment the following line to use case-sensitive completion.
 # CASE_SENSITIVE="true"
 
@@ -109,8 +109,8 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias uxssh="ssh vacharbh@unix.ucsc.edu"
 alias gg="lazygit"
-#alias vi="nvim"
-#alias vim="nvim"
+alias vi="nvim"
+alias vim="nvim"
 alias ud="cd ~/Documents/Programming"
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
@@ -136,3 +136,4 @@ npm() {
     npm "$@"
 }
 
+#neofetch

@@ -13,13 +13,18 @@ Plug 'airblade/vim-gitgutter'
 Plug 'lervag/vimtex'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --ts-completer --java-completer ' }
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+Plug 'shime/vim-livedown'
+
 call plug#end()
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
 set termguicolors     " enable true colors support
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 syntax enable
 
-let ayucolor='mirage'   " for dark version of theme
+let ayucolor='dark'   " for dark version of theme
 colorscheme ayu
 
 set tabstop=2      " number of visual spaces per TAB
@@ -76,6 +81,7 @@ let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language
 
 " }}}
 
+map <C-n> :NERDTreeToggle<CR>
 
 
 " move up/down consider wrapped lines

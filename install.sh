@@ -58,3 +58,6 @@ ln -s ${BASEDIR}/devilspie/vscode_transparent.ds ~/.devilspie/vscode_transparent
 
 #fusuma
 ln -s ${BASEDIR}/config/fusuma ~/.config/fusuma
+
+#spotifyd
+ln -s ${BASEDIR}/config/spotifyd ~/.config/spotifyd

@@ -1,3 +1,8 @@
 [user]
 	email = vybhavbugs+github@gmail.com
 	name = vybhavb
+	signingkey = A598B4829AF9318F
+[commit]
+	gpgsign = true
+[gpg]
+	program = gpg2

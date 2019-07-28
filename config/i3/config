@@ -106,7 +106,7 @@ set $ws6 "6"
 set $ws7 "7"
 set $ws8 "8"
 set $ws9 "9"
-set $ws10 "10: other"
+set $ws10 "10"
 
 # switch to workspace
 bindsym $mod+1 workspace $ws1
@@ -118,7 +118,7 @@ bindsym $mod+6 workspace $ws6
 bindsym $mod+7 workspace $ws7
 bindsym $mod+8 workspace $ws8
 bindsym $mod+9 workspace $ws9
-bindsym $mod+0 workspace number $ws10
+bindsym $mod+0 workspace $ws10
 
 # move focused container to workspace
 bindsym $mod+Shift+1 move container to workspace $ws1
@@ -226,9 +226,12 @@ mode "$mode_gaps_outer" {
 }
 
 #assign workspace
-assign [class="opera"] $ws1
+assign [class="chromium"] $ws1
+for_window [class="Nautilus"] floating enable, border none
 
 bindsym $mod+l exec betterlockscreen -l dimblur -- --timestr="%l:%M:%S %p" -S=0 -t
+
+bindsym $mod+Shift+s exec "systemctl suspend --now"
 
 #Screenshot
 #bindsym Print exec scrot '%Y-%m-%d-%s_screenshot_$wx$h.jpg' -e 'mv $f ~/Pictures/'
@@ -278,7 +281,7 @@ exec_always --no-startup-id ~/.dotfiles/config/polybar/launch.sh
 #exec --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 & eval $(gnome-keyring-daemon -s --components=pkcs11,secrets,ssh,gpg)
 
 #compton
-exec --no-startup-id compton --config ~/.config/compton/compton.conf -f --backend glx --blur-method kawase --blur-strength 6
+exec --no-startup-id compton --config ~/.config/compton/compton.conf -f --backend glx --blur-method kawase --blur-strength 12
 exec --no-startup-id ~/.config/dunst/start.sh
 
 #exec --no-startup-id conky -c ~/.config/conky/conkyrc

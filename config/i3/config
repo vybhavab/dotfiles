@@ -228,8 +228,12 @@ mode "$mode_gaps_outer" {
 #assign workspace
 assign [class="chromium"] $ws1
 for_window [class="Nautilus"] floating enable, border none
+assign [class="Caprine"] $ws9
+assign [class="Slack"] $ws9
 
 bindsym $mod+l exec betterlockscreen -l dimblur -- --timestr="%l:%M:%S %p" -S=0 -t
+
+bindsym $mod+c exec rofi -show calc -modi calc -no-show-match -no-sort -no-history -calc-command "echo \'{result}\' | xclip -selection clipboard"
 
 bindsym $mod+Shift+s exec "systemctl suspend --now"
 
@@ -242,9 +246,6 @@ bindsym Print exec gnome-screenshot
 bindsym Shift+Print exec "sleep 0.2; gnome-screenshot -a -c"
 
 bindsym Control+Print exec gnome-screenshot -w
-
-
-bindsym $mod+c exec google-chrome-stable --new-tab
 
 # Switch between internal and external display
 #bindsym XF86Display exec "~/.i3/toggleDisplay"

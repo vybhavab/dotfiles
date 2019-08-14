@@ -7,13 +7,12 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-repeat'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
 Plug 'lervag/vimtex'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --ts-completer --java-completer ' }
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'shime/vim-livedown'
+Plug 'w0rp/ale'
 
 call plug#end()
 

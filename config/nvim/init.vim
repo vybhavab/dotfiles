@@ -13,35 +13,40 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --ts-comp
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'shime/vim-livedown'
 Plug 'w0rp/ale'
-
+Plug 'moll/vim-node'
 call plug#end()
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 
+autocmd User Node
+  \ if &filetype == "javascript" |
+  \   nmap <buffer> <C-w>f <Plug>NodeVSplitGotoFile |
+  \   nmap <buffer> <C-w><C-f> <Plug>NodeVSplitGotoFile |
+  \ endif
+
 set termguicolors     " enable true colors support
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 syntax enable
 
 let ayucolor='dark'   " for dark version of theme
 colorscheme ayu
-
+hi Normal guibg=NONE ctermbg=NONE
 set tabstop=2      " number of visual spaces per TAB
 set softtabstop=2   " number of spaces in tab when editing
 set shiftwidth=2    " number of spaces to use for autoindent
 set expandtab       " tabs are space
 set autoindent
 set copyindent      " copy indent from the previous line
-
-set number                   " show line number
+set clipboard=unnamedplus
+set number relativenumber                   " show line number
 set showcmd                  " show command in bottom bar
-set cursorline               " highlight current line
 set wildmenu                 " visual autocomplete for command menu
 set showmatch                " highlight matching brace
 set laststatus=2             " window will always have a status line
 set nobackup
 set noswapfile
-let &colorcolumn="100,".join(range(119,999),",")
+"let &colorcolumn="80,".join(range(119,999),",")
 
 set foldenable
 set foldlevelstart=10  " default folding level when buffer is opened
@@ -80,16 +85,19 @@ let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language
 
 " }}}
 
-map <C-n> :NERDTreeToggle<CR>
+
 
 
 " move up/down consider wrapped lines
 nnoremap j gj
 nnoremap k gk
 
-"nerd tree
+
+" nerd tree {{
+map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 let NERDTreeIgnore = ['\.pyc$', '__pycache__','/node_modules','/.next']
+" }}
 
 " IndentLine {{
 let g:indentLine_char = ''
@@ -98,6 +106,21 @@ let g:indentLine_showFirstIndentLevel = 1
 let g:indentLine_setColors = 0
 " }}
 
+"" Remaps {{
+
+" " Copy to clipboard
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+nnoremap  <leader>yy  "+yy
+
+" " Paste from clipboard
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+vnoremap <leader>p "+p
+vnoremap <leader>P "+P
+
+"" }}
 
 " Commands {{
 command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
@@ -116,16 +139,14 @@ function! s:RunShellCommand(cmdline)
     call add(words, word)
   endfor
   let expanded_cmdline = join(words)
-  botright new
+  " botright new
   setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
-  call setline(1, 'You entered:  ' . a:cmdline)
-  call setline(2, 'Expanded to:  ' . expanded_cmdline)
-  call append(line('$'), substitute(getline(2), '.', '=', 'g'))
-  silent execute '$read !'. expanded_cmdline
+  " call setline(1, 'You entered:  ' . a:cmdline)
+  " call setline(2, 'Expanded to:  ' . expanded_cmdline)
+  " call append(line('$'), substitute(getline(2), '.', '=', 'g'))
+  redir @+ | execute '!'. expanded_cmdline | redir END
   1
 endfunction
-
-command! -complete=file -nargs=* RunJS call s:RunShellCommand('node '.<q-args>)
-
+command! -complete=command -nargs=* RunJS call s:RunShellCommand('node '.<q-args>)
 " }}
 

@@ -114,6 +114,12 @@ alias ud="cd ~/Documents/Programming"
 alias pbcopy='xclip -selection clipboard'
 alias pbpaste='xclip -selection clipboard -o'
 alias open="xdg-open"
+
+autoload -Uz compinit
+compinit
+# Completion for kitty
+kitty + complete setup zsh | source /dev/stdin
+
 nvm() {
     unset -f nvm
     export NVM_DIR=~/.nvm

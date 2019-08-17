@@ -61,3 +61,8 @@ ln -s ${BASEDIR}/config/fusuma ~/.config/fusuma
 
 #spotifyd
 ln -s ${BASEDIR}/config/spotifyd ~/.config/spotifyd
+
+#kitty
+ln -s ${BASEDIR}/config/kitty ~/.config
+
+

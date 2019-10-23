@@ -1,12 +1,17 @@
 #!/bin/bash
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
 # vim
 ln -s ${BASEDIR}/vimrc ~/.vimrc
 
 #nvim 
 ln -s ${BASEDIR}/config/nvim ~/.config/
 
+#betterlockscreen
 ln -s ${BASEDIR}/config/betterlockscreenrc ~/.config/betterlockscreenrc
+
+#wtfutil
+ln -s ${BASEDIR}/config/wtf ~/.config/
 
 # zsh
 ln -s ${BASEDIR}/zshrc ~/.zshrc
@@ -18,6 +23,8 @@ ln -s ${BASEDIR}/tmux.conf ~/.tmux.conf
 ln -s ${BASEDIR}/config/autorandr/docked/postswitch ~/.config/autorandr/docked/
 
 ln -s ${BASEDIR}/config/autorandr/mobile/postswitch ~/.config/autorandr/mobile/
+
+ln -s ${BASEDIR}/config/autorandr/library/postswitch ~/.config/autorandr/library/
 
 #termite
 ln -s ${BASEDIR}/config/termite/config ~/.config/termite/config
@@ -48,21 +55,19 @@ ln -s ${BASEDIR}/config/compton ~/.config/
 ln -s ${BASEDIR}/config/dunst ~/.config
 
 #conky
-ln -s ${BASEDIR}/config/conky ~/.config
+#ln -s ${BASEDIR}/config/conky ~/.config
 
 #chrome
 ln -sv ${BASEDIR}/config/chrome-flags.conf ~/.config/chrome-flags.conf
 
 #devilspie
-ln -s ${BASEDIR}/devilspie/vscode_transparent.ds ~/.devilspie/vscode_transparent.ds
+#ln -s ${BASEDIR}/devilspie/vscode_transparent.ds ~/.devilspie/vscode_transparent.ds
 
 #fusuma
-ln -s ${BASEDIR}/config/fusuma ~/.config/fusuma
+#ln -s ${BASEDIR}/config/fusuma ~/.config/fusuma
 
 #spotifyd
-ln -s ${BASEDIR}/config/spotifyd ~/.config/spotifyd
+#ln -s ${BASEDIR}/config/spotifyd ~/.config/spotifyd
 
 #kitty
 ln -s ${BASEDIR}/config/kitty ~/.config
-
-

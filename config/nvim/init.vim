@@ -1,23 +1,22 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'davidhalter/jedi-vim'
 Plug 'ayu-theme/ayu-vim'
-Plug 'ervandew/supertab'
 Plug 'scrooloose/nerdtree'
-Plug 'scrooloose/nerdcommenter'
 Plug 'tpope/vim-surround'
 Plug 'godlygeek/tabular'
 Plug 'tpope/vim-repeat'
 Plug 'airblade/vim-gitgutter'
 Plug 'lervag/vimtex'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --ts-completer --java-completer ' }
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'shime/vim-livedown'
 Plug 'w0rp/ale'
 Plug 'moll/vim-node'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 call plug#end()
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+"autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
+"let g:coc_node_path = '/home/vybhavb/.nvm/versions/node/v12.9.1/bin/node'
 
 autocmd User Node
   \ if &filetype == "javascript" |
@@ -27,11 +26,12 @@ autocmd User Node
 
 set termguicolors     " enable true colors support
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-syntax enable
+"syntax enable
 
 let ayucolor='dark'   " for dark version of theme
 colorscheme ayu
 hi Normal guibg=NONE ctermbg=NONE
+let mapleader = " "
 set tabstop=2      " number of visual spaces per TAB
 set softtabstop=2   " number of spaces in tab when editing
 set shiftwidth=2    " number of spaces to use for autoindent
@@ -47,11 +47,20 @@ set laststatus=2             " window will always have a status line
 set nobackup
 set noswapfile
 "let &colorcolumn="80,".join(range(119,999),",")
-
+set splitbelow
+set splitright
 set foldenable
 set foldlevelstart=10  " default folding level when buffer is opened
 set foldnestmax=10     " maximum nested fold
 set foldmethod=syntax  " fold based on indentation
+
+
+" Resize splits {{{
+
+nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+
+" }}}
 
 " edit/reload vimrc
 nmap <leader>ev :e $MYVIMRC<CR>
@@ -120,33 +129,15 @@ nnoremap <leader>P "+P
 vnoremap <leader>p "+p
 vnoremap <leader>P "+P
 
+nnoremap <leader><leader>p :tabp<CR>
+nnoremap <leader><leader>n   :tabn<CR>
+nnoremap <C-t>     :tabnew<CR>
+inoremap <C-S-tab> <Esc>:tabprevious<CR>i
+inoremap <C-tab>   <Esc>:tabnext<CR>i
+inoremap <C-t>     <Esc>:tabnew<CR>
+
 "" }}
 
-" Commands {{
-command! -complete=shellcmd -nargs=+ Shell call s:RunShellCommand(<q-args>)
-function! s:RunShellCommand(cmdline)
-  let isfirst = 1
-  let words = []
-  for word in split(a:cmdline)
-    if isfirst
-      let isfirst = 0
-    else
-      if word[0] =~ '\v[%#<]'
-        let word = expand(word)
-      endif
-      let word = shellescape(word, 1)
-    endif
-    call add(words, word)
-  endfor
-  let expanded_cmdline = join(words)
-  " botright new
-  setlocal buftype=nofile bufhidden=wipe nobuflisted noswapfile nowrap
-  " call setline(1, 'You entered:  ' . a:cmdline)
-  " call setline(2, 'Expanded to:  ' . expanded_cmdline)
-  " call append(line('$'), substitute(getline(2), '.', '=', 'g'))
-  redir @+ | execute '!'. expanded_cmdline | redir END
-  1
-endfunction
-command! -complete=command -nargs=* RunJS call s:RunShellCommand('node '.<q-args>)
-" }}
+" <Ctrl-l> redraws the screen and removes any search highlighting.
+nnoremap <silent> <C-l> :nohl<CR><C-l>
 

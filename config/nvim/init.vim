@@ -2,15 +2,22 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'ayu-theme/ayu-vim'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
-Plug 'godlygeek/tabular'
-Plug 'tpope/vim-repeat'
 Plug 'airblade/vim-gitgutter'
 Plug 'lervag/vimtex'
 Plug 'shime/vim-livedown'
 Plug 'w0rp/ale'
-Plug 'moll/vim-node'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'moll/vim-node'
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"Plug 'pangloss/vim-javascript'
+Plug 'Yggdroot/indentLine'
+Plug 'preservim/nerdcommenter'
+Plug 'yuezk/vim-js'
+Plug 'maxmellon/vim-jsx-pretty'
+Plug 'alvan/vim-closetag'
+"Plug 'jiangmiao/auto-pairs'
+Plug 'mattn/emmet-vim'
 call plug#end()
 
 autocmd StdinReadPre * let s:std_in=1
@@ -30,30 +37,29 @@ set termguicolors     " enable true colors support
 
 let ayucolor='dark'   " for dark version of theme
 colorscheme ayu
-hi Normal guibg=NONE ctermbg=NONE
-let mapleader = " "
+set background=dark
+let mapleader = " " 
 set tabstop=2      " number of visual spaces per TAB
 set softtabstop=2   " number of spaces in tab when editing
 set shiftwidth=2    " number of spaces to use for autoindent
 set expandtab       " tabs are space
 set autoindent
-set copyindent      " copy indent from the previous line
+"set copyindent      " copy indent from the previous line
 set clipboard=unnamedplus
 set number relativenumber                   " show line number
 set showcmd                  " show command in bottom bar
 set wildmenu                 " visual autocomplete for command menu
 set showmatch                " highlight matching brace
-set laststatus=2             " window will always have a status line
+set laststatus=2           " window will always have a status line
 set nobackup
 set noswapfile
-"let &colorcolumn="80,".join(range(119,999),",")
+"let &colorcolumn="100,".join(range(119,999),",")
 set splitbelow
 set splitright
 set foldenable
 set foldlevelstart=10  " default folding level when buffer is opened
 set foldnestmax=10     " maximum nested fold
 set foldmethod=syntax  " fold based on indentation
-
 
 " Resize splits {{{
 
@@ -75,22 +81,21 @@ nmap <leader>x :x<CR>
 nmap <leader>q :q<CR>
 
 
-" YCM mappings {{{
-nnoremap <leader>g :YcmCompleter GoTo<CR>
+"" YCM mappings {{{
+"nnoremap <leader>t :YcmCompleter GoTo<CR>
 " }}}
 
 " YCM {{{
 "let g:ycm_server_keep_logfiles = 1
 "let g:ycm_server_log_level = 'debug'
-let g:ycm_filetype_specific_completion_to_disable = {
-    \ 'gitcommit': 1,
-    \ 'python': 1
-    \}
-let g:ycm_rust_src_path='/home/synasius/workspace/rust/src/'
-let g:ycm_complete_in_comments = 1
-let g:ycm_complete_in_strings = 1
-let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
-let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's
+"let g:ycm_filetype_specific_completion_to_disable = {
+"   "\ 'gitcommit': 1,
+"   "\ 'python': 1
+"   "\}
+"let g:ycm_complete_in_comments = 1
+"let g:ycm_complete_in_strings = 1
+"let g:ycm_use_ultisnips_completer = 1 " Default 1, just ensure
+"let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's
 
 " }}}
 
@@ -109,34 +114,70 @@ let NERDTreeIgnore = ['\.pyc$', '__pycache__','/node_modules','/.next']
 " }}
 
 " IndentLine {{
-let g:indentLine_char = ''
-let g:indentLine_first_char = ''
-let g:indentLine_showFirstIndentLevel = 1
+"let g:indentLine_char = ''
+"let g:indentLine_first_char = ''
+let g:indentLine_char_list = ['|', '¦', '┆', '┊']
+let g:indentLine_showFirstIndentLevel = 2
 let g:indentLine_setColors = 0
 " }}
-
 "" Remaps {{
 
 " " Copy to clipboard
-vnoremap  <leader>y  "+y
-nnoremap  <leader>Y  "+yg_
-nnoremap  <leader>y  "+y
-nnoremap  <leader>yy  "+yy
+"vnoremap  <leader>y  "+y
+"nnoremap  <leader>Y  "+yg_
+"nnoremap  <leader>y  "+y
+"nnoremap  <leader>yy  "+yy
 
-" " Paste from clipboard
-nnoremap <leader>p "+p
-nnoremap <leader>P "+P
-vnoremap <leader>p "+p
-vnoremap <leader>P "+P
+"" " Paste from clipboard
+"nnoremap <leader>p "+p
+"nnoremap <leader>P "+P
+"vnoremap <leader>p "+p
+"vnoremap <leader>P "+P
 
-nnoremap <leader><leader>p :tabp<CR>
-nnoremap <leader><leader>n   :tabn<CR>
+nnoremap <leader>p :tabp<CR>
+nnoremap <leader>n   :tabn<CR>
 nnoremap <C-t>     :tabnew<CR>
-inoremap <C-S-tab> <Esc>:tabprevious<CR>i
-inoremap <C-tab>   <Esc>:tabnext<CR>i
-inoremap <C-t>     <Esc>:tabnew<CR>
 
 "" }}
 
 " <Ctrl-l> redraws the screen and removes any search highlighting.
 nnoremap <silent> <C-l> :nohl<CR><C-l>
+
+"" Ale {{
+let g:ale_fixers = {
+\   'javascript': ['eslint'],
+\}
+
+let g:ale_fix_on_save = 1
+"" }}
+
+" FZF
+"nnoremap <silent> <leader>f :FZF<cr>
+let $FZF_DEFAULT_COMMAND = 'rg --files'
+nnoremap <Leader>gf :GFiles<CR>
+nnoremap <Leader>f :Files<CR>
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>h :History<CR>
+nnoremap <Leader>g :Rg<CR>
+"nnoremap <C-p> :GFiles
+
+" COC
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <silent><expr> <c-space> coc#refresh()
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gr <Plug>(coc-references)
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+"
+
+" LiveDown
+nmap gm :LivedownToggle<CR>
+"
+

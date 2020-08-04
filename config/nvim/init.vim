@@ -6,18 +6,21 @@ Plug 'airblade/vim-gitgutter'
 Plug 'lervag/vimtex'
 Plug 'shime/vim-livedown'
 Plug 'w0rp/ale'
-"Plug 'moll/vim-node'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"Plug 'pangloss/vim-javascript'
 Plug 'Yggdroot/indentLine'
 Plug 'preservim/nerdcommenter'
 Plug 'yuezk/vim-js'
+Plug 'HerringtonDarkholme/yats.vim'
 Plug 'maxmellon/vim-jsx-pretty'
-Plug 'alvan/vim-closetag'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'OmniSharp/omnisharp-vim'
+"Plug 'alvan/vim-closetag'
+"Plug 'pangloss/vim-javascript'
 "Plug 'jiangmiao/auto-pairs'
-Plug 'mattn/emmet-vim'
+"Plug 'mattn/emmet-vim'
 call plug#end()
 
 autocmd StdinReadPre * let s:std_in=1
@@ -25,19 +28,18 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
 "let g:coc_node_path = '/home/vybhavb/.nvm/versions/node/v12.9.1/bin/node'
 
-autocmd User Node
-  \ if &filetype == "javascript" |
-  \   nmap <buffer> <C-w>f <Plug>NodeVSplitGotoFile |
-  \   nmap <buffer> <C-w><C-f> <Plug>NodeVSplitGotoFile |
-  \ endif
+"autocmd User Node
+"  \ if &filetype == "javascript" |
+"  \   nmap <buffer> <C-w>f <Plug>NodeVSplitGotoFile |
+"  \   nmap <buffer> <C-w><C-f> <Plug>NodeVSplitGotoFile |
+"  \ endif
 
 set termguicolors     " enable true colors support
 "let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-"syntax enable
-
 let ayucolor='dark'   " for dark version of theme
 colorscheme ayu
 set background=dark
+syntax on 
 let mapleader = " " 
 set tabstop=2      " number of visual spaces per TAB
 set softtabstop=2   " number of spaces in tab when editing
@@ -98,9 +100,6 @@ nmap <leader>q :q<CR>
 "let g:ycm_seed_identifiers_with_syntax = 1 " Completion for programming language's
 
 " }}}
-
-
-
 
 " move up/down consider wrapped lines
 nnoremap j gj
@@ -175,9 +174,27 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+let g:coc_global_extensions = [
+  \ 'coc-snippets',
+  \ 'coc-pairs',
+  \ 'coc-tsserver',
+  \ 'coc-eslint',
+  \ 'coc-json',
+  \ ]
+
 "
 
 " LiveDown
 nmap gm :LivedownToggle<CR>
+
 "
 
+" VimTex
+"g:vimtex_compiler_progname = 'nvr'
+"
+
+"" vim-airline {
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme='ayu_dark'
+"" }

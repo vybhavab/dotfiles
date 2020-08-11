@@ -1,5 +1,7 @@
 call plug#begin('~/.local/share/nvim/plugged')
 Plug 'ayu-theme/ayu-vim'
+Plug 'vybhavb/ci_dark'
+Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
 Plug 'airblade/vim-gitgutter'
@@ -25,7 +27,7 @@ call plug#end()
 
 autocmd StdinReadPre * let s:std_in=1
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
-"autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
+" autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
 "let g:coc_node_path = '/home/vybhavb/.nvm/versions/node/v12.9.1/bin/node'
 
 "autocmd User Node
@@ -34,12 +36,27 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 "  \   nmap <buffer> <C-w><C-f> <Plug>NodeVSplitGotoFile |
 "  \ endif
 
-set termguicolors     " enable true colors support
-"let $NVIM_TUI_ENABLE_TRUE_COLOR=1
-let ayucolor='dark'   " for dark version of theme
-colorscheme ayu
-set background=dark
-syntax on 
+let g:tex_flavor = 'latex'
+
+" Colors {{
+" AYU
+" syntax on 
+" set termguicolors     " enable true colors support
+" let ayucolor='dark'   " for dark version of theme
+" colorscheme ayu
+" set background=dark
+" set fillchars+=vert:│
+" let g:airline_theme='ayu_dark'
+
+" CI Dark
+syntax on
+set termguicolors
+colorscheme ci_dark
+set fillchars+=vert:│
+let g:airline_theme = 'ci_dark'
+let g:lightline = { 'colorscheme': 'ci_dark' }
+" }}
+
 let mapleader = " " 
 set tabstop=2      " number of visual spaces per TAB
 set softtabstop=2   " number of spaces in tab when editing
@@ -81,7 +98,6 @@ inoremap jj <esc>
 nmap <leader>w :w<CR>
 nmap <leader>x :x<CR>
 nmap <leader>q :q<CR>
-
 
 "" YCM mappings {{{
 "nnoremap <leader>t :YcmCompleter GoTo<CR>
@@ -196,5 +212,4 @@ nmap gm :LivedownToggle<CR>
 
 "" vim-airline {
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme='ayu_dark'
 "" }

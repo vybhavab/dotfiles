@@ -115,3 +115,9 @@ kitty + complete setup zsh | source /dev/stdin
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+## Extra Functions
+mkcdir(){
+  mkdir -p -- "$1" &&
+    cd -P -- "$1"
+}

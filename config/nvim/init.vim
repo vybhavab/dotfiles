@@ -1,6 +1,6 @@
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'ayu-theme/ayu-vim'
-Plug 'vybhavb/ci_dark'
+" Plug 'ayu-theme/ayu-vim'
+Plug 'flazz/vim-colorschemes'
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree'
 Plug 'tpope/vim-surround'
@@ -39,22 +39,17 @@ autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 let g:tex_flavor = 'latex'
 
 " Colors {{
-" AYU
-" syntax on 
-" set termguicolors     " enable true colors support
-" let ayucolor='dark'   " for dark version of theme
-" colorscheme ayu
-" set background=dark
-" set fillchars+=vert:│
-" let g:airline_theme='ayu_dark'
-
-" CI Dark
 syntax on
 set termguicolors
-colorscheme ci_dark
-set fillchars+=vert:│
-let g:airline_theme = 'ci_dark'
-let g:lightline = { 'colorscheme': 'ci_dark' }
+let ayucolor='dark'
+colorscheme ayu
+" CI Dark
+" syntax on
+" set termguicolors
+" colorscheme ci_dark
+" set fillchars+=vert:│
+" let g:airline_theme = 'ci_dark'
+" let g:lightline = { 'colorscheme': 'ci_dark' }
 " }}
 
 let mapleader = " " 

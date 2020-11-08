@@ -104,6 +104,8 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 #Alias
 alias gg="lazygit"
 alias .="nvim"
+alias vim="nvim"
+alias vi="nvim"
 
 autoload -Uz compinit && compinit
 
@@ -121,6 +123,7 @@ mkcdir(){
   mkdir -p -- "$1" &&
     cd -P -- "$1"
 }
+
 
 # adding pyenv to manage python environments
 if command -v pyenv 1>/dev/null 2>&1; then

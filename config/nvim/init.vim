@@ -67,7 +67,7 @@ set showmatch                " highlight matching brace
 set laststatus=2           " window will always have a status line
 set nobackup
 set noswapfile
-"let &colorcolumn="100,".join(range(119,999),",")
+let &colorcolumn="100,".join(range(120,999),",")
 set splitbelow
 set splitright
 set foldenable
@@ -173,18 +173,20 @@ nnoremap <Leader>g :Rg<CR>
 
 " COC
 inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
+      \ pumvisible() ? coc#_select_confirm() :
+      \ coc#expandableOrJumpable() ? "\<C-r>=coc#rpc#request('doKeymap', ['snippets-expand-jump',''])\<CR>" :
       \ <SID>check_back_space() ? "\<TAB>" :
       \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-inoremap <silent><expr> <c-space> coc#refresh()
-nmap <leader>gd <Plug>(coc-definition)
-nmap <leader>gr <Plug>(coc-references)
 
 function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+
+let g:coc_snippet_next = '<tab>'
+
+nmap <leader>gd <Plug>(coc-definition)
+nmap <leader>gr <Plug>(coc-references)
 
 let g:coc_global_extensions = [
   \ 'coc-snippets',

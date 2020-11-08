@@ -1,9 +1,3 @@
-# ############################################################### #
-# THE FOLLOWING SECTION CONTAIN SIMPLE MAPPINGS DEMONSTRATING HOW #
-# TO INTERACT WITH THE YABAI WM. THESE ARE SUPPOSED TO BE USED AS #
-# A REFERENCE ONLY, WHEN MAKING YOUR OWN CONFIGURATION..          #
-# ############################################################### #
-
 # focus window
 alt - h : yabai -m window --focus west
 alt - j : yabai -m window --focus south
@@ -14,7 +8,7 @@ alt - l : yabai -m window --focus east
 # shift + alt - h : yabai -m window --swap north
 
 # move managed window
-shift + cmd - h : yabai -m window --warp east
+# shift + cmd - h : yabai -m window --warp east
 
 # balance size of windows
 # shift + alt - 0 : yabai -m space --balance
@@ -46,7 +40,9 @@ ctrl + cmd - 2  : yabai -m window --display 2; yabai -m display --focus 2
 ctrl + cmd - 3  : yabai -m window --display 3; yabai -m display --focus 3
 
 # move floating window
+shift + ctrl - d : yabai -m window --move rel:20:0
 shift + ctrl - a : yabai -m window --move rel:-20:0
+shift + ctrl - w : yabai -m window --move rel:0:-20
 shift + ctrl - s : yabai -m window --move rel:0:20
 
 # increase window size

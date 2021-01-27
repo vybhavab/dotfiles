@@ -1,5 +1,4 @@
 call plug#begin('~/.local/share/nvim/plugged')
-" Plug 'ayu-theme/ayu-vim'
 Plug 'flazz/vim-colorschemes'
 Plug 'luochen1990/rainbow'
 Plug 'scrooloose/nerdtree'
@@ -13,20 +12,18 @@ Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Yggdroot/indentLine'
 Plug 'preservim/nerdcommenter'
-Plug 'yuezk/vim-js'
-Plug 'HerringtonDarkholme/yats.vim'
-Plug 'maxmellon/vim-jsx-pretty'
+" Plug 'yuezk/vim-js'
+" Plug 'HerringtonDarkholme/yats.vim'
+" Plug 'maxmellon/vim-jsx-pretty'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'OmniSharp/omnisharp-vim'
-"Plug 'alvan/vim-closetag'
-"Plug 'pangloss/vim-javascript'
-"Plug 'jiangmiao/auto-pairs'
-"Plug 'mattn/emmet-vim'
+
+Plug 'glacambre/firenvim', { 'do': { _ -> firenvim#install(69) } } " Need to have 69 just because it doesn't work without
 call plug#end()
 
 autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " autocmd BufWritePost * NERDTreeFocus | execute 'normal R' | wincmd p
 "let g:coc_node_path = '/home/vybhavb/.nvm/versions/node/v12.9.1/bin/node'
 

@@ -30,6 +30,8 @@ yabai -m config left_padding                 0
 yabai -m config right_padding                0
 yabai -m config window_gap                   5
 
+# yabai -m config external_bar all:10:0
+
 yabai -m rule --add app="^Google Chrome$" title="^Picture in Picture$" sticky=on
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^FaceTime$" manage=off

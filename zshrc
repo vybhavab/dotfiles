@@ -106,6 +106,7 @@ alias gg="lazygit"
 alias .="nvim"
 alias vim="nvim"
 alias vi="nvim"
+alias hmtdrp="node ~/Documents/Programming/Projects/RoshPoops/poops.js"
 
 autoload -Uz compinit && compinit
 
@@ -129,3 +130,7 @@ mkcdir(){
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
+
+export PATH="/usr/local/opt/llvm/bin:/usr/local/opt/luajit-openresty/bin:$PATH"
+export LDFLAGS="-L/usr/local/opt/llvm/lib"
+export CPPFLAGS="-I/usr/local/opt/llvm/include"

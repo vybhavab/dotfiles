@@ -24,9 +24,6 @@ Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'mbbill/undotree'
 Plug 'flazz/vim-colorschemes'
 
-"airline
-Plug 'vim-airline/vim-airline'
-
 Plug 'luochen1990/rainbow'
 
 Plug 'tpope/vim-fugitive'
@@ -45,8 +42,8 @@ let mapleader=" "
 " ======= REMAPS ===========
 
 " Resize splits
-nnoremap <silent> <Leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
-nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
+nnoremap <silent> <leader>+ :exe "resize " . (winheight(0) * 3/2)<CR>
+nnoremap <silent> <leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 
 " edit/reload vimrc
 nmap <leader>ev :e $MYVIMRC<CR>

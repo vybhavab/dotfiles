@@ -19,8 +19,7 @@ set scrolloff=10
 set noshowmode
 set completeopt=menuone,noinsert,noselect
 set signcolumn=yes
-set colorcolumn=100
-set clipboard=unnamedplus
+set colorcolumn=120
+set clipboard+=unnamedplus
 set splitbelow
 set splitright
-

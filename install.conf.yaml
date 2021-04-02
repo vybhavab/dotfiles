@@ -1,0 +1,49 @@
+- defaults:
+    link:
+        create: true
+        relink: true
+
+- clean: ['$HOME']
+
+- clean:
+    $HOME/:
+        force: true
+    $HOME/.config:
+        recursive: true
+
+- link:
+    $HOME/.tmux.conf:
+        path: tmux/tmux.conf
+    $HOME/.screenrc:
+        path: screen/screenrc
+    $HOME/.config/nvim:
+        path: nvim
+    $HOME/.config/kitty:
+        path: kitty
+    $HOME/.zshrc:
+        path: zsh/zshrc
+    $HOME/.hyper.js:
+        path: hyper/hyper.js
+    $HOME/.config/yabai/yabairc:
+        if: '[ `uname` = Darwin ]'
+        path: yabai/yabairc
+    $HOME/.config/skhd/skhdrc:
+        if: '[ `uname` = Darwin ]'
+        path: skhd/skhdrc
+    $HOME/.config/autorandr:
+        if: '[ `uname` = Linux ]'
+        path: autorandr
+    $HOME/.config/i3:
+        if: '[ `uname` = Linux ]'
+        path: i3
+- tap:
+    - cmacrae/formulae
+    - homebrew/cask
+    - homebrew/services
+    - homebrew/cask-fonts
+    - homebrew/cask-versions
+    - koekeishiya/formulae
+
+- brew: [curl, git, lazygit, openjdk, pyenv, git-lfs, autojump, htop, tmux, yabai, zsh, gdb, llvm, neovim, skhd, cmake]
+
+- cask: [alfred, brave-browser, slack, private-internet-access, keybase, font-fira-code]

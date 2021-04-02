@@ -1,6 +1,7 @@
-autodetach on 
-startup_message off 
-hardstatus alwayslastline 
+autodetach on
+startup_message off
+hardstatus alwayslastline
 shelltitle 'zsh'
 
 hardstatus string '%{gk}[%{wk}%?%-Lw%?%{=b kR}(%{W}%n*%f %t%?(%u)%?%{=b kR})%{= w}%?%+Lw%?%? %{g}][%{d}%l%{g}][ %{= w}%Y/%m/%d %0C:%s%a%{g} ]%{W}'
+

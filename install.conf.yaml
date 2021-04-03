@@ -36,6 +36,7 @@
     $HOME/.config/i3:
         if: '[ `uname` = Linux ]'
         path: i3
+
 - tap:
     - cmacrae/formulae
     - homebrew/cask
@@ -47,3 +48,9 @@
 - brew: [curl, git, lazygit, openjdk, pyenv, git-lfs, autojump, htop, tmux, yabai, zsh, gdb, llvm, neovim, skhd, cmake]
 
 - cask: [alfred, brave-browser, slack, private-internet-access, keybase, font-fira-code]
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+    - [chsh -s $(which zsh), Making ZSH default]
+    - [git clone https://github.com/zdharma/fast-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/fast-syntax-highlighting, Installing FSH]
+    - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions, Installing ZSH Auto]

@@ -1,4 +1,4 @@
-nnoremap <leader>tp :tabp<CR>
+noremap <leader>tp :tabp<CR>
 nnoremap <leader>tn :tabn<CR>
 nnoremap <leader>nt :tabnew<CR>
 

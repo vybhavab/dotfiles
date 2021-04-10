@@ -36,6 +36,8 @@ Plug 'luochen1990/rainbow'
 
 Plug 'tpope/vim-fugitive'
 
+Plug 'voldikss/vim-floaterm'
+
 call plug#end()
 
 " colorscheme

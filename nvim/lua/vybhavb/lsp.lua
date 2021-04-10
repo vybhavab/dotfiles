@@ -8,3 +8,5 @@ require'lspconfig'.clangd.setup {
 }
 
 require'lspconfig'.pyls.setup{ on_attach=on_attach }
+
+require'lspconfig'.texlab.setup{ on_attach=on_attach }

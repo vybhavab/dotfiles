@@ -23,3 +23,4 @@ set colorcolumn=120
 set clipboard+=unnamedplus
 set splitbelow
 set splitright
+set shortmess+=c

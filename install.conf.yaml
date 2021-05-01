@@ -24,12 +24,18 @@
         path: zsh/zshrc
     $HOME/.hyper.js:
         path: hyper/hyper.js
+    $HOME/spicetify_data/config.ini:
+        if: '[ `uname` = Darwin ]'
+        path: spicetify_data/config.ini
     $HOME/.config/yabai/yabairc:
         if: '[ `uname` = Darwin ]'
         path: yabai/yabairc
     $HOME/.config/skhd/skhdrc:
         if: '[ `uname` = Darwin ]'
         path: skhd/skhdrc
+    $HOME/.config/spicetify_data/config.ini:
+        if: '[ `uname` = Linux ]'
+        path: spicetify_data/config.ini
     $HOME/.config/autorandr:
         if: '[ `uname` = Linux ]'
         path: autorandr

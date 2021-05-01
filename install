@@ -12,5 +12,16 @@ cd "${BASEDIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
-
-"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" --plugin-dir dotbot-brew -c "${CONFIG}" "${@}"
+echo "Is this a first time install?(Will download brew and setup zsh if it is)"
+select yn in Yes No; do
+    case $yn in
+        Yes)
+            "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" --plugin-dir dotbot-brew -c "${CONFIG}" "${@}"
+            ;;
+        No)
+            "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" --except shell brew tap cask -c "${CONFIG}" "${@}"
+            ;;
+        *)
+            break;;
+    esac
+done

@@ -1,6 +1,17 @@
 " Thanks to https://github.com/awesome-streamers/awesome-streamerrc
 " for most of this vimrc help
 
+set path+=**
+set wildmode=longest,list,full
+set wildmenu
+set wildignore+=*.pyc
+set wildignore+=*_build/*
+set wildignore+=**/coverage/*
+set wildignore+=**/node_modules/*
+set wildignore+=**/android/*
+set wildignore+=**/ios/*
+set wildignore+=**/.git/*
+
 " To install vim plug if it isn't already installed
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 if empty(glob(data_dir . '/autoload/plug.vim'))
@@ -11,9 +22,12 @@ endif
 call plug#begin('~/.local/share/nvim/plugged')
 "LSP
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
-Plug 'tjdevries/nlua.nvim'
-Plug 'tjdevries/lsp_extensions.nvim'
+Plug 'hrsh7th/nvim-compe'
+Plug 'glepnir/lspsaga.nvim'
+Plug 'kabouzeid/nvim-lspinstall'
+" Plug 'nvim-lua/completion-nvim'
+" Plug 'tjdevries/nlua.nvim'
+" Plug 'tjdevries/lsp_extensions.nvim'
 
 "Tree sitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
@@ -29,21 +43,51 @@ Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 
-Plug 'mbbill/undotree'
-Plug 'flazz/vim-colorschemes'
 
+Plug 'simrat39/symbols-outline.nvim'
+
+Plug 'mbbill/undotree'
+
+" Colors
+Plug 'flazz/vim-colorschemes'
+Plug 'folke/tokyonight.nvim'
 Plug 'luochen1990/rainbow'
 
 Plug 'tpope/vim-fugitive'
 
 Plug 'voldikss/vim-floaterm'
 
+" Harpoon
+Plug 'ThePrimeagen/harpoon'
+
+" LuaLine
+Plug 'hoob3rt/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+
 call plug#end()
 
-" colorscheme
-let ayucolor='dark'
-colorscheme ayu
 
+" ======= COLORS ============
+" colorscheme
+" let ayucolor='dark'
+" hi SignColumn guibg=none
+" highlight Normal guibg=none
+" highlight LineNr guifg=#4c84a1
+" highlight netrwDir guifg=#5eacd3
+" highlight TelescopeBorder guifg=#5eacd
+
+let g:tokyonight_style = "night"
+colorscheme tokyonight
+"highlight ColorColumn ctermbg=0 guibg=grey
+"hi SignColumn guibg=none
+highlight Normal guibg=none
+highlight LineNr guifg=#a9b1d6
+highlight CursorLineNr guifg=#7aa2f7
+highlight netrwDir guifg=#7dcfff
+highlight TelescopeBorder guifg=#7dcfff
+highlight link CompeDocumentation NormalFloat
+
+" ======= LUA ==============
 lua require("vybhavb")
 lua require'nvim-treesitter.configs'.setup { highlight = { enable = true } }
 
@@ -67,7 +111,7 @@ nmap <leader>w :w<CR>
 nmap <leader>x :x<CR>
 nmap <leader>q :q<CR>
 
-nnoremap <leader>pv :Vex<CR>
+nnoremap <leader>pv :Ex<CR>
 vnoremap <leader>p "_dP
 nnoremap <leader>y "+y
 vnoremap <leader>y "+y

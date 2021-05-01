@@ -1,4 +1,5 @@
-local on_attach = require'completion'.on_attach
+local function on_attach()
+end
 
 require'lspconfig'.tsserver.setup{ on_attach=on_attach }
 
@@ -10,3 +11,10 @@ require'lspconfig'.clangd.setup {
 require'lspconfig'.pyls.setup{ on_attach=on_attach }
 
 require'lspconfig'.texlab.setup{ on_attach=on_attach }
+
+local opts = {
+    highlight_hovered_item = true,
+    show_guides = true,
+}
+
+require('symbols-outline').setup(opts)

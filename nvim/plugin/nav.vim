@@ -32,7 +32,7 @@ fun! ToggleQFList(global)
 endfun
 
 
-nnoremap <C-k> :cnext<CR>
-nnoremap <C-j> :cprev<CR>
-nnoremap <C-q> :call ToggleQFList(1)<CR>
-nnoremap <C-l> :call ToggleQFList(0)<CR>
+" nnoremap <C-k> :cnext<CR>
+" nnoremap <C-j> :cprev<CR>
+" nnoremap <C-q> :call ToggleQFList(1)<CR>
+" nnoremap <C-w> :call ToggleQFList(0)<CR>

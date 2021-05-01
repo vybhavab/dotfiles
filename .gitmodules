@@ -5,3 +5,9 @@
 [submodule "dotbot-brew"]
 	path = dotbot-brew
 	url = https://github.com/d12frosted/dotbot-brew.git
+[submodule "keyboardlayouts/keyboards"]
+	path = keyboardlayouts/keyboards
+	url = git@github.com:ThePrimeagen/keyboards.git
+[submodule "keyboardlayouts/REALDvorak"]
+	path = keyboardlayouts/REALDvorak
+	url = git@github.com:ThePrimeagen/keyboards.git

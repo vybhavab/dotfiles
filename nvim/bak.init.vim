@@ -32,7 +32,6 @@ Plug 'kabouzeid/nvim-lspinstall'
 "Tree sitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
-
 " Debugging stuff
 Plug 'puremourning/vimspector'
 Plug 'szw/vim-maximizer'

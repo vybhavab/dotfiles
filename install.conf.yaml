@@ -60,3 +60,4 @@
     - [chsh -s $(which zsh), Making ZSH default]
     - [git clone https://github.com/zdharma/fast-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/fast-syntax-highlighting, Installing FSH]
     - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions, Installing ZSH Auto]
+    - [git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm, Adding TPM]

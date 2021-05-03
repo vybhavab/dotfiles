@@ -35,6 +35,11 @@ local function packer_startup()
             run = ":TSUpdate"
         }
 
+        use {
+            'neoclide/coc.nvim',
+            branch = 'release',
+        }
+
         -- Telescope
         use 'nvim-lua/plenary.nvim'
         use 'nvim-lua/popup.nvim'

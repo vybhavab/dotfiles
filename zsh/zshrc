@@ -2,8 +2,15 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/Users/vybhavb/.oh-my-zsh"
-
+case "$OSTYPE" in
+  darwin*)
+	export ZSH="/Users/vybhavb/.oh-my-zsh"
+  ;;
+  linux*)
+	export ZSH="$HOME/.oh-my-zsh"
+	export PATH="$HOME/neovim/bin:$PATH"
+  ;;
+esac
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -110,8 +117,9 @@ alias hmtdrp="node ~/Documents/Programming/Projects/RoshPoops/poops.js"
 
 autoload -Uz compinit && compinit
 
-kitty + complete setup zsh | source /dev/stdin
-
+if command -v kitty 1>/dev/null 2>&1; then
+	eval "kitty + complete setup zsh | source /dev/stdin"
+fi
 #FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 

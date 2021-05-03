@@ -3,7 +3,7 @@ local function init()
     require 'vybhavb.plugins.packer'.init()
 
     --HARPOOOOOON
-    --require 'vybhavb.plugins.harpoon'.init()
+    require 'vybhavb.plugins.harpoon'.init()
 
     -- lsp
     require 'vybhavb.plugins.lsp'.init()

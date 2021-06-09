@@ -9,13 +9,13 @@ local on_attach = function (client, bufnr)
     buf_set_keymap('n', 'vi', '<Cmd>lua vim.lsp.buf.implementation()<CR>', opts)
     buf_set_keymap('n', 'vsh', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
     buf_set_keymap('n', 'vsh', '<Cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-    buf_set_keymap('n','<leader>vrr <Cmd>lua vim.lsp.buf.references()<CR>',opts)
-    buf_set_keymap('n','<leader>vrn <Cmd>lua vim.lsp.buf.rename()<CR>',opts)
-    buf_set_keymap('n','<leader>vh <Cmd>lua vim.lsp.buf.hover()<CR>',opts)
-    buf_set_keymap('n','<leader>vca <Cmd>lua vim.lsp.buf.code_action()<CR>',opts)
-    buf_set_keymap('n','<leader>vsd <Cmd>lua vim.lsp.util.show_line_diagnostics(); vim.lsp.util.show_line_diagnostics()<CR>',opts)
-    buf_set_keymap('n','<leader>vn <Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',opts)
-    buf_set_keymap('n','<leader>vN <Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',opts)
+    buf_set_keymap('n','<leader>vrr', '<Cmd>lua vim.lsp.buf.references()<CR>',opts)
+    buf_set_keymap('n','<leader>vrn', '<Cmd>lua vim.lsp.buf.rename()<CR>',opts)
+    buf_set_keymap('n','<leader>vh', '<Cmd>lua vim.lsp.buf.hover()<CR>',opts)
+    buf_set_keymap('n','<leader>vca', '<Cmd>lua vim.lsp.buf.code_action()<CR>',opts)
+    buf_set_keymap('n','<leader>vsd','<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',opts)
+    buf_set_keymap('n','<leader>vn','<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',opts)
+    buf_set_keymap('n','<leader>vN','<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',opts)
 
     -- Set some keybinds conditional on server capabilities
     if client.resolved_capabilities.document_formatting then
@@ -50,14 +50,72 @@ local function init()
       }
     }
 
+    local tssCapabilities = vim.lsp.protocol.make_client_capabilities()
+    tssCapabilities.textDocument.completion.completionItem.snippetSupport = true
+    tssCapabilities.textDocument.document_formatting = false
+    tssCapabilities.textDocument.completion.completionItem.resolveSupport = {
+      properties = {
+        'documentation',
+        'detail',
+        'additionalTextEdits',
+      }
+    }
+
     local languageServers = {"tsserver", "clangd", "pyls", "texlab"}
 
     for _, lsp in ipairs(languageServers) do
-        lspconfig[lsp].setup{ capabilities = capabilities, on_attach = on_attach }
+        if lsp == "tsserver" then
+            lspconfig[lsp].setup{ capabilities = tssCapabilities , on_attach = on_attach }
+        else
+            lspconfig[lsp].setup{ capabilities = capabilities, on_attach = on_attach }
+        end
     end
 
+    lspconfig.diagnosticls.setup{
+        filetypes = {"javascript", "typescript"},
+        root_dir = function(fname)
+            return lspconfig.util.root_pattern("tsconfig.json")(fname) or lspconfig.util.root_pattern(".eslintrc.js")(fname) or lspconfig.util.root_pattern(".eslintrc.json")(fname);
+        end,
+        init_options = {
+            linters = {
+                eslint = {
+                    command = "./node_modules/.bin/eslint",
+                    rootPatterns = {".eslintrc.js", ".git"},
+                    debounce = 100,
+                    args = {
+                        "--stdin",
+                        "--stdin-filename",
+                        "%filepath",
+                        "--format",
+                        "json"
+                    },
+                    sourceName = "eslint",
+                    parseJson = {
+                        errorsRoot = "[0].messages",
+                        line = "line",
+                        column = "column",
+                        endLine = "endLine",
+                        endColumn = "endColumn",
+                        message = "[eslint] ${message} [${ruleId}]",
+                        security = "severity"
+                    },
+                    securities = {
+                        [2] = "error",
+                        [1] = "warning"
+                    }
+                },
+            },
+            filetypes = {
+                javascript = "eslint",
+                typescript = "eslint",
+            }
+        },
+		on_attach = on_attach
+    } 
+
+
     local opts = {
-        highlight_hovered_item = true,
+        highlight_hovered_item = false,
         show_guides = true,
     }
 

@@ -24,6 +24,8 @@
         path: zsh/zshrc
     $HOME/.hyper.js:
         path: hyper/hyper.js
+    $HOME/.config/alacritty:
+        path: alacritty
     $HOME/spicetify_data/config.ini:
         if: '[ `uname` = Darwin ]'
         path: spicetify_data/config.ini

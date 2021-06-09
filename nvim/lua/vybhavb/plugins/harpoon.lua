@@ -5,6 +5,7 @@ local function init()
     local options = {noremap = true }
 
     map('n','<leader>a', ':lua require("harpoon.mark").add_file()<CR>',options)
+    map('n', '<C-e>',':lua require("harpoon.ui").toggle_quick_menu()<CR>', options)
     map('n','<C-h>', ':lua require("harpoon.ui").nav_file(1)<CR>',options)
     map('n','<C-j>', ':lua require("harpoon.ui").nav_file(2)<CR>',options)
     map('n','<C-k>', ':lua require("harpoon.ui").nav_file(3)<CR>',options)

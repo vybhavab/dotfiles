@@ -14,6 +14,7 @@ local function init()
                 i = {
                     ["<C-x>"] = false,
                     ["<C-q>"] = actions.send_to_qflist,
+        			["<esc>"] = actions.close,
                 },
             },
             file_ignore_patterns = {

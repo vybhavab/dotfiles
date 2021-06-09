@@ -34,11 +34,10 @@ local function packer_startup()
             requires = { 'neovim/nvim-lspconfig' },
             run = ":TSUpdate"
         }
-
-        use {
-            'neoclide/coc.nvim',
-            branch = 'release',
-        }
+        --use {
+        --    'neoclide/coc.nvim',
+        --    branch = 'release',
+        --}
 
         -- Telescope
         use 'nvim-lua/plenary.nvim'

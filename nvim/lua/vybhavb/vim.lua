@@ -53,7 +53,7 @@ local function set_vim_o()
         termguicolors=true,
         swapfile=false,
         backup=false,
-        undodir="/home/vybhavb/.vim/undodir",
+        undodir="/Users/vybhavb/.vim/undodir",
         undofile=true,
         incsearch=true,
         scrolloff=10,

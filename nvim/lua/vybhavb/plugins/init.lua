@@ -20,6 +20,9 @@ local function init()
     require 'vybhavb.plugins.tokyonight'.init()
     --require 'vybhavb.plugins.lualine'.init()
 
+    -- git
+    require 'vybhavb.plugins.gitsigns'.init()
+
 end
 
 return {

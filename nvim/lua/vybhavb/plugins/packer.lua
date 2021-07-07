@@ -34,10 +34,6 @@ local function packer_startup()
             requires = { 'neovim/nvim-lspconfig' },
             run = ":TSUpdate"
         }
-        --use {
-        --    'neoclide/coc.nvim',
-        --    branch = 'release',
-        --}
 
         -- Telescope
         use 'nvim-lua/plenary.nvim'
@@ -49,6 +45,7 @@ local function packer_startup()
                 'nvim-lua/popup.nvim'
             }
         }
+
         use {
             'nvim-telescope/telescope-fzy-native.nvim',
             requires = {
@@ -74,6 +71,25 @@ local function packer_startup()
         use 'romgrk/nvim-treesitter-context'
         use 'kyazdani42/nvim-web-devicons'
         use 'simrat39/symbols-outline.nvim'
+
+        use 'voldikss/vim-floaterm'
+
+        use {
+            'lewis6991/gitsigns.nvim',
+            requires = {
+                'nvim-lua/plenary.nvim'
+            }
+        }
+
+        use 'jose-elias-alvarez/null-ls.nvim'
+
+        use {
+            'jose-elias-alvarez/nvim-lsp-ts-utils',
+            requires = {
+                'jose-elias-alvarez/null-ls.nvim',
+                'nvim-lua/plenary.nvim'
+            }
+        }
 
     end)
 end

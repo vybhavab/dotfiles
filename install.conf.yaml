@@ -35,6 +35,9 @@
     $HOME/.config/skhd/skhdrc:
         if: '[ `uname` = Darwin ]'
         path: skhd/skhdrc
+    $HOME/Library/Application Support/jesseduffield/lazygit/config.yml:
+        if: '[ `uname` = Darwin ]'
+        path: lazygit/config.yml
     $HOME/.config/spicetify_data/config.ini:
         if: '[ `uname` = Linux ]'
         path: spicetify_data/config.ini
@@ -44,6 +47,9 @@
     $HOME/.config/i3:
         if: '[ `uname` = Linux ]'
         path: i3
+    $HOME/.config/lazygit/config.yml:
+        if: '[ `uname` = Linux ]'
+        path: lazygit/config.yml
 
 - tap:
     - cmacrae/formulae

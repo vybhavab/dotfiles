@@ -112,7 +112,7 @@ alias gg="lazygit"
 alias .="nvim"
 alias vim="nvim"
 alias vi="nvim"
-alias hmtdrp="node ~/Documents/Programming/Projects/RoshPoops/poops.js"
+alias wmrestart="brew services restart --all"
 
 autoload -Uz compinit && compinit
 
@@ -144,6 +144,9 @@ fi
 
 
 export PATH="/usr/local/opt/llvm/bin:/usr/local/opt/luajit-openresty/bin:$PATH"
+
+# path for yarn
+export PATH="$(npm bin -g):$PATH"
 export LDFLAGS="-L/usr/local/opt/llvm/lib"
 export CPPFLAGS="-I/usr/local/opt/llvm/include"
 

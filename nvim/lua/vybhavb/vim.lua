@@ -45,7 +45,7 @@ local function set_vim_o()
     local settings = {
         errorbells = false,
         expandtab = true,
-        softtabstop=4,
+        softtabstop=2,
         exrc = true,
         hlsearch=false,
         smartindent=true,
@@ -53,14 +53,21 @@ local function set_vim_o()
         termguicolors=true,
         swapfile=false,
         backup=false,
-        undodir="/Users/vybhavb/.vim/undodir",
+        undodir="/Users/vybhavbhargav/.vim/undodir",
         undofile=true,
         incsearch=true,
         scrolloff=10,
         showmode=false,
         completeopt="menuone,noinsert,noselect",
         signcolumn="yes",
-        colorcolumn="120"
+        colorcolumn="120",
+        encoding="utf8",
+        shiftwidth=2,
+        secure=true,
+        splitright=true,
+        splitbelow=true,
+        tabstop=2,
+        updatetime=300
     }
 
     -- Generic vim.o
@@ -74,13 +81,13 @@ local function set_vim_o()
     vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
 
     -- Not yet in vim.o
-    vim.cmd('set encoding=utf8')
-    vim.cmd('set shiftwidth=4')
-    vim.cmd('set secure')
-    vim.cmd('set splitright')
-    vim.cmd('set splitbelow')
-    vim.cmd('set tabstop=4')
-    vim.cmd('set updatetime=300')
+    -- vim.cmd('set encoding=utf8')
+    -- vim.cmd('set shiftwidth=2')
+    -- vim.cmd('set secure')
+    -- vim.cmd('set splitright')
+    -- vim.cmd('set splitbelow')
+    -- vim.cmd('set tabstop=2')
+    -- vim.cmd('set updatetime=300')
 
 end
 

@@ -39,14 +39,6 @@ local function packer_startup()
         use 'nvim-lua/plenary.nvim'
         use 'nvim-lua/popup.nvim'
         use {
-            'nvim-telescope/telescope.nvim',
-            requires = {
-                'nvim-lua/plenary.nvim',
-                'nvim-lua/popup.nvim'
-            }
-        }
-
-        use {
             'nvim-telescope/telescope-fzy-native.nvim',
             requires = {
                 'nvim-lua/plenary.nvim',
@@ -54,9 +46,18 @@ local function packer_startup()
                 'nvim-telescope/telescope.nvim'
             }
         }
+        use {
+            'nvim-telescope/telescope.nvim',
+            requires = {
+                'nvim-lua/plenary.nvim',
+                'nvim-lua/popup.nvim'
+            }
+        }
+
 
         -- Colors
         use 'folke/tokyonight.nvim'
+        -- use 'yashguptaz/calvera-dark.nvim'
         use 'luochen1990/rainbow'
 
         -- Utils

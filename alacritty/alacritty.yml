@@ -1,5 +1,4 @@
 #env:
-  #TERM: xterm-256color 
   dynamic_padding: true
   decorations: "buttonless"
   scrolling:
@@ -10,8 +9,7 @@
 
     size: 12.0
     use_thin_strokes: true
-
-# TokyoNight Alacritty Colors
+  # TokyoNight Alacritty Colors
   colors:
     # Default colors
     primary:

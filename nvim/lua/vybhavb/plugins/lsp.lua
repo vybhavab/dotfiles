@@ -24,6 +24,9 @@ _G.lsp_organize_imports = function()
 end
 
 local on_attach = function (client, bufnr)
+    if client.name == 'tsserver' then
+      client.resolved_capabilities.document_formatting = false;
+    end
     print("'" .. client.name .. "' language server started" );
 
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -63,15 +66,15 @@ local on_attach = function (client, bufnr)
        ]], false)
     end
 
---    if client.resolved_capabilities.document_formatting then
---       print(string.format("Formatting supported %s", client.name))
---       vim.api.nvim_exec([[
---        augroup LspAutocommands
---            autocmd! * <buffer>
---            autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting() 
---        augroup END
---        ]], true)
---    end
+    if client.resolved_capabilities.document_formatting then
+       print(string.format("Formatting supported %s", client.name))
+       vim.api.nvim_exec([[
+        augroup LspAutocommands
+            autocmd! * <buffer>
+            autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()
+        augroup END
+        ]], true)
+    end
 end
 
 local function init()
@@ -85,9 +88,6 @@ local function init()
       }
     }
 
-    local tssCapabilities = capabilities
-    tssCapabilities.textDocument.document_formatting = false
-
     local languageServers = {"clangd", "pyls", "texlab", "graphql"}
 
     for _, lsp in ipairs(languageServers) do
@@ -95,7 +95,7 @@ local function init()
     end
 
     lspconfig["tsserver"].setup({
-        capabilities = tssCapabilities,
+        capabilities = capabilities,
         on_attach = on_attach
     })
 

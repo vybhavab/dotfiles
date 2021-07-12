@@ -1,11 +1,24 @@
 local function set_augroups()
+  vim.api.nvim_exec([[
+    augroup VYBHAVB
+        autocmd!
+        autocmd BufWritePre * %s/\s\+$//e
+    augroup END
+  ]], false)
+
+  vim.api.nvim_exec([[
+   augroup highlight_yank
+      autocmd!
+      autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 40})
+    augroup END
+  ]], false)
 end
 
 local function set_keymaps()
     local map = vim.api.nvim_set_keymap
-    
+
     local options = { noremap = false }
-    
+
     map('n', '<leader>h', '<CMD>wincmd h<CR>', options)
     map('n', '<leader>j', '<CMD>wincmd j<CR>', options)
     map('n', '<leader>k', '<CMD>wincmd k<CR>', options)
@@ -77,18 +90,8 @@ local function set_vim_o()
 
     -- Custom vim.o
     vim.o.shortmess = vim.o.shortmess .. 'c'
-    
+
     vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
-
-    -- Not yet in vim.o
-    -- vim.cmd('set encoding=utf8')
-    -- vim.cmd('set shiftwidth=2')
-    -- vim.cmd('set secure')
-    -- vim.cmd('set splitright')
-    -- vim.cmd('set splitbelow')
-    -- vim.cmd('set tabstop=2')
-    -- vim.cmd('set updatetime=300')
-
 end
 
 local function set_vim_wo()
@@ -102,6 +105,7 @@ local function init()
     set_vim_o()
     set_vim_wo()
     set_keymaps()
+    set_augroups()
 end
 
 

@@ -113,6 +113,9 @@ alias .="nvim"
 alias vim="nvim"
 alias vi="nvim"
 alias wmrestart="brew services restart --all"
+if command -v bat 1>/dev/null 2>&1; then
+	alias cat="bat"
+fi
 
 autoload -Uz compinit && compinit
 

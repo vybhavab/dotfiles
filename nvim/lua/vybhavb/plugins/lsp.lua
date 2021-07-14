@@ -1,4 +1,5 @@
 local lspconfig = require 'lspconfig'
+local configs = require("lspconfig/configs")
 
 local format_async = function(err, _, result, _, bufnr)
     if err ~= nil or result == nil then return end
@@ -24,9 +25,8 @@ _G.lsp_organize_imports = function()
 end
 
 local on_attach = function (client, bufnr)
-    if client.name == 'tsserver' then
-      client.resolved_capabilities.document_formatting = false;
-    end
+    require "lsp_signature".on_attach()
+
     print("'" .. client.name .. "' language server started" );
 
     local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -94,52 +94,40 @@ local function init()
             lspconfig[lsp].setup({ capabilities = capabilities, on_attach = on_attach })
     end
 
-    lspconfig["tsserver"].setup({
+    local ts_utils = require 'vybhavb.plugins.lsp-ts-utils'
+
+    lspconfig.tsserver.setup({
         capabilities = capabilities,
-        on_attach = on_attach
+        on_attach = function(client, bufnr)
+          client.resolved_capabilities.document_formatting = false
+          ts_utils(client)
+          on_attach(client, bufnr)
+        end,
+        settings = {documentFormatting = false}
     })
 
-    local filetypes = {
-        typescript = "eslint",
-        typescriptreact = "eslint",
+    -- Formatting via efm
+    local prettier = require "vybhavb.efm.prettier"
+    local eslint = require "vybhavb.efm.eslint"
+
+    local languages = {
+      typescript = {prettier, eslint},
+      javascript = {prettier, eslint},
+      typescriptreact = {prettier, eslint},
+      javascriptreact = {prettier, eslint},
+      json = {prettier},
+      html = {prettier},
+      scss = {prettier},
+      css = {prettier},
+      markdown = {prettier},
     }
 
-    local linters = {
-        eslint = {
-            sourceName = "eslint",
-            command = "eslint_d",
-            rootPatterns = {".eslintrc.js", "package.json"},
-            debounce = 100,
-            args = {"--stdin", "--stdin-filename", "%filepath", "--format", "json"},
-            parseJson = {
-                errorsRoot = "[0].messages",
-                line = "line",
-                column = "column",
-                endLine = "endLine",
-                endColumn = "endColumn",
-                message = "${message} [${ruleId}]",
-                security = "severity"
-            },
-            securities = {[2] = "error", [1] = "warning"}
-        }
-    }
-    local formatters = {
-        prettier = {command = "prettier", args = {"--stdin-filepath", "%filepath"}}
-    }
-    local formatFiletypes = {
-        typescript = "prettier",
-        typescriptreact = "prettier"
-    }
-
-    lspconfig.diagnosticls.setup {
-        on_attach = on_attach,
-        filetypes = vim.tbl_keys(filetypes),
-        init_options = {
-            filetypes = filetypes,
-            linters = linters,
-            formatters = formatters,
-            formatFiletypes = formatFiletypes
-        }
+    lspconfig.efm.setup {
+      root_dir = lspconfig.util.root_pattern("yarn.lock", "lerna.json", ".git"),
+      filetypes = vim.tbl_keys(languages),
+      init_options = {documentFormatting = true, codeAction = true},
+      settings = {languages = languages, log_level = 1, log_file = '~/efm.log'},
+      on_attach = on_attach
     }
 
     local opts = {

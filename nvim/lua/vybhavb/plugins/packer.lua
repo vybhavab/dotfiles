@@ -87,10 +87,16 @@ local function packer_startup()
         use {
             'jose-elias-alvarez/nvim-lsp-ts-utils',
             requires = {
+                'neovim/nvim-lspconfig',
                 'jose-elias-alvarez/null-ls.nvim',
                 'nvim-lua/plenary.nvim'
             }
         }
+
+        use {
+          "ray-x/lsp_signature.nvim",
+        }
+
 
     end)
 end

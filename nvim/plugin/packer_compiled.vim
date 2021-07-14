@@ -80,6 +80,10 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/vybhavbhargav/.local/share/nvim/site/pack/packer/start/harpoon"
   },
+  ["lsp_signature.nvim"] = {
+    loaded = true,
+    path = "/Users/vybhavbhargav/.local/share/nvim/site/pack/packer/start/lsp_signature.nvim"
+  },
   ["lualine.nvim"] = {
     loaded = true,
     path = "/Users/vybhavbhargav/.local/share/nvim/site/pack/packer/start/lualine.nvim"

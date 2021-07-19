@@ -55,6 +55,7 @@ local function set_vim_g()
 end
 
 local function set_vim_o()
+    local home = os.getenv("HOME") .. "/.vim/undodir"
     local settings = {
         errorbells = false,
         expandtab = true,
@@ -66,7 +67,7 @@ local function set_vim_o()
         termguicolors=true,
         swapfile=false,
         backup=false,
-        undodir="/Users/vybhavb/.vim/undodir",
+        undodir=home,
         undofile=true,
         incsearch=true,
         scrolloff=10,

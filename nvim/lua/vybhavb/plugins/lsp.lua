@@ -68,12 +68,7 @@ local on_attach = function (client, bufnr)
 
     if client.resolved_capabilities.document_formatting then
        print(string.format("Formatting supported %s", client.name))
-       vim.api.nvim_exec([[
-        augroup LspAutocommands
-            autocmd! * <buffer>
-            autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()
-        augroup END
-        ]], true)
+       vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()")
     end
 end
 
@@ -88,11 +83,21 @@ local function init()
       }
     }
 
-    local languageServers = {"clangd", "pyls", "texlab", "graphql"}
+    local languageServers = {"clangd", "pylsp", "texlab", "graphql"}
 
     for _, lsp in ipairs(languageServers) do
+        if lspconfig[lsp] then
             lspconfig[lsp].setup({ capabilities = capabilities, on_attach = on_attach })
+        end
     end
+
+    local null_ls = require("null-ls")
+
+    local sources = {null_ls.builtins.formatting.eslint_d}
+    null_ls.config {sources=sources}
+    require("lspconfig")["null-ls"].setup {
+      on_attach = on_attach
+    }
 
     local ts_utils = require 'vybhavb.plugins.lsp-ts-utils'
 
@@ -125,7 +130,7 @@ local function init()
     lspconfig.efm.setup {
       root_dir = lspconfig.util.root_pattern("yarn.lock", "lerna.json", ".git"),
       filetypes = vim.tbl_keys(languages),
-      init_options = {documentFormatting = true, codeAction = true},
+      init_options = {documentFormatting = false, codeAction = true},
       settings = {languages = languages, log_level = 1, log_file = '~/efm.log'},
       on_attach = on_attach
     }

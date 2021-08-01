@@ -47,7 +47,7 @@ local function packer_startup()
             }
         }
 
-	use 'nvim-telescope/telescope.nvim'
+        use 'nvim-telescope/telescope.nvim'
 
         -- Colors
         use 'folke/tokyonight.nvim'
@@ -91,6 +91,9 @@ local function packer_startup()
           "ray-x/lsp_signature.nvim",
         }
 
+        use {
+          "lazytanuki/nvim-mapper",
+        }
 
     end)
 end

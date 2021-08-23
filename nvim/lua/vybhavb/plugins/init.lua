@@ -17,9 +17,8 @@ local function init()
     require 'vybhavb.plugins.floaterm'.init()
 
     -- display
-    require 'vybhavb.plugins.tokyonight'.init()
+    require 'vybhavb.plugins.theme'.init()
     require 'vybhavb.plugins.lualine'.init()
-    -- require 'vybhavb.plugins.calvera'.init()
 
     -- git
     require 'vybhavb.plugins.gitsigns'.init()

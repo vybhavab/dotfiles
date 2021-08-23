@@ -69,6 +69,10 @@ end
 time([[try_loadstring definition]], false)
 time([[Defining packer_plugins]], true)
 _G.packer_plugins = {
+  ["Catppuccino.nvim"] = {
+    loaded = true,
+    path = "/Users/vybhavbhargav/.local/share/nvim/site/pack/packer/start/Catppuccino.nvim"
+  },
   ["gitsigns.nvim"] = {
     loaded = true,
     path = "/Users/vybhavbhargav/.local/share/nvim/site/pack/packer/start/gitsigns.nvim"
@@ -104,6 +108,10 @@ _G.packer_plugins = {
   ["nvim-lspinstall"] = {
     loaded = true,
     path = "/Users/vybhavbhargav/.local/share/nvim/site/pack/packer/start/nvim-lspinstall"
+  },
+  ["nvim-mapper"] = {
+    loaded = true,
+    path = "/Users/vybhavbhargav/.local/share/nvim/site/pack/packer/start/nvim-mapper"
   },
   ["nvim-treesitter"] = {
     loaded = true,
@@ -144,10 +152,6 @@ _G.packer_plugins = {
   ["telescope.nvim"] = {
     loaded = true,
     path = "/Users/vybhavbhargav/.local/share/nvim/site/pack/packer/start/telescope.nvim"
-  },
-  ["tokyonight.nvim"] = {
-    loaded = true,
-    path = "/Users/vybhavbhargav/.local/share/nvim/site/pack/packer/start/tokyonight.nvim"
   },
   ["vim-floaterm"] = {
     loaded = true,

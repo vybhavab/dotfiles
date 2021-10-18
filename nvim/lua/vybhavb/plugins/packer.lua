@@ -29,10 +29,34 @@ local function packer_startup()
             'hrsh7th/vim-vsnip',
             requires = { 'neovim/nvim-compe' }
         }
+
+       -- use {
+       --   'hrsh7th/nvim-cmp',
+       --   requires = {
+       --     'hrsh7th/vim-vsnip',
+       --     'hrsh7th/cmp-buffer',
+       --     'hrsh7th/cmp-nvim-lsp'
+       --   }
+       -- }
+       -- use {
+       --   'hrsh7th/cmp-nvim-lsp'
+       -- }
+       -- use 'saadparwaiz1/cmp_luasnip'
+       -- use 'L3MON4D3/LuaSnip'
         use {
             'nvim-treesitter/nvim-treesitter',
             requires = { 'neovim/nvim-lspconfig' },
-            run = ":TSUpdate"
+            run = ':TSUpdate'
+        }
+
+        use {
+          'ThePrimeagen/git-worktree.nvim',
+          requires = {
+            'nvim-lua/plenary.nvim',
+            'nvim-lua/popup.nvim',
+            'nvim-telescope/telescope.nvim',
+            'hoob3rt/lualine.nvim'
+          }
         }
 
         -- Telescope
@@ -52,6 +76,7 @@ local function packer_startup()
         -- Colors
         use 'folke/tokyonight.nvim'
         -- use 'yashguptaz/calvera-dark.nvim'
+        -- use 'pocco81/catppuccino.nvim'
         use 'luochen1990/rainbow'
 
         -- Utils
@@ -67,13 +92,18 @@ local function packer_startup()
         use 'kyazdani42/nvim-web-devicons'
         use 'simrat39/symbols-outline.nvim'
 
-        use 'voldikss/vim-floaterm'
+        -- use 'voldikss/vim-floaterm'
+        use 'kdheepak/lazygit.nvim'
 
         use {
             'lewis6991/gitsigns.nvim',
             requires = {
                 'nvim-lua/plenary.nvim'
             }
+        }
+
+        use {
+           'tpope/vim-fugitive'
         }
 
         use 'jose-elias-alvarez/null-ls.nvim'
@@ -88,11 +118,11 @@ local function packer_startup()
         }
 
         use {
-          "ray-x/lsp_signature.nvim",
+          'ray-x/lsp_signature.nvim',
         }
 
         use {
-          "lazytanuki/nvim-mapper",
+          'lazytanuki/nvim-mapper',
         }
 
     end)

@@ -74,6 +74,7 @@ end
 
 local function init()
     local capabilities = vim.lsp.protocol.make_client_capabilities()
+    -- capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.textDocument.completion.completionItem.resolveSupport = {
       properties = {
@@ -112,14 +113,14 @@ local function init()
     })
 
     -- Formatting via efm
-    local prettier = require "vybhavb.efm.prettier"
+    -- local prettier = require "vybhavb.efm.prettier"
     local eslint = require "vybhavb.efm.eslint"
 
     local languages = {
-      typescript = {prettier, eslint},
-      javascript = {prettier, eslint},
-      typescriptreact = {prettier, eslint},
-      javascriptreact = {prettier, eslint},
+      typescript = {eslint},
+      javascript = {eslint},
+      typescriptreact = {eslint},
+      javascriptreact = {eslint},
       json = {prettier},
       html = {prettier},
       scss = {prettier},

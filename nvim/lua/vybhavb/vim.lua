@@ -84,7 +84,7 @@ local function set_vim_o()
         incsearch=true,
         scrolloff=10,
         showmode=false,
-        completeopt="menuone,noinsert,noselect",
+        completeopt="menuone,noselect",
         signcolumn="yes",
         colorcolumn="120",
         encoding="utf8",

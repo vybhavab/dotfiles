@@ -7,6 +7,7 @@ local function init()
 
     -- lsp
     require 'vybhavb.plugins.lsp'.init()
+    -- require 'vybhavb.plugins.cmp'.init()
     require 'vybhavb.plugins.compe'.init()
     require 'vybhavb.plugins.treesitter'.init()
 
@@ -14,7 +15,9 @@ local function init()
     require 'vybhavb.plugins.telescope'.init()
 
     -- utils
-    require 'vybhavb.plugins.floaterm'.init()
+    -- require 'vybhavb.plugins.floaterm'.init()
+    require 'vybhavb.plugins.lazygit'.init()
+
 
     -- display
     require 'vybhavb.plugins.theme'.init()

@@ -35,6 +35,7 @@ local function init()
     }
 
     require('telescope').load_extension('fzy_native')
+    require("telescope").load_extension("git_worktree")
 
     local map = vim.api.nvim_set_keymap
     local opts = { noremap = true }
@@ -45,6 +46,7 @@ local function init()
     map('n','<leader>pb','<CMD>lua require("telescope.builtin").buffers()<CR>',opts)
     map('n','<leader>ph','<CMD>lua require("telescope.builtin").help_tags()<CR>',opts)
     map('n','<leader>fb','<CMD>lua require("telescope.builtin").file_browser()<CR>',opts)
+    map('n', '<leader>gwt', '<CMD>lua require("telescope").extensions.git_worktree.git_worktrees()<CR>', opts)
 
 end
 

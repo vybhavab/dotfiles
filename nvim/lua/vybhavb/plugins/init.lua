@@ -7,8 +7,8 @@ local function init()
 
     -- lsp
     require 'vybhavb.plugins.lsp'.init()
-    -- require 'vybhavb.plugins.cmp'.init()
-    require 'vybhavb.plugins.compe'.init()
+    require 'vybhavb.plugins.cmp'.init()
+    -- require 'vybhavb.plugins.compe'.init()
     require 'vybhavb.plugins.treesitter'.init()
 
     -- telescope

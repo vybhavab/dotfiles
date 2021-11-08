@@ -103,7 +103,6 @@ local function set_vim_o()
 
     -- Custom vim.o
     vim.o.shortmess = vim.o.shortmess .. 'c'
-
     vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
 end
 

@@ -84,7 +84,7 @@ local function init()
       }
     }
 
-    local languageServers = {"clangd", "pylsp", "texlab", "graphql"}
+    local languageServers = {"clangd", "texlab", "graphql"}
 
     for _, lsp in ipairs(languageServers) do
         if lspconfig[lsp] then

@@ -18,7 +18,7 @@ local function packer_startup()
         -- LSP
         use 'neovim/nvim-lspconfig'
         use {
-            'kabouzeid/nvim-lspinstall',
+            'williamboman/nvim-lsp-installer',
             requires = { 'neovim/nvim-lspconfig' }
         }
         -- use {
@@ -39,7 +39,7 @@ local function packer_startup()
         use 'saadparwaiz1/cmp_luasnip'
         use 'L3MON4D3/LuaSnip'
 
-        use 'github/copilot.vim'
+        -- use 'github/copilot.vim'
 
         use {
             'nvim-treesitter/nvim-treesitter',
@@ -76,6 +76,10 @@ local function packer_startup()
         -- use 'yashguptaz/calvera-dark.nvim'
         -- use 'pocco81/catppuccino.nvim'
         use 'luochen1990/rainbow'
+        use({
+          "catppuccin/nvim",
+          as = "catppuccin"
+        })
 
         -- Utils
         use {

@@ -104,9 +104,9 @@ local function catppuccin()
         },
         lsp_trouble = false,
         lsp_saga = false,
-        gitgutter = false,
-        gitsigns = false,
-        telescope = false,
+        gitgutter = true,
+        gitsigns = true,
+        telescope = true,
         nvimtree = {
           enabled = false,
           show_root = false,

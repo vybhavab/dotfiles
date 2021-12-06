@@ -92,6 +92,33 @@ local function init()
         end
     end
 
+
+    local lsp_installer = require("nvim-lsp-installer")
+    lsp_installer.on_server_ready(function(server)
+      local opts = {}
+
+      -- (optional) Customize the options passed to the server
+      -- if server.name == "tsserver" then
+      --     opts.root_dir = function() ... end
+      -- end
+      if server.name == "pyright" then
+        opts.before_init = function(_, config)
+          local p
+          if vim.env.VIRTUAL_ENV then
+            p = lsp_util.path.join(vim.env.VIRTUAL_ENV, "bin", "python3")
+          else
+            p = utils.find_cmd("python3", ".venv/bin", config.root_dir)
+          end
+          config.settings.python.pythonPath = p
+        end
+      end
+
+      opts.capabilities = capabilities
+      opts.on_attach = on_attach
+
+      server:setup(opts)
+    end)
+
     local null_ls = require("null-ls")
 
     local sources = {null_ls.builtins.formatting.eslint_d}

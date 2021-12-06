@@ -135,5 +135,5 @@ local function catppuccin()
 end
 
 return {
-    init = catppuccin
+    init = tokyonight
 }

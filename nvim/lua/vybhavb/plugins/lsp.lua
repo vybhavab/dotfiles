@@ -72,35 +72,10 @@ local on_attach = function (client, bufnr)
     end
 end
 
-local function init()
-    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
-    local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
-    capabilities.textDocument.completion.completionItem.resolveSupport = {
-      properties = {
-        'documentation',
-        'detail',
-        'additionalTextEdits',
-      }
-    }
-
-    local languageServers = {"clangd", "texlab", "graphql"}
-
-    for _, lsp in ipairs(languageServers) do
-        if lspconfig[lsp] then
-            lspconfig[lsp].setup({ capabilities = capabilities, on_attach = on_attach })
-        end
-    end
-
-
+local function lspInstall()
     local lsp_installer = require("nvim-lsp-installer")
     lsp_installer.on_server_ready(function(server)
       local opts = {}
-
-      -- (optional) Customize the options passed to the server
-      -- if server.name == "tsserver" then
-      --     opts.root_dir = function() ... end
-      -- end
       if server.name == "pyright" then
         opts.before_init = function(_, config)
           local p
@@ -119,49 +94,38 @@ local function init()
       server:setup(opts)
     end)
 
-    local null_ls = require("null-ls")
+end
 
-    local sources = {null_ls.builtins.formatting.eslint_d}
-    null_ls.config {sources=sources}
-    require("lspconfig")["null-ls"].setup {
-      on_attach = on_attach
+local function init()
+    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
+    local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.resolveSupport = {
+      properties = {
+        'documentation',
+        'detail',
+        'additionalTextEdits',
+      }
     }
 
-    local ts_utils = require 'vybhavb.plugins.lsp-ts-utils'
+    local languageServers = {"clangd", "eslint","texlab", "graphql"}
+
+    for _, lsp in ipairs(languageServers) do
+        if lspconfig[lsp] then
+            lspconfig[lsp].setup({ capabilities = capabilities, on_attach = on_attach })
+        end
+    end
+
+    lspInstall()
 
     lspconfig.tsserver.setup({
         capabilities = capabilities,
         on_attach = function(client, bufnr)
           client.resolved_capabilities.document_formatting = false
-          ts_utils(client)
           on_attach(client, bufnr)
         end,
         settings = {documentFormatting = false}
     })
-
-    -- Formatting via efm
-    -- local prettier = require "vybhavb.efm.prettier"
-    local eslint = require "vybhavb.efm.eslint"
-
-    local languages = {
-      typescript = {eslint},
-      javascript = {eslint},
-      typescriptreact = {eslint},
-      javascriptreact = {eslint},
-      json = {prettier},
-      html = {prettier},
-      scss = {prettier},
-      css = {prettier},
-      markdown = {prettier},
-    }
-
-    lspconfig.efm.setup {
-      root_dir = lspconfig.util.root_pattern("yarn.lock", "lerna.json", ".git"),
-      filetypes = vim.tbl_keys(languages),
-      init_options = {documentFormatting = false, codeAction = true},
-      settings = {languages = languages, log_level = 1, log_file = '~/efm.log'},
-      on_attach = on_attach
-    }
 
     local opts = {
         highlight_hovered_item = false,

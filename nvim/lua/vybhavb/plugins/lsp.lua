@@ -1,5 +1,4 @@
 local lspconfig = require 'lspconfig'
-local configs = require("lspconfig/configs")
 
 local format_async = function(err, _, result, _, bufnr)
     if err ~= nil or result == nil then return end
@@ -23,6 +22,7 @@ _G.lsp_organize_imports = function()
     }
     vim.lsp.buf.execute_command(params)
 end
+
 
 local on_attach = function (client, bufnr)
     require "lsp_signature".on_attach()
@@ -52,6 +52,7 @@ local on_attach = function (client, bufnr)
     if client.resolved_capabilities.document_range_formatting then
          buf_set_keymap("v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
     end
+
     -- Set autocommands conditional on server_capabilities
     if client.resolved_capabilities.document_highlight then
        vim.api.nvim_exec([[
@@ -67,12 +68,12 @@ local on_attach = function (client, bufnr)
     end
 
     if client.resolved_capabilities.document_formatting then
-       print(string.format("Formatting supported %s", client.name))
-       vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()")
+      print(string.format("Formatting supported %s", client.name))
+      vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()")
     end
 end
 
-local function lspInstall()
+local function lspInstall(capabilities)
     local lsp_installer = require("nvim-lsp-installer")
     lsp_installer.on_server_ready(function(server)
       local opts = {}
@@ -116,7 +117,7 @@ local function init()
         end
     end
 
-    lspInstall()
+    lspInstall(capabilities)
 
     lspconfig.tsserver.setup({
         capabilities = capabilities,

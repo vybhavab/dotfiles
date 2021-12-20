@@ -134,6 +134,16 @@ local function catppuccin()
 
 end
 
+local function ayu()
+  local ayu_theme = require("ayu")
+  ayu_theme.setup({
+    mirage = false,
+    overrides = {}
+  })
+
+  ayu_theme.colorscheme()
+end
+
 return {
-    init = tokyonight
+    init = ayu
 }

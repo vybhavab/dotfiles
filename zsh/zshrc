@@ -24,7 +24,6 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 alias gg="lazygit"
 alias vim="nvim"
 alias vi="nvim"
-alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
 
 if command -v bat 1>/dev/null 2>&1; then
 	alias cat="bat"
@@ -56,6 +55,8 @@ if command -v pyenv 1>/dev/null 2>&1; then
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
+  alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
+
 fi
 
 
@@ -70,4 +71,5 @@ export CPPFLAGS="-I/usr/local/opt/llvm/include"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # things for extra support
-source ~/.dotfiles/zsh/extra.sh
+export DOTFILES="$HOME/.dotfiles"
+[ ! -e "$DOTFILES/zsh/extra.sh" ] || \. "$DOTFILES/zsh/extra.sh"

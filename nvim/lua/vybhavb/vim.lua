@@ -63,7 +63,9 @@ local function set_vim_g()
     vim.g.netrw_browse_split = 0
     vim.g.netrw_banner = 0
     vim.g.netrw_winsize = 25
-    vim.g.netrw_localrmdir = 'rm -r'
+    vim.g.netrw_localrmdir = 'rm -rd'
+    vim.g.copilot_enabled = "false"
+
 end
 
 local function set_vim_o()
@@ -84,7 +86,7 @@ local function set_vim_o()
         incsearch=true,
         scrolloff=10,
         showmode=false,
-        completeopt="menuone,noselect",
+        completeopt="menu,menuone,noselect",
         signcolumn="yes",
         colorcolumn="120",
         encoding="utf8",

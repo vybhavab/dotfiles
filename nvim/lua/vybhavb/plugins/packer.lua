@@ -21,6 +21,7 @@ local function packer_startup()
             'williamboman/nvim-lsp-installer',
             requires = { 'neovim/nvim-lspconfig' }
         }
+        use 'sbdchd/neoformat'
         -- use {
         --     'hrsh7th/nvim-compe',
         --     requires = { 'neovim/nvim-lspconfig' }
@@ -74,8 +75,7 @@ local function packer_startup()
         -- Colors
         use 'folke/tokyonight.nvim'
         use 'Shatur/neovim-ayu'
-        -- use 'yashguptaz/calvera-dark.nvim'
-        -- use 'pocco81/catppuccino.nvim'
+        use 'rebelot/kanagawa.nvim'
         use 'luochen1990/rainbow'
         use({
           "catppuccin/nvim",

@@ -144,6 +144,30 @@ local function ayu()
   ayu_theme.colorscheme()
 end
 
+local function kanagawa()
+  local default_colors = require('kanagawa.colors')
+  require('kanagawa').setup({
+    undercurl = true,
+    commentStyle = "italic",
+    functionStyle = "NONE",
+    keywordStyle = "italic",
+    statementStyle = "bold",
+    typeStyle = "NONE",
+    variablebuiltinStyle = "italic",
+    specialReturn = true,       -- special highlight for the return keyword
+    specialException = true,    -- special highlight for exception handling keywords
+    transparent = false,        -- do not set background color
+    colors = {},
+    overrides = {
+      ColorColumn = {
+        bg = default_colors.bg_dark
+      }
+    }
+  })
+
+  vim.cmd[[colorscheme kanagawa]]
+end
+
 return {
-    init = ayu
+    init = kanagawa
 }

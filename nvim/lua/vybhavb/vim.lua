@@ -64,8 +64,6 @@ local function set_vim_g()
     vim.g.netrw_banner = 0
     vim.g.netrw_winsize = 25
     vim.g.netrw_localrmdir = 'rm -rd'
-    vim.g.copilot_enabled = "false"
-
 end
 
 local function set_vim_o()

@@ -55,10 +55,10 @@ if command -v pyenv 1>/dev/null 2>&1; then
   export PATH="$PYENV_ROOT/bin:$PATH"
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
+  eval "$(pyenv virtualenv-init -)"
   alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
 
 fi
-
 
 
 export PATH="/usr/local/opt/llvm/bin:/usr/local/opt/luajit-openresty/bin:$PATH"

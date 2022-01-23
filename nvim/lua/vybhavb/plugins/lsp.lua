@@ -95,7 +95,7 @@ local function init()
       }
     }
 
-    local languageServers = {"clangd", "eslint","texlab", "graphql"}
+    local languageServers = {"clangd", "eslint","texlab"}
 
     for _, lsp in ipairs(languageServers) do
         if lspconfig[lsp] then

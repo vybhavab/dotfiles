@@ -22,8 +22,6 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 
 #Alias
 alias gg="lazygit"
-alias vim="nvim"
-alias vi="nvim"
 
 if command -v bat 1>/dev/null 2>&1; then
 	alias cat="bat"
@@ -73,3 +71,4 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 # things for extra support
 export DOTFILES="$HOME/.dotfiles"
 [ ! -e "$DOTFILES/zsh/extra.sh" ] || \. "$DOTFILES/zsh/extra.sh"
+export GPG_TTY=$(tty)

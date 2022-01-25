@@ -110,6 +110,7 @@ local function init()
         on_attach = function(client, bufnr)
           on_attach(client, bufnr)
         end,
+        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", ".git") or vim.loop.cwd();
     })
 
     local opts = {

@@ -13,7 +13,7 @@ local function init()
             mappings = {
                 i = {
                     ["<C-q>"] = actions.send_to_qflist,
-        			["<esc>"] = actions.close,
+                    ["<esc>"] = actions.close,
                 },
             },
             file_ignore_patterns = {
@@ -25,6 +25,11 @@ local function init()
                 "**/ios/*",
                 "**/.git/*"
             }
+        },
+        pickers = {
+          lsp_code_actions = {
+            theme="cursor"
+          }
         },
         extensions = {
             fzy_native = {
@@ -47,6 +52,8 @@ local function init()
     map('n','<leader>ph','<CMD>lua require("telescope.builtin").help_tags()<CR>',opts)
     map('n','<leader>fb','<CMD>lua require("telescope.builtin").file_browser()<CR>',opts)
     map('n', '<leader>gwt', '<CMD>lua require("telescope").extensions.git_worktree.git_worktrees()<CR>', opts)
+    map('n', '<leader>lca', '<CMD>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
+    map('v', '<leader>lca', '<CMD>lua require("telescope.builtin").lsp_code_actions()<CR>', opts)
 
 end
 

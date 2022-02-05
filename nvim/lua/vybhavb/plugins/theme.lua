@@ -169,5 +169,5 @@ local function kanagawa()
 end
 
 return {
-    init = kanagawa
+    init = ayu
 }

@@ -67,9 +67,9 @@ local function lspInstall(capabilities)
         opts.before_init = function(_, config)
           local p
           if vim.env.VIRTUAL_ENV then
-            p = lsp_util.path.join(vim.env.VIRTUAL_ENV, "bin", "python3")
+            p = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, "bin", "python3")
           else
-            p = utils.find_cmd("python3", ".venv/bin", config.root_dir)
+            p = lspconfig.util.find_cmd("python3", ".venv/bin", config.root_dir)
           end
           config.settings.python.pythonPath = p
         end
@@ -103,15 +103,15 @@ local function init()
         end
     end
 
-    lspInstall(capabilities)
-
     lspconfig.tsserver.setup({
         capabilities = capabilities,
         on_attach = function(client, bufnr)
           on_attach(client, bufnr)
         end,
-        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", ".git") or vim.loop.cwd();
+        root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", ".git") or vim.loop.cwd()
     })
+
+    lspInstall(capabilities)
 
     local opts = {
         highlight_hovered_item = false,

@@ -63,14 +63,15 @@ if command -v pyenv 1>/dev/null 2>&1; then
 
 fi
 
+# export LDFLAGS="-L/usr/local/opt/llvm/lib"
+# export CPPFLAGS="-I/usr/local/opt/llvm/include"
+# export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
+# export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
 
 export PATH="/usr/local/opt/llvm/bin:/usr/local/opt/luajit-openresty/bin:$PATH"
-
-# path for yarn
 export PATH="$(npm bin -g):$PATH"
-export LDFLAGS="-L/usr/local/opt/llvm/lib"
-export CPPFLAGS="-I/usr/local/opt/llvm/include"
-
+export PATH="/usr/local/opt/openssl@3/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 # things for extra support

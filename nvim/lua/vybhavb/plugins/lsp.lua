@@ -9,7 +9,6 @@ _G.lsp_organize_imports = function()
     vim.lsp.buf.execute_command(params)
 end
 
-
 local on_attach = function (client, bufnr)
     require "lsp_signature".on_attach()
 
@@ -84,7 +83,6 @@ local function lspInstall(capabilities)
 end
 
 local function init()
-    -- local capabilities = vim.lsp.protocol.make_client_capabilities()
     local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
     capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.textDocument.completion.completionItem.resolveSupport = {
@@ -115,7 +113,7 @@ local function init()
 
     local opts = {
         highlight_hovered_item = false,
-        show_guides = true,
+        show_guides = true
     }
 
     require('symbols-outline').setup(opts)

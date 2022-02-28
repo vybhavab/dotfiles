@@ -15,14 +15,14 @@ hyper - l : yabai -m window --warp east
 meh - 1  : yabai -m display --focus 1
 meh - 2  : yabai -m display --focus 2
 meh - 3  : yabai -m display --focus 3
-meh - 4 : yabai -m display --focus 3
+meh - 4 : yabai -m display --focus 4
 
 # send window to monitor and follow focus
 hyper - c  : yabai -m window --display next; yabai -m display --focus next
 hyper - 1  : yabai -m window --display 1; yabai -m display --focus 1
 hyper - 2  : yabai -m window --display 2; yabai -m display --focus 2
 hyper - 3  : yabai -m window --display 3; yabai -m display --focus 3
-hyper - 4  : yabai -m window --display 3; yabai -m display --focus 4
+hyper - 4  : yabai -m window --display 4; yabai -m display --focus 4
 
 # move floating window
 meh - d : yabai -m window --move rel:20:0
@@ -58,4 +58,4 @@ hyper - p : yabai -m window --toggle sticky;\
            yabai -m window --toggle topmost;\
            yabai -m window --toggle pip
 
-meh - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai"
+meh - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai";

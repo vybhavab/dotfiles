@@ -21,6 +21,7 @@ local function init()
 
     -- display
     require 'vybhavb.plugins.theme'.init()
+    require 'vybhavb.plugins.zenmode'.init()
     require 'vybhavb.plugins.lualine'.init()
 
     -- git

@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+YABAI_CERT=yabai-cert sh -c "$(curl -fsSL "https://git.io/update-yabai")" &
 
 # global settings
 yabai -m config mouse_follows_focus          on
@@ -34,4 +35,7 @@ yabai -m rule --add app="^Google Chrome$" title="^Picture in Picture$" sticky=on
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^FaceTime$" manage=off
 
+if [[ $OSTYPE == 'darwin'* ]]; then
+  osascript -e 'display notification "Yabai Config Loaded" with title "yabairc"'
+fi
 echo "yabai configuration loaded.."

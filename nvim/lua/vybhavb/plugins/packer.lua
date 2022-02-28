@@ -74,6 +74,7 @@ local function packer_startup()
 
         -- Colors
         use 'folke/tokyonight.nvim'
+
         use 'Shatur/neovim-ayu'
         use 'rebelot/kanagawa.nvim'
         use 'luochen1990/rainbow'
@@ -88,6 +89,15 @@ local function packer_startup()
             requires = {
                 'nvim-lua/plenary.nvim'
             }
+        }
+
+        use {
+          "folke/zen-mode.nvim",
+          config = function()
+            require("zen-mode").setup {
+              width = 130
+            }
+          end,
         }
 
         use 'hoob3rt/lualine.nvim'

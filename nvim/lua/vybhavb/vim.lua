@@ -47,15 +47,13 @@ local function set_keymaps()
     map('i', '<C-k>', "<esc>:m .-2<CR>==i", options)
     map('n', '<leader>j', ":m .+1<CR>==", options)
     map('n', '<leader>k', ":m .-2<CR>==", options)
-    --map('v','<leader>p' '"_dP',
-    --map('n','<leader>y "+y
-    --map('v','<leader>y "+y
-    --map('n','<leader>Y gg"+yG
+    map('v','<leader>p' '"_dP', options)
+    map('n','<leader>y' '"+y', options)
+    map('v','<leader>y' '"+y', options)
+    map('n','<leader>Y' 'gg"+yG', options)
 
-    --map('n','<leader>d "_d
-    --map('v','<leader>d "_d
-
-
+    map('n','<leader>d' '"_d', options)
+    map('v','<leader>d' '"_d', options)
 end
 
 local function set_vim_g()

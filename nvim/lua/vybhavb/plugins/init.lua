@@ -15,7 +15,6 @@ local function init()
     require 'vybhavb.plugins.telescope'.init()
 
     -- utils
-    -- require 'vybhavb.plugins.floaterm'.init()
     require 'vybhavb.plugins.lazygit'.init()
 
 

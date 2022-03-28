@@ -36,10 +36,10 @@ local function set_keymaps()
 
     map('n','<leader>pv', '<CMD>Ex<CR>',options)
 
-    map('i', ',', ',<c-g>u', options)
-    map('i', '.', '.<c-g>u', options)
-    map('i', '!', '!<c-g>u', options)
-    map('i', '?', '?<c-g>u', options)
+    -- map('i', ',', ',<c-g>u', options)
+    -- map('i', '.', '.<c-g>u', options)
+    -- map('i', '!', '!<c-g>u', options)
+    -- map('i', '?', '?<c-g>u', options)
 
     map('v', 'J', ":m '>+1<CR>gv=gv", options)
     map('v', 'K', ":m '<-2<CR>gv=gv", options)
@@ -47,13 +47,15 @@ local function set_keymaps()
     map('i', '<C-k>', "<esc>:m .-2<CR>==i", options)
     map('n', '<leader>j', ":m .+1<CR>==", options)
     map('n', '<leader>k', ":m .-2<CR>==", options)
-    map('v','<leader>p' '"_dP', options)
-    map('n','<leader>y' '"+y', options)
-    map('v','<leader>y' '"+y', options)
-    map('n','<leader>Y' 'gg"+yG', options)
+    map('v','<leader>p', '"_dP', options)
 
-    map('n','<leader>d' '"_d', options)
-    map('v','<leader>d' '"_d', options)
+    map('n','<leader>y', '"+y', options)
+
+    map('v','<leader>y', '"+y', options)
+    map('n','<leader>Y', 'gg"+yG', options)
+
+    map('n','<leader>d', '"_d', options)
+    map('v','<leader>d', '"_d', options)
 end
 
 local function set_vim_g()
@@ -110,10 +112,15 @@ local function set_vim_wo()
     vim.wo.wrap = false
 end
 
+local function set_vim_b()
+  vim.b.copilot_enabled = false
+end
+
 local function init()
     set_vim_g()
     set_vim_o()
     set_vim_wo()
+    set_vim_b()
     set_keymaps()
     set_augroups()
 end

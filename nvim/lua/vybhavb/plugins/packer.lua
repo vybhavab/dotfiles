@@ -40,7 +40,7 @@ local function packer_startup()
         use 'saadparwaiz1/cmp_luasnip'
         use 'L3MON4D3/LuaSnip'
 
-        use 'github/copilot.vim'
+        --use 'github/copilot.vim'
 
         use {
             'nvim-treesitter/nvim-treesitter',

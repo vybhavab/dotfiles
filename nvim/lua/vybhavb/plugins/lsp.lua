@@ -25,9 +25,9 @@ local on_attach = function (client, bufnr)
     buf_set_keymap('n','<leader>vrn', '<Cmd>lua vim.lsp.buf.rename()<CR>',opts)
     buf_set_keymap('n','<leader>vh', '<Cmd>lua vim.lsp.buf.hover()<CR>',opts)
     buf_set_keymap('n','<leader>vca', '<Cmd>lua vim.lsp.buf.code_action()<CR>',opts)
-    buf_set_keymap('n','<leader>vld','<Cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>',opts)
-    buf_set_keymap('n','<leader>vn','<Cmd>lua vim.lsp.diagnostic.goto_next()<CR>',opts)
-    buf_set_keymap('n','<leader>vN','<Cmd>lua vim.lsp.diagnostic.goto_prev()<CR>',opts)
+    buf_set_keymap('n','<leader>vld','<Cmd>lua vim.diagnostic.show_line_diagnostics()<CR>',opts)
+    buf_set_keymap('n','<leader>vn','<Cmd>lua vim.diagnostic.goto_next()<CR>',opts)
+    buf_set_keymap('n','<leader>vN','<Cmd>lua vim.diagnostic.goto_prev()<CR>',opts)
 
     -- Set some keybinds conditional on server capabilities
     if client.resolved_capabilities.document_formatting then
@@ -84,7 +84,7 @@ end
 
 local function init()
     local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-    capabilities.textDocument.completion.completionItem.snippetSupport = true
+    -- capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.textDocument.completion.completionItem.resolveSupport = {
       properties = {
         'documentation',
@@ -112,7 +112,7 @@ local function init()
     lspInstall(capabilities)
 
     local opts = {
-        highlight_hovered_item = false,
+        highlight_hovered_item = true,
         show_guides = true
     }
 

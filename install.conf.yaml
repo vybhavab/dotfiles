@@ -26,6 +26,9 @@
         path: hyper/hyper.js
     $HOME/.config/alacritty:
         path: alacritty
+    $HOME/.local/bin:
+        glob: true
+        path: scripts/*
     $HOME/spicetify_data/config.ini:
         if: '[ `uname` = Darwin ]'
         path: spicetify_data/config.ini
@@ -59,15 +62,36 @@
     - homebrew/cask-versions
     - koekeishiya/formulae
 
-- brew: [curl, git, lazygit, openjdk, pyenv, git-lfs, autojump, htop, tmux, yabai, zsh, gdb, llvm, neovim, skhd, cmake]
+- brew:
+    - curl
+    - wget
+    - lazygit
+    - openjdk
+    - git-lfs
+    - autojump
+    - htop
+    - tmux
+    - yabai
+    - zsh
+    - gdb
+    - llvm
+    - neovim --HEAD
+    - skhd
+    - cmake
+    - asdf
+    - fzf
+    - bat
+    - gpg
+    - gawk
 
-- cask: [alfred, brave-browser, slack, private-internet-access, keybase, font-fira-code]
+- cask: [brave-browser, slack, private-internet-access, keybase, font-fira-code, discord, iterm2, telegram, raycast, notion]
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
-    - [/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", Installing BREW]
     - [sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)", Installing OMZ]
     - [chsh -s $(which zsh), Making ZSH default]
     - [git clone https://github.com/zdharma/fast-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/fast-syntax-highlighting, Installing FSH]
     - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions, Installing ZSH Auto]
+    - [git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim, Installing Packer]
     - [git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm, Adding TPM]
+    - [/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", Installing BREW]

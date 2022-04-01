@@ -39,28 +39,13 @@ fi
 #FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 ## Extra Functions
 mkcdir(){
   mkdir -p -- "$1" &&
     cd -P -- "$1"
 }
 
-#
-# adding pyenv to manage python environments
-if command -v pyenv 1>/dev/null 2>&1; then
-
-  export PYENV_ROOT="$HOME/.pyenv"
-  export PATH="$PYENV_ROOT/bin:$PATH"
-  eval "$(pyenv init --path)"
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-  alias brew='env PATH="${PATH//$(pyenv root)\/shims:/}" brew'
-
-fi
+. /usr/local/opt/asdf/libexec/asdf.sh
 
 # export LDFLAGS="-L/usr/local/opt/llvm/lib"
 # export CPPFLAGS="-I/usr/local/opt/llvm/include"
@@ -80,4 +65,3 @@ export GPG_TTY=$(tty)
 
 # Fig post block. Keep at the bottom of this file.
 eval "$(fig init zsh post)"
-

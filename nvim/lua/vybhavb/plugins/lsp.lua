@@ -51,29 +51,12 @@ local on_attach = function (client, bufnr)
          augroup END
        ]], false)
     end
-
-    if client.resolved_capabilities.document_formatting then
-      print(string.format("Formatting supported %s", client.name))
-      vim.cmd("autocmd BufWritePost <buffer> lua vim.lsp.buf.formatting()")
-    end
 end
 
 local function lspInstall(capabilities)
     local lsp_installer = require("nvim-lsp-installer")
     lsp_installer.on_server_ready(function(server)
       local opts = {}
-      if server.name == "pyright" then
-        opts.before_init = function(_, config)
-          local p
-          if vim.env.VIRTUAL_ENV then
-            p = lspconfig.util.path.join(vim.env.VIRTUAL_ENV, "bin", "python3")
-          else
-            p = lspconfig.util.find_cmd("python3", ".venv/bin", config.root_dir)
-          end
-          config.settings.python.pythonPath = p
-        end
-      end
-
       opts.capabilities = capabilities
       opts.on_attach = on_attach
 
@@ -84,7 +67,7 @@ end
 
 local function init()
     local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-    -- capabilities.textDocument.completion.completionItem.snippetSupport = true
+    capabilities.textDocument.completion.completionItem.snippetSupport = true
     capabilities.textDocument.completion.completionItem.resolveSupport = {
       properties = {
         'documentation',
@@ -93,17 +76,31 @@ local function init()
       }
     }
 
-    local languageServers = {"clangd", "eslint","texlab"}
+    lspconfig.clangd.setup({ capabilities = capabilities, on_attach = on_attach })
 
-    for _, lsp in ipairs(languageServers) do
-        if lspconfig[lsp] then
-            lspconfig[lsp].setup({ capabilities = capabilities, on_attach = on_attach })
-        end
-    end
+    lspconfig.eslint.setup({
+      capabilities = capabilities,
+      on_attach = function(client, bufnr)
+        client.resolved_capabilities.document_formatting = true
+        vim.api.nvim_exec([[
+          augroup eslint_fix_all_lsp
+            autocmd!
+            autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
+          augroup END
+        ]], false)
+        on_attach(client, bufnr)
+      end,
+    })
+
+    lspconfig.texlab.setup({ capabilities = capabilities, on_attach = on_attach })
+
+    lspconfig.pyright.setup({ capabilities = capabilities, on_attach = on_attach })
+
 
     lspconfig.tsserver.setup({
         capabilities = capabilities,
         on_attach = function(client, bufnr)
+          client.resolved_capabilities.document_formatting = false
           on_attach(client, bufnr)
         end,
         root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", ".git") or vim.loop.cwd()

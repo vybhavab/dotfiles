@@ -84,7 +84,7 @@
     - gpg
     - gawk
 
-- cask: [brave-browser, slack, private-internet-access, keybase, font-fira-code, discord, iterm2, telegram, raycast, notion]
+- cask: [brave-browser, slack, private-internet-access, keybase, font-fira-code, discord, iterm2, telegram, raycast, notion, megasync, alt-tab]
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

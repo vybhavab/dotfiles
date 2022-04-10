@@ -144,6 +144,18 @@ local function packer_startup()
           run = function() vim.fn['firenvim#install'](0) end
         }
 
+        -- Debugging
+        use {
+          'mfussenegger/nvim-dap'
+        }
+
+        use {
+          "rcarriga/nvim-dap-ui",
+          requires = {
+            "mfussenegger/nvim-dap"
+          }
+        }
+
     end)
 end
 

@@ -26,6 +26,9 @@ local function init()
     -- git
     require 'vybhavb.plugins.gitsigns'.init()
 
+    -- debugger
+    require 'vybhavb.plugins.debugger'.init()
+
 end
 
 return {

@@ -1,0 +1,47 @@
+case "$OSTYPE" in
+  darwin*)
+  ;;
+  linux*)
+	export PATH="$HOME/neovim/bin:$PATH"
+  ;;
+esac
+
+export MANPATH="/usr/local/man:$MANPATH"
+
+# SSH Keys
+export SSH_KEY_PATH="~/.ssh/id_rsa"
+
+#Alias
+alias gg="lazygit"
+
+if command -v bat 1>/dev/null 2>&1; then
+	alias cat="bat"
+fi
+
+autoload -Uz compinit && compinit
+
+if command -v kitty 1>/dev/null 2>&1; then
+	eval "kitty + complete setup zsh | source /dev/stdin"
+fi
+
+#FZF
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+## Extra Functions
+mkcdir(){
+  mkdir -p -- "$1" &&
+    cd -P -- "$1"
+}
+
+# export LDFLAGS="-L/usr/local/opt/llvm/lib"
+# export CPPFLAGS="-I/usr/local/opt/llvm/include"
+# export LDFLAGS="-L/usr/local/opt/openssl@3/lib"
+# export CPPFLAGS="-I/usr/local/opt/openssl@3/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl@3/lib/pkgconfig"
+
+export PATH="/usr/local/opt/llvm/bin:/usr/local/opt/luajit-openresty/bin:$PATH"
+export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="$(npm bin -g):$PATH"
+export PATH="/usr/local/opt/openssl@3/bin:$PATH"
+
+bindkey -s ^f "tmux-sessionizer\n"

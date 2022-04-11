@@ -22,6 +22,8 @@
         path: kitty
     $HOME/.zshrc:
         path: zsh/zshrc
+    $HOME/.zsh_profile:
+        path: zsh/zsh_profile
     $HOME/.hyper.js:
         path: hyper/hyper.js
     $HOME/.config/alacritty:

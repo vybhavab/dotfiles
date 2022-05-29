@@ -30,16 +30,16 @@ local on_attach = function (client, bufnr)
     buf_set_keymap('n','<leader>vN','<Cmd>lua vim.diagnostic.goto_prev()<CR>',opts)
 
     -- Set some keybinds conditional on server capabilities
-    if client.resolved_capabilities.document_formatting then
+    if client.server_capabilities.document_formatting then
          buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
     end
 
-    if client.resolved_capabilities.document_range_formatting then
+    if client.server_capabilities.document_range_formatting then
          buf_set_keymap("v", "<space>f", "<cmd>lua vim.lsp.buf.range_formatting()<CR>", opts)
     end
 
     -- Set autocommands conditional on server_capabilities
-    if client.resolved_capabilities.document_highlight then
+    if client.server_capabilities.document_highlight then
        vim.api.nvim_exec([[
          hi LspReferenceRead cterm=bold ctermbg=red guibg=LightYellow
          hi LspReferenceText cterm=bold ctermbg=red guibg=LightYellow
@@ -81,7 +81,7 @@ local function init()
     lspconfig.eslint.setup({
       capabilities = capabilities,
       on_attach = function(client, bufnr)
-        client.resolved_capabilities.document_formatting = true
+        client.server_capabilities.document_formatting = true
         vim.api.nvim_exec([[
           augroup eslint_fix_all_lsp
             autocmd!
@@ -100,10 +100,15 @@ local function init()
     lspconfig.tsserver.setup({
         capabilities = capabilities,
         on_attach = function(client, bufnr)
-          client.resolved_capabilities.document_formatting = false
+          client.server_capabilities.document_formatting = false
           on_attach(client, bufnr)
         end,
         root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", ".git") or vim.loop.cwd()
+    })
+
+    lspconfig.tailwindcss.setup({
+      capabilities = capabilities,
+      on_attach = on_attach
     })
 
     lspInstall(capabilities)

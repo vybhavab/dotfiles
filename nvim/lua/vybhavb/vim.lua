@@ -36,11 +36,6 @@ local function set_keymaps()
 
     map('n','<leader>pv', '<CMD>Ex<CR>',options)
 
-    -- map('i', ',', ',<c-g>u', options)
-    -- map('i', '.', '.<c-g>u', options)
-    -- map('i', '!', '!<c-g>u', options)
-    -- map('i', '?', '?<c-g>u', options)
-
     map('v', 'J', ":m '>+1<CR>gv=gv", options)
     map('v', 'K', ":m '<-2<CR>gv=gv", options)
     map('i', '<C-j>', "<esc>:m .+1<CR>==i", options)

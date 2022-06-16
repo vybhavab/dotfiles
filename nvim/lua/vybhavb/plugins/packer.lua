@@ -132,30 +132,33 @@ local function packer_startup()
         }
 
         use {
-          'ray-x/lsp_signature.nvim',
+            'ray-x/lsp_signature.nvim',
         }
 
         use {
-          'lazytanuki/nvim-mapper',
+            'lazytanuki/nvim-mapper',
         }
 
         use {
-          'glacambre/firenvim',
-          run = function() vim.fn['firenvim#install'](0) end
+            'glacambre/firenvim',
+            run = function() vim.fn['firenvim#install'](0) end
         }
 
         -- Debugging
         use {
-          'mfussenegger/nvim-dap'
+            'mfussenegger/nvim-dap'
         }
 
         use {
-          "rcarriga/nvim-dap-ui",
-          requires = {
-            "mfussenegger/nvim-dap"
-          }
+            "rcarriga/nvim-dap-ui",
+            requires = {
+              "mfussenegger/nvim-dap"
+            }
         }
 
+        use {
+            "mbbill/undotree"
+        }
     end)
 end
 

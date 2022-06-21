@@ -1,61 +1,61 @@
 # focus window
-meh - h : yabai -m window --focus west
-meh - j : yabai -m window --focus south
-meh - k : yabai -m window --focus north
-meh - l : yabai -m window --focus east
+ctrl + alt - h : yabai -m window --focus west
+ctrl + alt - j : yabai -m window --focus south
+ctrl + alt - k : yabai -m window --focus north
+ctrl + alt - l : yabai -m window --focus east
 
 # move managed window
-hyper - h : yabai -m window --warp west
-hyper - j : yabai -m window --warp south
-hyper - k : yabai -m window --warp north
-hyper - l : yabai -m window --warp east
+cmd + ctrl + alt - h : yabai -m window --warp west
+cmd + ctrl + alt - j : yabai -m window --warp south
+cmd + ctrl + alt - k : yabai -m window --warp north
+cmd + ctrl + alt - l : yabai -m window --warp east
 
 # focus monitor
 #ctrl + alt - z  : yabai -m display --focus prev
-meh - 1  : yabai -m display --focus 1
-meh - 2  : yabai -m display --focus 2
-meh - 3  : yabai -m display --focus 3
-meh - 4 : yabai -m display --focus 4
+ctrl + alt - 1  : yabai -m display --focus 1
+ctrl + alt - 2  : yabai -m display --focus 2
+ctrl + alt - 3  : yabai -m display --focus 3
+ctrl + alt - 4 : yabai -m display --focus 4
 
 # send window to monitor and follow focus
-hyper - c  : yabai -m window --display next; yabai -m display --focus next
-hyper - 1  : yabai -m window --display 1; yabai -m display --focus 1
-hyper - 2  : yabai -m window --display 2; yabai -m display --focus 2
-hyper - 3  : yabai -m window --display 3; yabai -m display --focus 3
-hyper - 4  : yabai -m window --display 4; yabai -m display --focus 4
+cmd + ctrl + alt - c  : yabai -m window --display next; yabai -m display --focus next
+cmd + ctrl + alt - 1  : yabai -m window --display 1; yabai -m display --focus 1
+cmd + ctrl + alt - 2  : yabai -m window --display 2; yabai -m display --focus 2
+cmd + ctrl + alt - 3  : yabai -m window --display 3; yabai -m display --focus 3
+cmd + ctrl + alt - 4  : yabai -m window --display 4; yabai -m display --focus 4
 
 # move floating window
-meh - d : yabai -m window --move rel:20:0
-meh - a : yabai -m window --move rel:-20:0
-meh - w : yabai -m window --move rel:0:-20
-meh - s : yabai -m window --move rel:0:20
+ctrl + alt - d : yabai -m window --move rel:20:0
+ctrl + alt - a : yabai -m window --move rel:-20:0
+ctrl + alt - w : yabai -m window --move rel:0:-20
+ctrl + alt - s : yabai -m window --move rel:0:20
 
 # increase window size
-hyper - a : yabai -m window --resize left:-20:0
-hyper - w : yabai -m window --resize top:0:-20
-hyper - s : yabai -m window --resize bottom:0:20
-hyper - d : yabai -m window --resize right:20:0
+cmd + ctrl + alt - a : yabai -m window --resize left:-20:0
+cmd + ctrl + alt - w : yabai -m window --resize top:0:-20
+cmd + ctrl + alt - s : yabai -m window --resize bottom:0:20
+cmd + ctrl + alt - d : yabai -m window --resize right:20:0
 
 # decrease window size
-meh - s : yabai -m window --resize bottom:0:-20
-meh - w : yabai -m window --resize top:0:20
-meh - a : yabai -m window --resize left:20:0
-meh - d : yabai -m window --resize right:-20:0
+ctrl + alt - s : yabai -m window --resize bottom:0:-20
+ctrl + alt - w : yabai -m window --resize top:0:20
+ctrl + alt - a : yabai -m window --resize left:20:0
+ctrl + alt - d : yabai -m window --resize right:-20:0
 
 # toggle window zoom
-hyper - d : yabai -m window --toggle zoom-parent
-hyper - f : yabai -m window --toggle zoom-fullscreen
+cmd + ctrl + alt - d : yabai -m window --toggle zoom-parent
+cmd + ctrl + alt - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window split type
-hyper - e : yabai -m window --toggle split
+cmd + ctrl + alt - e : yabai -m window --toggle split
 
 # float / unfloat window and center on screen
-hyper - t : yabai -m window --toggle float;\
+cmd + ctrl + alt - t : yabai -m window --toggle float;\
 	   yabai -m window --grid 4:4:1:1:2:2
 
 # toggle sticky(+float), topmost, picture-in-picture
-hyper - p : yabai -m window --toggle sticky;\
+cmd + ctrl + alt - p : yabai -m window --toggle sticky;\
            yabai -m window --toggle topmost;\
            yabai -m window --toggle pip
 
-meh - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai";
+ctrl + alt - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai";

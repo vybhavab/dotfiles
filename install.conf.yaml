@@ -31,6 +31,8 @@
     $HOME/.local/bin:
         glob: true
         path: scripts/*
+    $HOME/.default-npm-packages:
+        path: asdf/default-npm-packages
     $HOME/spicetify_data/config.ini:
         if: '[ `uname` = Darwin ]'
         path: spicetify_data/config.ini

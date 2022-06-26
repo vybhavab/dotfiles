@@ -5,10 +5,10 @@ ctrl + alt - k : yabai -m window --focus north
 ctrl + alt - l : yabai -m window --focus east
 
 # move managed window
-cmd + ctrl + alt - h : yabai -m window --warp west
-cmd + ctrl + alt - j : yabai -m window --warp south
-cmd + ctrl + alt - k : yabai -m window --warp north
-cmd + ctrl + alt - l : yabai -m window --warp east
+hyper - h : yabai -m window --warp west
+hyper - j : yabai -m window --warp south
+hyper - k : yabai -m window --warp north
+hyper - l : yabai -m window --warp east
 
 # focus monitor
 #ctrl + alt - z  : yabai -m display --focus prev
@@ -25,37 +25,37 @@ cmd + ctrl + alt - 3  : yabai -m window --display 3; yabai -m display --focus 3
 cmd + ctrl + alt - 4  : yabai -m window --display 4; yabai -m display --focus 4
 
 # move floating window
-ctrl + alt - d : yabai -m window --move rel:20:0
-ctrl + alt - a : yabai -m window --move rel:-20:0
-ctrl + alt - w : yabai -m window --move rel:0:-20
-ctrl + alt - s : yabai -m window --move rel:0:20
+meh - d : yabai -m window --move rel:20:0
+meh - a : yabai -m window --move rel:-20:0
+meh - w : yabai -m window --move rel:0:-20
+meh - s : yabai -m window --move rel:0:20
 
 # increase window size
-cmd + ctrl + alt - a : yabai -m window --resize left:-20:0
-cmd + ctrl + alt - w : yabai -m window --resize top:0:-20
-cmd + ctrl + alt - s : yabai -m window --resize bottom:0:20
-cmd + ctrl + alt - d : yabai -m window --resize right:20:0
+hyper - a : yabai -m window --resize left:-20:0
+hyper - w : yabai -m window --resize top:0:-20
+hyper - s : yabai -m window --resize bottom:0:20
+hyper - d : yabai -m window --resize right:20:0
 
 # decrease window size
-ctrl + alt - s : yabai -m window --resize bottom:0:-20
-ctrl + alt - w : yabai -m window --resize top:0:20
-ctrl + alt - a : yabai -m window --resize left:20:0
-ctrl + alt - d : yabai -m window --resize right:-20:0
+meh - s : yabai -m window --resize bottom:0:-20
+meh - w : yabai -m window --resize top:0:20
+meh - a : yabai -m window --resize left:20:0
+meh - d : yabai -m window --resize right:-20:0
 
 # toggle window zoom
-cmd + ctrl + alt - d : yabai -m window --toggle zoom-parent
-cmd + ctrl + alt - f : yabai -m window --toggle zoom-fullscreen
+hyper - d : yabai -m window --toggle zoom-parent
+hyper - f : yabai -m window --toggle zoom-fullscreen
 
 # toggle window split type
-cmd + ctrl + alt - e : yabai -m window --toggle split
+hyper - e : yabai -m window --toggle split
 
 # float / unfloat window and center on screen
-cmd + ctrl + alt - t : yabai -m window --toggle float;\
+hyper - t : yabai -m window --toggle float;\
 	   yabai -m window --grid 4:4:1:1:2:2
 
 # toggle sticky(+float), topmost, picture-in-picture
-cmd + ctrl + alt - p : yabai -m window --toggle sticky;\
+hyper - p : yabai -m window --toggle sticky;\
            yabai -m window --toggle topmost;\
            yabai -m window --toggle pip
 
-ctrl + alt - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai";
+meh - r : launchctl kickstart -k "gui/${UID}/homebrew.mxcl.yabai";

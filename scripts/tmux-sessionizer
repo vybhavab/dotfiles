@@ -12,13 +12,11 @@ fi
 
 selected_name=$(basename "$selected" | tr . _)
 
-selected_name_t=${selected_name:0:8}
-
 if [[ -n $TMUX ]]; then
-  tmux switch-client -t "$selected_name_t" \
-  || tmux new-session -ds "$selected_name_t" -c "$selected" \
-  && tmux switch-client -t "$selected_name_t"
+  tmux switch-client -t "$selected_name" \
+  || tmux new-session -ds "$selected_name" -c "$selected" \
+  && tmux switch-client -t "$selected_name"
 elif [[ -z $TMUX ]]; then
-  tmux new-session -s "$selected_name_t" -c "$selected" \
-  || tmux attach -t "$selected_name_t"
+  tmux new-session -s "$selected_name" -c "$selected" \
+  || tmux attach -t "$selected_name"
 fi

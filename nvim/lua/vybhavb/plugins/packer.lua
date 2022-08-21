@@ -33,15 +33,41 @@ local function packer_startup()
         use {
           'tzachar/cmp-tabnine',
           run='./install.sh',
-          requires = 'hrsh7th/nvim-cmp'
+          requires = {
+            'hrsh7th/nvim-cmp'
+          }
+        }
+
+
+        use 'github/copilot.vim'
+
+        use {
+          'zbirenbaum/copilot-cmp',
+          module = "copilot_cmp",
+          requires = {
+            'hrsh7th/nvim-cmp',
+            'zbirenbaum/copilot.lua'
+          }
+        }
+
+        use {
+          'zbirenbaum/copilot.lua',
+          event = {"VimEnter"},
+          config = function()
+            vim.defer_fn(function()
+              require("copilot").setup()
+            end, 100)
+          end,
+          requires = {
+            'hrsh7th/nvim-cmp',
+            'github/copilot.vim'
+          }
         }
 
         use 'onsails/lspkind-nvim'
 
         use 'saadparwaiz1/cmp_luasnip'
         use 'L3MON4D3/LuaSnip'
-
-        --use 'github/copilot.vim'
 
         use {
             'nvim-treesitter/nvim-treesitter',

@@ -29,6 +29,9 @@ local function init()
     -- debugger
     require 'vybhavb.plugins.debugger'.init()
 
+    --undotree
+    require 'vybhavb.plugins.undotree'.init()
+
 end
 
 return {

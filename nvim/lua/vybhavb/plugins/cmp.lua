@@ -37,6 +37,38 @@ local function init(...)
           fallback()
         end
       end),
+      ['<C-n>'] = cmp.mapping({
+        c = function()
+            if cmp.visible() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+            else
+                vim.api.nvim_feedkeys(t('<Down>'), 'n', true)
+            end
+        end,
+        i = function(fallback)
+            if cmp.visible() then
+                cmp.select_next_item({ behavior = cmp.SelectBehavior.Select })
+            else
+                fallback()
+            end
+        end
+        }),
+      ['<C-p>'] = cmp.mapping({
+        c = function()
+          if cmp.visible() then
+              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+          else
+              vim.api.nvim_feedkeys(t('<Up>'), 'n', true)
+          end
+        end,
+        i = function(fallback)
+          if cmp.visible() then
+              cmp.select_prev_item({ behavior = cmp.SelectBehavior.Select })
+          else
+              fallback()
+          end
+        end
+      }),
     }),
     formatting = {
       format = lspkind.cmp_format({

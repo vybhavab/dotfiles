@@ -128,7 +128,12 @@ local function packer_startup()
         }
 
         use 'hoob3rt/lualine.nvim'
-        use 'romgrk/nvim-treesitter-context'
+        use {
+          'nvim-treesitter/nvim-treesitter-context',
+          requires = {
+            'nvim-treesitter/nvim-treesitter',
+          }
+        }
         use 'kyazdani42/nvim-web-devicons'
         use 'simrat39/symbols-outline.nvim'
 

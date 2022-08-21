@@ -11,7 +11,7 @@ local function init(...)
     buffer = "[Buffer]",
     nvim_lsp = "[LSP]",
     nvim_lua = "[Lua]",
-    -- cmp_tabnine = "[TN]",
+    cmp_tabnine = "[TN]",
     Copilot = "",
     path = "[Path]",
   }
@@ -67,12 +67,15 @@ local function init(...)
       format = lspkind.cmp_format({
         mode = "symbol",
         max_width = 50,
-        symbol_map = { Copilot = "" }
+        symbol_map = {
+          Copilot = "",
+          cmp_tabnine = "[TN]"
+        }
       })
     },
     sources = cmp.config.sources({
       { name = "copilot", group_index = 2 },
-      -- { name = "cmp_tabnine" , group_index = 2 },
+      { name = "cmp_tabnine" , group_index = 2 },
       { name = 'nvim_lsp' , group_index = 2 },
       { name = 'path', group_index = 2 },
       { name = 'luasnip' , group_index = 2 }, -- For luasnip users.

@@ -12,7 +12,7 @@ local function init(...)
     nvim_lsp = "[LSP]",
     nvim_lua = "[Lua]",
     cmp_tabnine = "[TN]",
-    copilot = "[CP]",
+    -- copilot = "[CP]",
     path = "[Path]",
   }
 
@@ -73,18 +73,18 @@ local function init(...)
           end
           vim_item.kind = ""
         end
-        if entry.source.name == "copilot" then
-          if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
-            menu = entry.completion_item.data.detail .. " " .. menu
-          end
-          vim_item.kind = ""
-        end
+        -- if entry.source.name == "copilot" then
+        --   if entry.completion_item.data ~= nil and entry.completion_item.data.detail ~= nil then
+        --     menu = entry.completion_item.data.detail .. " " .. menu
+        --   end
+        --   vim_item.kind = ""
+        -- end
         vim_item.menu = menu
         return vim_item
       end,
     },
     sources = cmp.config.sources({
-      { name = "copilot", group_index = 2 },
+--      { name = "copilot", group_index = 2 },
       { name = "cmp_tabnine" , group_index = 2 },
       { name = 'nvim_lsp' , group_index = 2 },
       { name = 'path', group_index = 2 },

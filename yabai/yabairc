@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
-YABAI_CERT=yabai-cert sh -c "$(curl -fsSL "https://git.io/update-yabai")" &
+# YABAI_CERT=yabai-cert sh -c "$(curl -fsSL "https://git.io/update-yabai")" &
 
 # global settings
 yabai -m config mouse_follows_focus          on

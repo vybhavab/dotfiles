@@ -76,7 +76,13 @@ local function init()
       }
     }
 
-    lspconfig.clangd.setup({ capabilities = capabilities, on_attach = on_attach })
+    local clangd_capabilities = capabilities;
+    clangd_capabilities.offsetEncoding = "utf-8"
+
+    lspconfig.clangd.setup({
+      capabilities = clangd_capabilities,
+      on_attach = on_attach
+  })
 
     lspconfig.eslint.setup({
       capabilities = capabilities,

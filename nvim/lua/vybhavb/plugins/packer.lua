@@ -39,30 +39,30 @@ local function packer_startup()
         }
 
 
-        use 'github/copilot.vim'
+        -- use 'github/copilot.vim'
 
-        use {
-          'zbirenbaum/copilot-cmp',
-          module = "copilot_cmp",
-          requires = {
-            'hrsh7th/nvim-cmp',
-            'zbirenbaum/copilot.lua'
-          }
-        }
+        -- use {
+        --   'zbirenbaum/copilot-cmp',
+        --   module = "copilot_cmp",
+        --   requires = {
+        --     'hrsh7th/nvim-cmp',
+        --     'zbirenbaum/copilot.lua'
+        --   }
+        -- }
 
-        use {
-          'zbirenbaum/copilot.lua',
-          event = {"VimEnter"},
-          config = function()
-            vim.defer_fn(function()
-              require("copilot").setup()
-            end, 100)
-          end,
-          requires = {
-            'hrsh7th/nvim-cmp',
-            'github/copilot.vim'
-          }
-        }
+        -- use {
+        --   'zbirenbaum/copilot.lua',
+        --   event = {"VimEnter"},
+        --   config = function()
+        --     vim.defer_fn(function()
+        --       require("copilot").setup()
+        --     end, 100)
+        --   end,
+        --   requires = {
+        --     'hrsh7th/nvim-cmp',
+        --     'github/copilot.vim'
+        --   }
+        -- }
 
         use 'onsails/lspkind-nvim'
 

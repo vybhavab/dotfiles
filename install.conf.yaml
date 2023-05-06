@@ -33,6 +33,8 @@
         path: scripts/*
     $HOME/.default-npm-packages:
         path: asdf/default-npm-packages
+    $HOME/.config/callibella/config.json:
+        path: callibella/config.json
     $HOME/spicetify_data/config.ini:
         if: '[ `uname` = Darwin ]'
         path: spicetify_data/config.ini

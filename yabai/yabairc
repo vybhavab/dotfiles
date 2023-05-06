@@ -34,6 +34,7 @@ yabai -m config window_gap                   5
 yabai -m rule --add app="^Google Chrome$" title="^Picture in Picture$" sticky=on
 yabai -m rule --add app="^System Preferences$" manage=off
 yabai -m rule --add app="^FaceTime$" manage=off
+yabai -m rule --add app="^ChatGPT$" manage=off
 
 if [[ $OSTYPE == 'darwin'* ]]; then
   osascript -e 'display notification "Yabai Config Loaded" with title "yabairc"'

@@ -1,3 +1,7 @@
+local hl = function(thing, opts)
+    vim.api.nvim_set_hl(0, thing, opts)
+end
+
 local function calvera()
 
   vim.g.calvera_italic_keywords = false

@@ -15,7 +15,6 @@ end
 return require('packer').startup(function(use)
 	use 'wbthomason/packer.nvim'
 
-
 	use {
 		'nvim-telescope/telescope.nvim',
 		requires = { {'nvim-lua/plenary.nvim'} }
@@ -57,7 +56,7 @@ return require('packer').startup(function(use)
 		"folke/trouble.nvim",
 		config = function()
 			require("trouble").setup {
-				icons = false,
+				icons = true,
 				-- your configuration comes here
 				-- or leave it empty to use the default settings
 				-- refer to the configuration section below
@@ -95,9 +94,6 @@ return require('packer').startup(function(use)
 			{'saadparwaiz1/cmp_luasnip'},
 			{'hrsh7th/cmp-nvim-lsp'},
 			{'hrsh7th/cmp-nvim-lua'},
-			{'zbirenbaum/copilot-cmp'},
-			{'zbirenbaum/copilot.lua'},
-			{'github/copilot.vim'},
 
 			-- Snippets
 			{'L3MON4D3/LuaSnip'},
@@ -105,9 +101,28 @@ return require('packer').startup(function(use)
 		}
 	}
 
+  use {
+    "zbirenbaum/copilot.lua",
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({
+        suggestion = {enabled = false},
+        panel = {enabled = false}
+      })
+    end,
+  }
+
+  use {
+    "zbirenbaum/copilot-cmp",
+    after = { "copilot.lua" },
+    config = function ()
+      require("copilot_cmp").setup()
+    end
+  }
+
 	use 'sbdchd/neoformat'
 	use("folke/zen-mode.nvim")
-	use("github/copilot.vim")
 
 	use 'kyazdani42/nvim-web-devicons'
 	use 'kdheepak/lazygit.nvim'
@@ -115,7 +130,9 @@ return require('packer').startup(function(use)
 	use {
 		'lewis6991/gitsigns.nvim',
         config = function()
-            require('gitsigns').setup()
+            require('gitsigns').setup({
+              current_line_blame = true,
+            })
         end,
 		requires = {
 			'nvim-lua/plenary.nvim'

@@ -35,7 +35,7 @@ local function tokyonight()
 
     hl("ColorColumn", {
         ctermbg = 0,
-        bg = "#555555",
+        bg = "#2B79A0",
     })
 
     hl("CursorLineNR", {

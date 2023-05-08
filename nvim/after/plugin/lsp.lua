@@ -1,3 +1,4 @@
+local lsp_formatting_augroup = vim.api.nvim_create_augroup('LspFormatting', {})
 local lsp = require("lsp-zero")
 
 lsp.preset({
@@ -39,6 +40,18 @@ cmp.setup({
 
 lsp.on_attach(function(client, bufnr)
     local opts = {buffer = bufnr, remap = false}
+
+    vim.api.nvim_create_autocmd('BufWritePre', {
+      group = lsp_formatting_augroup,
+      pattern = "*.tsx,*.ts,*.jsx,*.js",
+      callback = function()
+        vim.lsp.buf.format()
+        vim.cmd[[EslintFixAll]]
+        filter = function(c)
+          return c.name == "eslint"
+        end
+      end,
+    })
 
     vim.keymap.set("n", "vd", function() vim.lsp.buf.definition() end, opts)
     vim.keymap.set('n', 'vD', function() vim.lsp.buf.declaration() end, opts)

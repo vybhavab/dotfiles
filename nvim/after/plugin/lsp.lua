@@ -38,20 +38,25 @@ cmp.setup({
   }
 })
 
+local function lsp_format_onsave(bufnr)
+  vim.api.nvim_clear_autocmds({group = augroup, buffer = bufnr})
+  vim.api.nvim_create_autocmd('BufWritePre', {
+    group = lsp_formatting_augroup,
+    -- buffer = bufnr, -- cannot use both pattern and bufnr
+    pattern = "*.tsx,*.ts,*.jsx,*.js",
+    callback = function()
+      vim.cmd[[EslintFixAll]]
+      filter = function(c)
+        return c.name == "eslint"
+      end
+    end,
+  })
+end
+
 lsp.on_attach(function(client, bufnr)
     local opts = {buffer = bufnr, remap = false}
 
-    vim.api.nvim_create_autocmd('BufWritePre', {
-      group = lsp_formatting_augroup,
-      pattern = "*.tsx,*.ts,*.jsx,*.js",
-      callback = function()
-        vim.lsp.buf.format()
-        vim.cmd[[EslintFixAll]]
-        filter = function(c)
-          return c.name == "eslint"
-        end
-      end,
-    })
+    lsp_format_onsave(bufnr)
 
     vim.keymap.set("n", "vd", function() vim.lsp.buf.definition() end, opts)
     vim.keymap.set('n', 'vD', function() vim.lsp.buf.declaration() end, opts)

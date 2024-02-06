@@ -44,6 +44,7 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="$(npm bin -g):$PATH"
 export PATH="/usr/local/opt/openssl@3/bin:$PATH"
 export PATH="${PATH}:${HOME}/.local/bin"
+export PATH="/usr/local/opt/openjdk/bin:$PATH"
 
 bindkey -s ^f "tmux-sessionizer\n"
 export EDITOR="nvim"

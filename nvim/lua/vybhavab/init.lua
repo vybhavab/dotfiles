@@ -2,7 +2,6 @@ require("vybhavab.sets")
 require("vybhavab.remap")
 require("vybhavab.lazy_init")
 
-
 local augroup = vim.api.nvim_create_augroup
 local VybhavABGroup = augroup('VybhavAB', {})
 
@@ -24,12 +23,6 @@ autocmd('TextYankPost', {
     end,
 })
 
-autocmd({"BufWritePre"}, {
-    group = VybhavABGroup,
-    pattern = "*",
-    command = [[%s/\s\+$//e]],
-})
-
 autocmd('LspAttach', {
   group = VybhavABGroup,
   callback = function(e)
@@ -47,6 +40,19 @@ autocmd('LspAttach', {
     vim.keymap.set("n", "<leader>vrr", function() vim.lsp.buf.references() end, opts)
     vim.keymap.set("n", "<leader>vrn", function() vim.lsp.buf.rename() end, opts)
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
+
+    augroup("__formatter__", { clear = true })
+    autocmd("BufWritePost", {
+      group = "__formatter__",
+      command = ":FormatWrite",
+    })
+
+    autocmd({ "BufWritePost" }, {
+      group = VybhavABGroup,
+      callback = function()
+        require("lint").try_lint()
+      end,
+    })
   end
 })
 

@@ -4,7 +4,6 @@ return {
   'kyazdani42/nvim-web-devicons',
   'tpope/vim-fugitive',
   'lewis6991/gitsigns.nvim',
-  'sbdchd/neoformat',
   {
     'mbbill/undotree',
     config = function()

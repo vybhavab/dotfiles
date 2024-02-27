@@ -3,3 +3,5 @@ typescript-language-server
 vscode-langservers-extracted
 @tailwindcss/language-server
 yarn
+eslint_d
+@fsouza/prettierd

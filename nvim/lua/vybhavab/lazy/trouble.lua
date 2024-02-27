@@ -13,11 +13,11 @@ return {
         require("trouble").toggle()
       end)
 
-      vim.keymap.set("n", "<leader>[d", function()
+      vim.keymap.set("n", "<leader>vn", function()
         require("trouble").next({skip_groups = true, jump = true})
       end)
 
-      vim.keymap.set("n", "<leader>]d", function()
+      vim.keymap.set("n", "<leader>vN", function()
         require("trouble").previous({skip_groups = true, jump = true})
       end)
 

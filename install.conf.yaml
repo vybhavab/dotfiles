@@ -28,6 +28,8 @@
         path: hyper/hyper.js
     $HOME/.config/alacritty:
         path: alacritty
+    $HOME/.config/wezterm:
+        path: wezterm
     $HOME/.local/bin:
         glob: true
         path: scripts/*

@@ -1,0 +1,7 @@
+alias gg="lazygit"
+alias gpu="git push -u origin `git branch --show-current`"
+if command -v bat 1>/dev/null 2>&1; then
+	alias cat="bat"
+fi
+
+alias tasks="taskell ~/taskell.md"

@@ -24,6 +24,8 @@
         path: zsh/zshrc
     $HOME/.zsh_profile:
         path: zsh/zsh_profile
+    $HOME/.zsh_alias:
+        path: zsh/zsh_alias
     $HOME/.hyper.js:
         path: hyper/hyper.js
     $HOME/.config/alacritty:
@@ -37,6 +39,8 @@
         path: asdf/default-npm-packages
     $HOME/.config/callibella/config.json:
         path: callibella/config.json
+    $HOME/.config/wezterm:
+      path: wezterm
     $HOME/spicetify_data/config.ini:
         if: '[ `uname` = Darwin ]'
         path: spicetify_data/config.ini
@@ -47,6 +51,9 @@
         if: '[ `uname` = Darwin ]'
         path: skhd/skhdrc
     $HOME/Library/Application Support/jesseduffield/lazygit/config.yml:
+        if: '[ `uname` = Darwin ]'
+        path: lazygit/config.yml
+    $HOME/Library/Application Support/lazygit/config.yml:
         if: '[ `uname` = Darwin ]'
         path: lazygit/config.yml
     $HOME/.config/spicetify_data/config.ini:

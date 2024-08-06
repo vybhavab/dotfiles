@@ -23,7 +23,7 @@ end
 
 -- Custom vim.o
 vim.o.shortmess = vim.o.shortmess .. 'c'
-vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
+-- vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
 
 vim.opt.guicursor = ""
 
@@ -56,4 +56,3 @@ vim.opt.isfname:append("@-@")
 vim.opt.updatetime = 50
 
 vim.opt.colorcolumn = "80"
-

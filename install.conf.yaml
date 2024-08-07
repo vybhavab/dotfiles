@@ -69,9 +69,58 @@
         if: '[ `uname` = Linux ]'
         path: lazygit/config.yml
 
+- shell:
+    - 
+     command: git submodule update --init --recursive
+     stdin: true
+     stdout: true
+     stderr: true
+     description: Installing submodules
+    - 
+     command: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+     description: Installing OMZ
+     stdin: true
+     stdout: true
+     stderr: true
+    - 
+     command: git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
+     description: Installing zsh-syntax-highlighting
+     stdin: true
+     stdout: true
+     stderr: true
+    - 
+     command: git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
+     description: Installing ZSH Auto
+     stdin: true
+     stdout: true
+     stderr: true
+    - 
+     command: git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+     description: Installing Packer
+     stdin: true
+     stdout: true
+     stderr: true
+    - 
+     command: git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+     description: Adding TPM
+     stdin: true
+     stdout: true
+     stderr: true
+    - 
+     command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+     description: Installing BREW
+     stdin: true
+     stdout: true
+     stderr: true
+    -
+     command: (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zprofile
+     description: Adding brew to shellEnv
+     stdin: true
+     stdout: true
+     stderr: true
+
 - tap:
     - cmacrae/formulae
-    - homebrew/cask
     - homebrew/services
     - homebrew/cask-fonts
     - homebrew/cask-versions
@@ -81,17 +130,14 @@
     - curl
     - wget
     - lazygit
-    - openjdk
     - git-lfs
     - autojump
     - htop
     - tmux
-    - yabai
-    - zsh
-    - gdb
+    - koekeishiya/formulae/yabai
     - llvm
-    - neovim --HEAD
-    - skhd
+    - neovim
+    - koekeishiya/formulae/skhd
     - cmake
     - asdf
     - fzf
@@ -99,14 +145,19 @@
     - gpg
     - gawk
 
-- cask: [private-internet-access, keybase, font-fira-code, discord, raycast, notion, megasync, alt-tab, 1password, wezterm]
+- cask: [discord, raycast, megasync, alt-tab, 1password, wezterm]
 
 - shell:
-    - [git submodule update --init --recursive, Installing submodules]
-    - [sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)", Installing OMZ]
-    - [chsh -s $(which zsh), Making ZSH default]
-    - [git clone https://github.com/zdharma/fast-syntax-highlighting.git $HOME/.oh-my-zsh/custom/plugins/fast-syntax-highlighting, Installing FSH]
-    - [git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions, Installing ZSH Auto]
-    - [git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim, Installing Packer]
-    - [git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm, Adding TPM]
-    - [/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)", Installing BREW]
+    - 
+     if: '[ `uname` = Darwin ]'
+     command: skhd --start-service
+     stderr: true
+     stdout: true
+     stdin: true
+    - 
+     if: '[ `uname` = Darwin ]'
+     command: yabai --start-service
+     stderr: true
+     stdout: true
+     stdin: true
+     

@@ -144,8 +144,9 @@
     - bat
     - gpg
     - gawk
+    - ripgrep
 
-- cask: [discord, raycast, megasync, alt-tab, 1password, wezterm]
+- cask: [discord, raycast, alt-tab, 1password, wezterm]
 
 - shell:
     - 
@@ -160,4 +161,8 @@
      stderr: true
      stdout: true
      stdin: true
-     
+    -
+     command: asdf plugin add nodejs && asdf install nodejs latest && asdf global nodejs latest
+     stderr: true
+     stdout: true
+     stdin: true

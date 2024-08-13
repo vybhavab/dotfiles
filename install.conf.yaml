@@ -145,6 +145,7 @@
     - gpg
     - gawk
     - ripgrep
+    - jq
 
 - cask: [discord, raycast, alt-tab, 1password, wezterm]
 

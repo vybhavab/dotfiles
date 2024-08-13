@@ -2,7 +2,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 ZSH_THEME="robbyrussell"
 
-plugins=(autojump git zsh-autosuggestions last-working-dir asdf zsh-syntax-highlighting)
+plugins=(autojump git zsh-autosuggestions last-working-dir asdf zsh-syntax-highlighting direnv)
 
 source $ZSH/oh-my-zsh.sh
 

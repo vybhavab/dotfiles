@@ -125,6 +125,72 @@ return {
       })
 
       local util = require "formatter.util"
+      if require("vybhavab.utils.nodePackageReader").check_xo_dependency() then
+        require("formatter").setup({
+          logging = true,
+          log_level = vim.log.levels.WARN,
+          filetype = {
+            javascript = {
+              function()
+                return {
+                  exe = "xo",
+                  args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
+                  stdin = true
+                }
+              end
+            },
+            javascriptreact = {
+              function()
+                return {
+                  exe = "xo",
+                  args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
+                  stdin = true
+                }
+              end
+            },
+            typescript = {
+              function()
+                return {
+                  exe = "xo",
+                  args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
+                  stdin = true
+                }
+              end
+            },
+            typescriptreact = {
+              function()
+                return {
+                  exe = "xo",
+                  args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
+                  stdin = true
+                }
+              end
+            },
+            lua = {
+              require("formatter.filetypes.lua").stylua,
+              function()
+                if util.get_current_buffer_file_name() == "special.lua" then
+                  return nil
+                end
+                return {
+                  exe = "stylua",
+                  args = {
+                    "--search-parent-directories",
+                    "--stdin-filepath",
+                    util.escape_path(util.get_current_buffer_file_path()),
+                    "--",
+                    "-",
+                  },
+                  stdin = true,
+                }
+              end
+            },
+            ["*"] = {
+              require("formatter.filetypes.any").remove_trailing_whitespace
+            }
+          }
+        })
+      else
       require("formatter").setup({
         logging = true,
         log_level = vim.log.levels.WARN,
@@ -176,6 +242,7 @@ return {
         typescript = {'eslint_d'},
         typescriptreact = {'eslint_d'},
       }
+    end
     end
   }
 }

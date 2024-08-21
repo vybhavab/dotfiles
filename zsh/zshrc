@@ -16,4 +16,3 @@ source ~/.zprofile
 source ~/.zsh_profile
 
 . /opt/homebrew/opt/asdf/libexec/asdf.sh
-export PATH="/Users/vybhavab/.gem/ruby/2.6.0/bin:$PATH"

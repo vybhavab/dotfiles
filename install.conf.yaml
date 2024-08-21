@@ -167,3 +167,21 @@
      stderr: true
      stdout: true
      stdin: true
+    - 
+     if: '[ `uname` = Darwin ]'
+     command: defaults write com.apple.dock autohide-delay -float 0; defaults write com.apple.dock autohide-time-modifier -int 0;killall Dock
+     stderr: true
+     stdout: true
+     stdin: true
+    - 
+     if: '[ `uname` = Darwin ]'
+     command: defaults write com.apple.screencapture type jpg
+     stderr: true
+     stdout: true
+     stdin: true
+    - 
+     if: '[ `uname` = Darwin ]'
+     command: defaults write com.apple.Dock showhidden -bool TRUE && killall Dock
+     stderr: true
+     stdout: true
+     stdin: true

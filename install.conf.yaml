@@ -113,7 +113,7 @@
      stdout: true
      stderr: true
     -
-     command: (echo; echo 'eval "$(/opt/homebrew/bin/brew shellenv)"') >> ~/.zprofile
+     command: eval "$(/opt/homebrew/bin/brew shellenv)"
      description: Adding brew to shellEnv
      stdin: true
      stdout: true
@@ -147,7 +147,7 @@
     - ripgrep
     - jq
 
-- cask: [discord, raycast, alt-tab, 1password, wezterm]
+- cask: [discord, raycast, alt-tab, wezterm]
 
 - shell:
     - 

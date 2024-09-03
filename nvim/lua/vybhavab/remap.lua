@@ -1,9 +1,9 @@
 vim.g.mapleader = " "
 vim.keymap.set("n", "<leader>pv", "<CMD>Ex<CR>")
-vim.keymap.set('n', '<leader>h', '<CMD>wincmd h<CR>')
-vim.keymap.set('n', '<leader>j', '<CMD>wincmd j<CR>')
-vim.keymap.set('n', '<leader>k', '<CMD>wincmd k<CR>')
-vim.keymap.set('n', '<leader>l', '<CMD>wincmd l<CR>')
+vim.keymap.set('n', '<A-h>', '<CMD>wincmd h<CR>')
+vim.keymap.set('n', '<A-j>', '<CMD>wincmd j<CR>')
+vim.keymap.set('n', '<A-k>', '<CMD>wincmd k<CR>')
+vim.keymap.set('n', '<A-l>', '<CMD>wincmd l<CR>')
 vim.keymap.set('n', '<leader>tp', '<CMD>tabp<CR>')
 vim.keymap.set('n', '<leader>tn', '<CMD>tabn<CR>')
 vim.keymap.set('n', '<leader>nt', '<CMD>tabnew<CR>')

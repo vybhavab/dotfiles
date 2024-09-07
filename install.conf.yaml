@@ -44,12 +44,15 @@
     $HOME/spicetify_data/config.ini:
         if: '[ `uname` = Darwin ]'
         path: spicetify_data/config.ini
-    $HOME/.config/yabai/yabairc:
+        # $HOME/.config/yabai/yabairc:
+        #     if: '[ `uname` = Darwin ]'
+        #     path: yabai/yabairc
+        # $HOME/.config/skhd/skhdrc:
+        #     if: '[ `uname` = Darwin ]'
+        #     path: skhd/skhdrc
+    $HOME/.config/aerospace/aerospace.toml:
         if: '[ `uname` = Darwin ]'
-        path: yabai/yabairc
-    $HOME/.config/skhd/skhdrc:
-        if: '[ `uname` = Darwin ]'
-        path: skhd/skhdrc
+        path: aerospace/aerospace.toml
     $HOME/Library/Application Support/jesseduffield/lazygit/config.yml:
         if: '[ `uname` = Darwin ]'
         path: lazygit/config.yml

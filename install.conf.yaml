@@ -44,12 +44,12 @@
     $HOME/spicetify_data/config.ini:
         if: '[ `uname` = Darwin ]'
         path: spicetify_data/config.ini
-        # $HOME/.config/yabai/yabairc:
-        #     if: '[ `uname` = Darwin ]'
-        #     path: yabai/yabairc
-        # $HOME/.config/skhd/skhdrc:
-        #     if: '[ `uname` = Darwin ]'
-        #     path: skhd/skhdrc
+    $HOME/.config/yabai/yabairc:
+       if: '[ `uname` = Darwin ]'
+       path: yabai/yabairc
+    $HOME/.config/skhd/skhdrc:
+       if: '[ `uname` = Darwin ]'
+       path: skhd/skhdrc
     $HOME/.config/aerospace/aerospace.toml:
         if: '[ `uname` = Darwin ]'
         path: aerospace/aerospace.toml
@@ -73,43 +73,43 @@
         path: lazygit/config.yml
 
 - shell:
-    - 
+    -
      command: git submodule update --init --recursive
      stdin: true
      stdout: true
      stderr: true
      description: Installing submodules
-    - 
+    -
      command: sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
      description: Installing OMZ
      stdin: true
      stdout: true
      stderr: true
-    - 
+    -
      command: git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
      description: Installing zsh-syntax-highlighting
      stdin: true
      stdout: true
      stderr: true
-    - 
+    -
      command: git clone https://github.com/zsh-users/zsh-autosuggestions ~/.oh-my-zsh/custom/plugins/zsh-autosuggestions
      description: Installing ZSH Auto
      stdin: true
      stdout: true
      stderr: true
-    - 
+    -
      command: git clone --depth 1 https://github.com/wbthomason/packer.nvim ~/.local/share/nvim/site/pack/packer/start/packer.nvim
      description: Installing Packer
      stdin: true
      stdout: true
      stderr: true
-    - 
+    -
      command: git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
      description: Adding TPM
      stdin: true
      stdout: true
      stderr: true
-    - 
+    -
      command: /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
      description: Installing BREW
      stdin: true
@@ -153,13 +153,13 @@
 - cask: [discord, raycast, alt-tab, wezterm]
 
 - shell:
-    - 
+    -
      if: '[ `uname` = Darwin ]'
      command: skhd --start-service
      stderr: true
      stdout: true
      stdin: true
-    - 
+    -
      if: '[ `uname` = Darwin ]'
      command: yabai --start-service
      stderr: true
@@ -170,19 +170,19 @@
      stderr: true
      stdout: true
      stdin: true
-    - 
+    -
      if: '[ `uname` = Darwin ]'
      command: defaults write com.apple.dock autohide-delay -float 0; defaults write com.apple.dock autohide-time-modifier -int 0;killall Dock
      stderr: true
      stdout: true
      stdin: true
-    - 
+    -
      if: '[ `uname` = Darwin ]'
      command: defaults write com.apple.screencapture type jpg
      stderr: true
      stdout: true
      stdin: true
-    - 
+    -
      if: '[ `uname` = Darwin ]'
      command: defaults write com.apple.Dock showhidden -bool TRUE && killall Dock
      stderr: true

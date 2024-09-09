@@ -1,5 +1,6 @@
 case "$OSTYPE" in
   darwin*)
+  export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
   ;;
   linux*)
 	export PATH="$HOME/neovim/bin:$PATH"
@@ -7,8 +8,6 @@ case "$OSTYPE" in
 esac
 
 export MANPATH="/usr/local/man:$MANPATH"
-
-export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
 
 # SSH Keys
 export SSH_KEY_PATH="~/.ssh/id_rsa"
@@ -23,6 +22,7 @@ fi
 
 #FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.env ] && source ~/.env
 
 ## Extra Functions
 mkcdir(){

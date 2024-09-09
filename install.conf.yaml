@@ -37,6 +37,8 @@
         path: scripts/*
     $HOME/.default-npm-packages:
         path: asdf/default-npm-packages
+    $HOME/.env:
+        path: zsh/.env
     $HOME/.config/callibella/config.json:
         path: callibella/config.json
     $HOME/.config/wezterm:

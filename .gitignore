@@ -5,3 +5,4 @@ packer_compiled.vim
 nvim/plugin/packer_compiled.lua
 
 zsh/extra.sh
+.env

@@ -44,7 +44,7 @@ return {
 					'rust_analyzer',
 					'tailwindcss',
 					'thriftls',
-					'tsserver',
+					'ts_ls',
         },
         handlers = {
            function (server_name)

@@ -1,0 +1,52 @@
+# alt - 0x2C : aerospace layout tiles horizontal vertical
+alt - j : aerospace focus down
+alt - k : aerospace focus up
+alt - l : aerospace focus right
+alt - h : aerospace focus left
+
+# move managed window
+alt - h : aerospace focus left
+alt - j : aerospace focus down
+alt - k : aerospace focus up
+alt - l : aerospace focus right
+
+alt + shift - h : aerospace move left
+alt + shift - j : aerospace move down
+alt + shift - k : aerospace move up
+alt + shift - l : aerospace move right
+
+ctrl + alt - h : aerospace focus-monitor --wrap-around left
+ctrl+alt-j : aerospace focus-monitor --wrap-around down
+ctrl+alt-k : aerospace focus-monitor --wrap-around up
+ctrl+alt-l : aerospace focus-monitor --wrap-around right
+
+hyper- 0x1B : aerospace resize smart -50
+hyper- 0x18 : aerospace resize smart +50
+
+alt-f : aerospace fullscreen
+
+alt-1 : aerospace workspace 1
+alt-2 : aerospace workspace 2
+alt-3 : aerospace workspace 3
+alt-4 : aerospace workspace 4
+alt-5 : aerospace workspace 5
+alt-6 : aerospace workspace 6
+alt-7 : aerospace workspace 7
+alt-8 : aerospace workspace 8
+alt-9 : aerospace workspace 9
+alt-0 : aerospace workspace 10
+
+
+alt+shift-1 : aerospace move-node-to-workspace 1
+alt+shift-2 : aerospace move-node-to-workspace 2
+alt+shift-3 : aerospace move-node-to-workspace 3
+alt+shift-4 : aerospace move-node-to-workspace 4
+alt+shift-5 : aerospace move-node-to-workspace 5
+alt+shift-6 : aerospace move-node-to-workspace 6
+alt+shift-7 : aerospace move-node-to-workspace 7
+alt+shift-8 : aerospace move-node-to-workspace 8
+alt+shift-9 : aerospace move-node-to-workspace 9
+alt+shift-0 : aerospace move-node-to-workspace 10
+
+alt-tab : aerospace workspace-back-and-forth
+alt+shift-tab : aerospace move-workspace-to-monitor --wrap-around next

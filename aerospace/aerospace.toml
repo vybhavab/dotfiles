@@ -186,3 +186,29 @@ alt-shift-h = ['join-with left', 'mode main']
 alt-shift-j = ['join-with down', 'mode main']
 alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
+
+[workspace-to-monitor-force-assignment]
+1 = 'main'
+2 = 'main'
+3 = 1
+4 = 1
+5 = 4
+6 = 4
+7 = 3
+8 = 3
+9 = 3
+10 = 3
+
+[[on-window-detected]]
+if.app-id = 'com.openai.chat'
+if.window-title-regex-substring = 'ChatGPT'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.FaceTime'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.ScreenSharing'
+run = 'layout floating'
+

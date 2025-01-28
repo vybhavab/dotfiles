@@ -4,7 +4,6 @@ return {
 		lazy = false,
 		priority = 1000,
 		config = function()
-
       vim.g.tokyonight_style = "night"
       vim.g.tokyonight_sidebars = {"qf", "vista_kind", "terminal", "packer"}
       vim.g.tokyonight_transparent_sidebar = true

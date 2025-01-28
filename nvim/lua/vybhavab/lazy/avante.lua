@@ -4,7 +4,34 @@ return {
     event = "VeryLazy",
     lazy = false,
     opts = {
-      -- add any opts here
+      -- provider = "openai",
+      -- auto_suggestions_provider = "openai", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
+      -- openai = {
+      --   endpoint = "https://api.groq.com/openai/v1",
+      --   model = "deepseek-r1-distill-llama-70b",
+      --   timeout = 30000, -- Timeout in milliseconds
+      --   temperature = 0,
+      --   max_tokens = 128000,
+      --   api_key_name = "GROQ_API_KEY",
+      -- },
+      -- dual_boost = {
+      --   enabled = true,
+      --   first_provider = "claude",
+      --   second_provider = "ollama",
+      --   prompt = "Based on the two reference outputs below, generate a response that incorporates elements from both but reflects your own judgment and unique perspective. Do not provide any explanation, just give the response directly. Reference Output 1: [{{provider1_output}}], Reference Output 2: [{{provider2_output}}]",
+      --   timeout = 60000, -- Timeout in milliseconds
+      -- },
+      vendors = {
+        ollama = {
+          __inherited_from = "openai",
+          api_key_name = "",
+          endpoint = "http://127.0.0.1:11434/v1",
+          model = "deepseek-r1",
+        },
+      },
+      behaviour = {
+        auto_suggestions = true, -- Experimental stage
+      },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",

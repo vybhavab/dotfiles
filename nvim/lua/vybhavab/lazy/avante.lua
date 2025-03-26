@@ -21,6 +21,25 @@ return {
       --   prompt = "Based on the two reference outputs below, generate a response that incorporates elements from both but reflects your own judgment and unique perspective. Do not provide any explanation, just give the response directly. Reference Output 1: [{{provider1_output}}], Reference Output 2: [{{provider2_output}}]",
       --   timeout = 60000, -- Timeout in milliseconds
       -- },
+      -- provider = "openai",
+      -- openai = {
+      --   endpoint = "https://api.openai.com/v1",
+      --   model = "gpt-4o",
+      --   timeout = 30000,
+      --   temperature = 0,
+      --   max_tokens = 4096,
+      --   reasoning_effort = "high" -- only supported for "o" models
+      -- },
+      claude = {
+        endpoint = "https://api.anthropic.com",
+        -- model = "claude-3-5-sonnet-latest",
+        temperature = 0,
+        max_tokens = 8000,
+      },
+      cursor_applying_provider = 'groq',
+      -- behaviour = {
+        -- enable_cursor_planning_mode = true
+      -- },
       vendors = {
         ollama = {
           __inherited_from = "openai",
@@ -28,9 +47,13 @@ return {
           endpoint = "http://127.0.0.1:11434/v1",
           model = "deepseek-r1",
         },
-      },
-      behaviour = {
-        auto_suggestions = true, -- Experimental stage
+        groq = {
+            __inherited_from = 'openai',
+            api_key_name = 'GROQ_API_KEY',
+            endpoint = 'https://api.groq.com/openai/v1/',
+            model = 'qwen-2.5-coder-32b',
+            max_tokens = 8192, -- remember to increase this value, otherwise it will stop generating halfway
+        },
       },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`

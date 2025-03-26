@@ -7,3 +7,4 @@ eslint_d
 @fsouza/prettierd
 tldr
 pnpm
+@anthropic-ai/claude-code

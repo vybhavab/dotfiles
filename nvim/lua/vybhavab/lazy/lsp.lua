@@ -16,6 +16,8 @@ return {
       'rcarriga/nvim-dap-ui',
       'mfussenegger/nvim-dap',
       'j-hui/fidget.nvim',
+      "supermaven-inc/supermaven-nvim",
+      "onsails/lspkind.nvim",
     },
     config = function ()
       require("fidget").setup({})
@@ -70,6 +72,7 @@ return {
 
       local cmp = require('cmp')
       local cmp_select = {behavior = cmp.SelectBehavior.Select}
+      local lspkind = require('lspkind')
 
       cmp.setup({
         snippet = {
@@ -89,9 +92,27 @@ return {
         sources = cmp.config.sources({
           { name = 'nvim_lsp' },
           { name = 'luasnip' },
+          { name = 'supermaven' },
         }, {
           { name = 'buffer' },
-        })
+        }),
+        formatting = {
+          format = lspkind.cmp_format({
+            mode = 'symbol',
+            maxwidth = {
+              menu = 50,
+              abbr = 50,
+            },
+            symbol_map = {
+              Supermaven = "",
+            },
+            ellipsis_char = '...',
+            show_labelDetails = true,
+            before = function (entry, vim_item)
+              return vim_item
+            end
+          })
+        },
       })
 
       -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).

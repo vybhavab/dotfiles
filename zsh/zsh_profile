@@ -40,6 +40,7 @@ export PATH="/usr/local/opt/openjdk/bin:$PATH"
 export PATH="${HOME}/.gem/ruby/2.6.0/bin:$PATH"
 export PATH="/opt/homebrew/opt/postgresql@15/bin:$PATH"
 export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
+export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 
 bindkey -s ^f "tmux-sessionizer\n"
 export EDITOR="nvim"

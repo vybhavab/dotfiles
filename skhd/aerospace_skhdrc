@@ -30,27 +30,27 @@ hyper - 0x18 : aerospace resize smart +50
 
 alt-f : aerospace fullscreen
 
-alt-1 : aerospace workspace 1
-alt-2 : aerospace workspace 2
-alt-3 : aerospace workspace 3
-alt-4 : aerospace workspace 4
-alt-5 : aerospace workspace 5
-alt-6 : aerospace workspace 6
-alt-7 : aerospace workspace 7
-alt-8 : aerospace workspace 8
-alt-9 : aerospace workspace 9
-alt-0 : aerospace workspace 10
+alt-1 : ~/.dotfiles/aerospace/bin/goto.sh 1
+alt-2 : ~/.dotfiles/aerospace/bin/goto.sh 2
+alt-3 : ~/.dotfiles/aerospace/bin/goto.sh 3
+alt-4 : ~/.dotfiles/aerospace/bin/goto.sh 4
+alt-5 : ~/.dotfiles/aerospace/bin/goto.sh 5
+alt-6 : ~/.dotfiles/aerospace/bin/goto.sh 6
+alt-7 : ~/.dotfiles/aerospace/bin/goto.sh 7
+alt-8 : ~/.dotfiles/aerospace/bin/goto.sh 8
+alt-9 : ~/.dotfiles/aerospace/bin/goto.sh 9
+alt-0 : ~/.dotfiles/aerospace/bin/goto.sh 10
 
-ctrl+alt-1 : aerospace move-node-to-workspace 1
-ctrl+alt-2 : aerospace move-node-to-workspace 2
-ctrl+alt-3 : aerospace move-node-to-workspace 3
-ctrl+alt-4 : aerospace move-node-to-workspace 4
-ctrl+alt-5 : aerospace move-node-to-workspace 5
-ctrl+alt-6 : aerospace move-node-to-workspace 6
-ctrl+alt-7 : aerospace move-node-to-workspace 7
-ctrl+alt-8 : aerospace move-node-to-workspace 8
-ctrl+alt-9 : aerospace move-node-to-workspace 9
-ctrl+alt-0 : aerospace move-node-to-workspace 10
+alt+shift-1 : aerospace move-node-to-workspace 1
+alt+shift-2 : aerospace move-node-to-workspace 2
+alt+shift-3 : aerospace move-node-to-workspace 3
+alt+shift-4 : aerospace move-node-to-workspace 4
+alt+shift-5 : aerospace move-node-to-workspace 5
+alt+shift-6 : aerospace move-node-to-workspace 6
+alt+shift-7 : aerospace move-node-to-workspace 7
+alt+shift-8 : aerospace move-node-to-workspace 8
+alt+shift-9 : aerospace move-node-to-workspace 9
+alt+shift-0 : aerospace move-node-to-workspace 10
 
 cmd+ctrl+alt-1 : aerospace move-node-to-workspace 1
 cmd+ctrl+alt-2 : aerospace move-node-to-workspace 2

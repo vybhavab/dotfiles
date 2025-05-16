@@ -5,3 +5,4 @@ if command -v bat 1>/dev/null 2>&1; then
 fi
 
 alias tasks="taskell ~/taskell.md"
+alias notes="nvim ~/projects/notes.md"

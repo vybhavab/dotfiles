@@ -60,6 +60,9 @@
     $HOME/.config/sketchybar:
         if: '[ `uname` = Darwin ]'
         path: sketchybar/
+    $HOME/.config/ghostty/config:
+        if: '[ `uname` = Darwin ]'
+        path: ghostty/config
     $HOME/.config/skhd/skhdrc:
        if: '[ `uname` = Darwin ]'
        path: skhd/aerospace_skhdrc

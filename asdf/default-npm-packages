@@ -8,3 +8,4 @@ eslint_d
 tldr
 pnpm
 @anthropic-ai/claude-code
+pm2

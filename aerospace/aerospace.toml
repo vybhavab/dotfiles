@@ -9,13 +9,13 @@ after-login-command = []
 after-startup-command = []
 
 on-focus-changed = [
-  "exec-and-forget osascript -e 'tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\"'",
+  "exec-and-forget curl http://localhost:7776/aerospace/spaces/refresh",
 ]
 
 exec-on-workspace-change = [
   '/bin/zsh',
   '-c',
-  '/usr/bin/osascript -e "tell application id \"tracesOf.Uebersicht\" to refresh widget id \"simple-bar-index-jsx\""',
+  'curl http://localhost:7776/aerospace/spaces/refresh',
 ]
 
 # Start AeroSpace at login
@@ -60,7 +60,7 @@ inner.horizontal = 6
 inner.vertical =   6
 outer.left =       6
 outer.bottom =     6 
-outer.top =        36
+outer.top =        [{ monitor."^built-in retina display$" = 0 }, 36]
 outer.right =      6 
 
 # 'main' binding mode declaration

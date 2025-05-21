@@ -32,6 +32,20 @@ return {
         bg = "none"
       })
 
+      hl("NormalFloat", {
+        bg = "none"
+      })
+
+      hl("NormalNC", {
+        bg = "none"
+      })
+
+		  hl('TelescopePromptPrefix', {
+        fg = "#5eacd3",
+        bg = "none",
+        bold = true,
+      })
+
       hl("LineNr", {
         fg = "#5eacd3"
       })

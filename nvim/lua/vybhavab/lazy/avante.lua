@@ -4,6 +4,30 @@ return {
     event = "VeryLazy",
     lazy = false,
     opts = {
+      -- providers = {
+      --   claude = {
+      --     endpoint = "https://api.anthropic.com",
+      --     timeout = 30000,
+      --     extra_request_body = {
+      --       temperature = 0.75,
+      --       max_tokens = 20480,
+      --     },
+      --   },
+      --   ollama = {
+      --     __inherited_from = "openai",
+      --     api_key_name = "",
+      --     endpoint = "http://127.0.0.1:11434/v1",
+      --     model = "deepseek-r1",
+      --   },
+      --   groq = {
+      --       __inherited_from = 'openai',
+      --       api_key_name = 'GROQ_API_KEY',
+      --       endpoint = 'https://api.groq.com/openai/v1/',
+      --       model = 'qwen-2.5-coder-32b',
+      --       max_tokens = 8192, -- remember to increase this value, otherwise it will stop generating halfway
+      --   },
+      -- },
+      -- cursor_applying_provider = 'groq',
       -- provider = "openai",
       -- auto_suggestions_provider = "openai", -- Since auto-suggestions are a high-frequency operation and therefore expensive, it is recommended to specify an inexpensive provider or even a free provider: copilot
       -- openai = {
@@ -30,31 +54,9 @@ return {
       --   max_tokens = 4096,
       --   reasoning_effort = "high" -- only supported for "o" models
       -- },
-      claude = {
-        endpoint = "https://api.anthropic.com",
-        -- model = "claude-3-5-sonnet-latest",
-        temperature = 0,
-        max_tokens = 8000,
-      },
-      cursor_applying_provider = 'groq',
       -- behaviour = {
         -- enable_cursor_planning_mode = true
       -- },
-      vendors = {
-        ollama = {
-          __inherited_from = "openai",
-          api_key_name = "",
-          endpoint = "http://127.0.0.1:11434/v1",
-          model = "deepseek-r1",
-        },
-        groq = {
-            __inherited_from = 'openai',
-            api_key_name = 'GROQ_API_KEY',
-            endpoint = 'https://api.groq.com/openai/v1/',
-            model = 'qwen-2.5-coder-32b',
-            max_tokens = 8192, -- remember to increase this value, otherwise it will stop generating halfway
-        },
-      },
     },
     -- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
     build = "make",

@@ -27,3 +27,4 @@ foreground = #c5c9c7
 cursor-color = #c5c9c7
 selection-background = #24262D
 selection-foreground = #c5c9c7
+keybind = shift+enter=text:\n

@@ -45,6 +45,8 @@
         path: callibella/config.json
     $HOME/.config/wezterm:
       path: wezterm
+    $HOME/.config/opencode:
+      path: opencode 
     $HOME/spicetify_data/config.ini:
         if: '[ `uname` = Darwin ]'
         path: spicetify_data/config.ini
@@ -164,6 +166,7 @@
     - jq
     - sketchybar
     - font-sf-pro
+    - sst/tap/opencode
 
 - cask: [discord, raycast, alt-tab, ghostty, sf-symbols, ubersicht]
 

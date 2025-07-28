@@ -4,5 +4,6 @@ background-opacity = 0.9
 background-blur = 20
 bold-is-bright = true
 theme = tokyonight_night
+font-family = "Zed Plex Mono"
 
 keybind = shift+enter=text:\n

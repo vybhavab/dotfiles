@@ -11,3 +11,6 @@
 [submodule "keyboardlayouts/REALDvorak"]
 	path = keyboardlayouts/REALDvorak
 	url = git@github.com:ThePrimeagen/keyboards.git
+[submodule "zed-fonts"]
+	path = zed-fonts
+	url = git@github.com:zed-industries/zed-fonts.git

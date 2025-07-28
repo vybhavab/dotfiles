@@ -26,6 +26,8 @@ vim.o.shortmess = vim.o.shortmess .. 'c'
 -- vim.o.clipboard = vim.o.clipboard .. 'unnamedplus'
 
 vim.opt.guicursor = ""
+vim.o.cursorline = true
+vim.o.cursorlineopt = "number"
 
 vim.opt.nu = true
 vim.opt.relativenumber = true

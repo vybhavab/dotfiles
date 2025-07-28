@@ -60,6 +60,9 @@ return {
                    capabilities = capabilities,
                    settings = {
                        Lua = {
+                           workspace = {
+                             checkThirdParty = false,
+                           },
                            diagnostics = {
                                globals = { "vim" }
                            }

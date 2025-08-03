@@ -60,7 +60,7 @@ inner.horizontal = 6
 inner.vertical =   6
 outer.left =       6
 outer.bottom =     6 
-outer.top =        [{ monitor."^built-in retina display$" = 0 }, 36]
+outer.top =        [{ monitor."^built-in retina display$" = 10 }, 48]
 outer.right =      6 
 
 # 'main' binding mode declaration

@@ -14,3 +14,6 @@
 [submodule "zed-fonts"]
 	path = zed-fonts
 	url = git@github.com:zed-industries/zed-fonts.git
+[submodule "simple-bar-server"]
+	path = simple-bar-server
+	url = https://github.com/Jean-Tinland/simple-bar-server.git

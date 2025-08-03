@@ -68,6 +68,9 @@
     $HOME/.config/skhd/skhdrc:
        if: '[ `uname` = Darwin ]'
        path: skhd/aerospace_skhdrc
+    $HOME/.barik-config.toml:
+       if: '[ `uname` = Darwin ]'
+       path: barik/barik-config.toml
     $HOME/Library/Application Support/jesseduffield/lazygit/config.yml:
         if: '[ `uname` = Darwin ]'
         path: lazygit/config.yml
@@ -168,7 +171,7 @@
     - font-sf-pro
     - sst/tap/opencode
 
-- cask: [discord, raycast, alt-tab, ghostty, sf-symbols, ubersicht]
+- cask: [discord, raycast, alt-tab, ghostty, sf-symbols, ubersicht, mocki-toki/formulae/barik]
 
 - shell:
     -

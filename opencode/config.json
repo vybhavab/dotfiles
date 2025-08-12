@@ -6,7 +6,9 @@
     "openrouter": {
       "models": {
         "qwen/qwen3-coder:free": {},
-        "zai-org/GLM-4.5": {}
+        "z-ai/glm-4.5-air": {},
+        "z-ai/glm-4.5": {},
+        "openrouter/horizon-beta": {}
       }
     }
   }

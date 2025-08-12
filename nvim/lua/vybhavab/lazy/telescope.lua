@@ -26,6 +26,7 @@ return {
         builtin.grep_string({ search = word })
       end)
 
+      vim.keymap.set('n', '<leader>pg', builtin.live_grep, { desc = 'Telescope live grep' })
 
       vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
     end

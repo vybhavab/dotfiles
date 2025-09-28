@@ -6,17 +6,25 @@ after-login-command = []
 # You can use it to add commands that run after AeroSpace startup.
 # 'after-startup-command' is run after 'after-login-command'
 # Available commands : https://nikitabobko.github.io/AeroSpace/commands
-after-startup-command = []
+# after-startup-command = [
+#     'exec-and-forget /opt/homebrew/opt/sketchybar/bin/sketchybar',
+# ]
 
-on-focus-changed = [
-  "exec-and-forget curl http://localhost:7776/aerospace/spaces/refresh",
-]
+# on-focus-changed = [
+#   "exec-and-forget curl http://localhost:7776/aerospace/spaces/refresh",
+# ]
 
-exec-on-workspace-change = [
-  '/bin/zsh',
-  '-c',
-  'curl http://localhost:7776/aerospace/spaces/refresh',
-]
+# exec-on-workspace-change = [
+#     '/bin/bash',
+#     '-c',
+#     '/opt/homebrew/opt/sketchybar/bin/sketchybar --trigger aerospace_workspace_change AEROSPACE_FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE AEROSPACE_PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE',
+# ]
+
+# exec-on-workspace-change = [
+#   '/bin/zsh',
+#   '-c',
+#   'curl http://localhost:7776/aerospace/spaces/refresh',
+# ]
 
 # Start AeroSpace at login
 start-at-login = true
@@ -59,9 +67,9 @@ on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 inner.horizontal = 6
 inner.vertical =   6
 outer.left =       6
-outer.bottom =     6 
-outer.top =        [{ monitor."^built-in retina display$" = 10 }, 48]
-outer.right =      6 
+outer.bottom =     6
+outer.top =        [{ monitor."^built-in retina display$" = 10 }, 6]
+outer.right =      6
 
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
@@ -221,3 +229,9 @@ run = 'layout floating'
 [[on-window-detected]]
 if.app-id = 'com.apple.ScreenSharing'
 run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id="com.mitchellh.ghostty"
+run= [
+  "layout tiling",
+]

@@ -67,4 +67,4 @@ alt+shift-tab : aerospace move-workspace-to-monitor --wrap-around next
 
 alt+shift-0x29 : aerospace mode service
 
-alt-f : aerospace layout floating
+alt+shift-f : aerospace layout floating

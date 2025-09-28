@@ -27,3 +27,10 @@ esac
 
 # Added by Windsurf
 export PATH="/Users/vybhavab/.codeium/windsurf/bin:$PATH"
+
+# bun completions
+[ -s "/Users/vybhavab/.bun/_bun" ] && source "/Users/vybhavab/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"

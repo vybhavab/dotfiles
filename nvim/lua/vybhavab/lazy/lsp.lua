@@ -65,6 +65,7 @@ return {
 					'tailwindcss',
 					'thriftls',
 					'ts_ls',
+          'biome',
         },
         handlers = {
            function (server_name)

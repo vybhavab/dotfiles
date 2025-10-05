@@ -1,14 +1,89 @@
 {
-  "model": "anthropic/claude-sonnet-4-20250514",
   "$schema": "https://opencode.ai/config.json",
-  "theme": "opencode",
+  "plugin": [
+    "opencode-openai-codex-auth"
+  ],
   "provider": {
-    "openrouter": {
+    "openai": {
+      "options": {
+        "reasoningEffort": "medium",
+        "reasoningSummary": "auto",
+        "textVerbosity": "medium",
+        "include": [
+          "reasoning.encrypted_content"
+        ]
+      },
       "models": {
-        "qwen/qwen3-coder:free": {},
-        "z-ai/glm-4.5-air": {},
-        "z-ai/glm-4.5": {},
-        "openrouter/horizon-beta": {}
+        "GPT 5 Codex Low (ChatGPT Subscription)": {
+          "id": "gpt-5-codex",
+          "options": {
+            "reasoningEffort": "low",
+            "reasoningSummary": "auto",
+            "textVerbosity": "medium"
+          }
+        },
+        "GPT 5 Codex Medium (ChatGPT Subscription)": {
+          "id": "gpt-5-codex",
+          "options": {
+            "reasoningEffort": "medium",
+            "reasoningSummary": "auto",
+            "textVerbosity": "medium"
+          }
+        },
+        "GPT 5 Codex High (ChatGPT Subscription)": {
+          "id": "gpt-5-codex",
+          "options": {
+            "reasoningEffort": "high",
+            "reasoningSummary": "detailed",
+            "textVerbosity": "medium"
+          }
+        },
+        "GPT 5 Minimal (ChatGPT Subscription)": {
+          "id": "gpt-5",
+          "options": {
+            "reasoningEffort": "minimal",
+            "reasoningSummary": "auto",
+            "textVerbosity": "low"
+          }
+        },
+        "GPT 5 Low (ChatGPT Subscription)": {
+          "id": "gpt-5",
+          "options": {
+            "reasoningEffort": "low",
+            "reasoningSummary": "auto",
+            "textVerbosity": "low"
+          }
+        },
+        "GPT 5 Medium (ChatGPT Subscription)": {
+          "id": "gpt-5",
+          "options": {
+            "reasoningEffort": "medium",
+            "reasoningSummary": "auto",
+            "textVerbosity": "medium"
+          }
+        },
+        "GPT 5 High (ChatGPT Subscription)": {
+          "id": "gpt-5",
+          "options": {
+            "reasoningEffort": "high",
+            "reasoningSummary": "detailed",
+            "textVerbosity": "high"
+          }
+        },
+        "gpt-5-mini": {
+          "options": {
+            "reasoningEffort": "low",
+            "reasoningSummary": "auto",
+            "textVerbosity": "low"
+          }
+        },
+        "gpt-5-nano": {
+          "options": {
+            "reasoningEffort": "minimal",
+            "reasoningSummary": "auto",
+            "textVerbosity": "low"
+          }
+        }
       }
     }
   }

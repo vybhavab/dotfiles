@@ -9,3 +9,5 @@ tldr
 pnpm
 @anthropic-ai/claude-code
 pm2
+tsgo
+bash-language-server

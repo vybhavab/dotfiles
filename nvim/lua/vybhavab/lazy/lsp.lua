@@ -37,67 +37,16 @@ return {
         root_markers = { '.git' },
       })
 
-      vim.lsp.config('tsgo', {
-        cmd = { vim.fn.expand('~/.local/bin/tsgo'), 'lsp', '--stdio' },
-        filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
-        root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
-      })
+      local lsp_servers = { 'tsgo', 'lua_ls', 'gopls', 'bashls', 'rust_analyzer', 'clangd', 'html', 'cssls', 'copilot' }
 
-      vim.lsp.config('lua_ls', {
-        cmd = { 'lua-language-server' },
-        filetypes = { 'lua' },
-        root_markers = { '.luarc.json', '.luarc.jsonc', '.git' },
-        settings = {
-          Lua = {
-            workspace = {
-              checkThirdParty = false,
-            },
-            diagnostics = {
-              globals = { "vim" }
-            }
-          }
-        }
-      })
+      for _, server in ipairs(lsp_servers) do
+        local ok, config = pcall(require, 'vybhavab.lsp.' .. server)
+        if ok then
+          vim.lsp.config(server, config)
+        end
+      end
 
-      vim.lsp.config('gopls', {
-        cmd = { 'gopls' },
-        filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
-        root_markers = { 'go.work', 'go.mod', '.git' },
-      })
-
-      vim.lsp.config('bashls', {
-        cmd = { 'bash-language-server', 'start' },
-        filetypes = { 'sh', 'bash' },
-      })
-
-      vim.lsp.config('rust_analyzer', {
-        cmd = { 'rust-analyzer' },
-        filetypes = { 'rust' },
-        root_markers = { 'Cargo.toml', '.git' },
-      })
-
-      vim.lsp.config('clangd', {
-        cmd = { 'clangd' },
-        filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
-        root_markers = { '.clangd', '.clang-tidy', '.clang-format', 'compile_commands.json', '.git' },
-      })
-
-      vim.lsp.config('html', {
-        cmd = { 'vscode-html-language-server', '--stdio' },
-        filetypes = { 'html' },
-      })
-
-      vim.lsp.config('cssls', {
-        cmd = { 'vscode-css-language-server', '--stdio' },
-        filetypes = { 'css', 'scss', 'less' },
-      })
-
-      vim.lsp.config('copilot', {
-        cmd = { 'copilot-language-server', '--stdio' },
-        filetypes = { '*' },
-      })
-
-      vim.lsp.enable({'tsgo', 'lua_ls', 'gopls', 'bashls', 'rust_analyzer', 'clangd', 'html', 'cssls', 'copilot'})
+      vim.lsp.enable(lsp_servers)
 
       local cmp = require('cmp')
       local cmp_select = {behavior = cmp.SelectBehavior.Select}

@@ -18,9 +18,9 @@ return {
   'mfussenegger/nvim-dap',
   {
     'j-hui/fidget.nvim',
-    dependencies = {
-      "supermaven-inc/supermaven-nvim",
-    },
+    -- dependencies = {
+    --   "supermaven-inc/supermaven-nvim",
+    -- },
     config = function ()
       require("fidget").setup({})
 
@@ -34,17 +34,20 @@ return {
 
       vim.lsp.config('*', {
         capabilities = capabilities,
-        root_markers = { '.git' },
       })
 
-      local lsp_servers = { 'tsgo', 'lua_ls', 'gopls', 'bashls', 'rust_analyzer', 'clangd', 'html', 'cssls', 'copilot' }
+      local lsp_servers = { 'tsgo', 'lua_ls', 'gopls', 'bashls', 'rust_analyzer', 'clangd', 'html', 'cssls', 'tailwindcss' }
 
-      for _, server in ipairs(lsp_servers) do
-        local ok, config = pcall(require, 'vybhavab.lsp.' .. server)
-        if ok then
-          vim.lsp.config(server, config)
-        end
-      end
+      -- for _, server in ipairs(lsp_servers) do
+      --   local ok, config = pcall(require, 'vybhavab.lsp.' .. server)
+      --   if ok then
+      --     vim.lsp.config(server, config)
+      --   end
+      -- end
+
+      vim.lsp.config('tailwindcss', {
+        workspace_required = false,
+      })
 
       vim.lsp.enable(lsp_servers)
 

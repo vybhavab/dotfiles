@@ -1,45 +1,28 @@
-local function start_tsgo()
-    local root_files = { "tsconfig.json", "jsconfig.json", "package.json", ".git" }
-    local paths = vim.fs.find(root_files, { stop = vim.env.HOME })
-    local root_dir = vim.fs.dirname(paths[1])
-
-    if root_dir == nil then
-        -- root directory was not found
-        return
-    end
-
-    vim.lsp.start({
-        name = "tsgo",
-        cmd = { "~/.local/bin/tsgo", "lsp", "--stdio" },
-        root_dir = root_dir,
-        -- init_options = { hostInfo = "neovim" }, -- not implemented yet
-    })
-end
-
 return {
+  'neovim/nvim-lspconfig',
+  'mfussenegger/nvim-lint',
+  'mhartington/formatter.nvim',
   {
-    'neovim/nvim-lspconfig',
+    'hrsh7th/nvim-cmp',
     dependencies = {
-      'williamboman/mason.nvim',
-      'williamboman/mason-lspconfig.nvim',
-      'mfussenegger/nvim-lint',
-      'mhartington/formatter.nvim',
       'hrsh7th/cmp-nvim-lsp',
       'hrsh7th/cmp-buffer',
       'hrsh7th/cmp-path',
       'hrsh7th/cmp-cmdline',
-      'hrsh7th/nvim-cmp',
       'L3MON4D3/LuaSnip',
       'saadparwaiz1/cmp_luasnip',
-      'rcarriga/nvim-dap-ui',
-      'mfussenegger/nvim-dap',
-      'j-hui/fidget.nvim',
-      "supermaven-inc/supermaven-nvim",
       "onsails/lspkind.nvim",
+    },
+  },
+  'rcarriga/nvim-dap-ui',
+  'mfussenegger/nvim-dap',
+  {
+    'j-hui/fidget.nvim',
+    dependencies = {
+      "supermaven-inc/supermaven-nvim",
     },
     config = function ()
       require("fidget").setup({})
-      require('mason').setup()
 
       local cmp_lsp = require('cmp_nvim_lsp')
       local capabilities = vim.tbl_deep_extend(
@@ -49,48 +32,72 @@ return {
         cmp_lsp.default_capabilities()
       )
 
-      require("mason-lspconfig").setup({
-        ensure_installed = {
-					'bashls',
-					'clangd',
-					'cmake',
-					'cssls',
-					'eslint',
-					'golangci_lint_ls',
-					'gopls',
-					'html',
-					'lua_ls',
-					'prismals',
-					'rust_analyzer',
-					'tailwindcss',
-					'thriftls',
-					'ts_ls',
-          'biome',
-        },
-        handlers = {
-           function (server_name)
-             require("lspconfig")[server_name].setup({
-               capabilities = capabilities,
-             })
-           end,
-           ["lua_ls"] = function ()
-               local lspconfig = require("lspconfig")
-               lspconfig.lua_ls.setup {
-                   capabilities = capabilities,
-                   settings = {
-                       Lua = {
-                           workspace = {
-                             checkThirdParty = false,
-                           },
-                           diagnostics = {
-                               globals = { "vim" }
-                           }
-                       }
-                   }
-               }
-           end,
+      vim.lsp.config('*', {
+        capabilities = capabilities,
+        root_markers = { '.git' },
+      })
+
+      vim.lsp.config('tsgo', {
+        cmd = { vim.fn.expand('~/.local/bin/tsgo'), 'lsp', '--stdio' },
+        filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' },
+        root_markers = { 'tsconfig.json', 'jsconfig.json', 'package.json', '.git' },
+      })
+
+      vim.lsp.config('lua_ls', {
+        cmd = { 'lua-language-server' },
+        filetypes = { 'lua' },
+        root_markers = { '.luarc.json', '.luarc.jsonc', '.git' },
+        settings = {
+          Lua = {
+            workspace = {
+              checkThirdParty = false,
+            },
+            diagnostics = {
+              globals = { "vim" }
+            }
+          }
         }
       })
+
+      vim.lsp.config('gopls', {
+        cmd = { 'gopls' },
+        filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+        root_markers = { 'go.work', 'go.mod', '.git' },
+      })
+
+      vim.lsp.config('bashls', {
+        cmd = { 'bash-language-server', 'start' },
+        filetypes = { 'sh', 'bash' },
+      })
+
+      vim.lsp.config('rust_analyzer', {
+        cmd = { 'rust-analyzer' },
+        filetypes = { 'rust' },
+        root_markers = { 'Cargo.toml', '.git' },
+      })
+
+      vim.lsp.config('clangd', {
+        cmd = { 'clangd' },
+        filetypes = { 'c', 'cpp', 'objc', 'objcpp' },
+        root_markers = { '.clangd', '.clang-tidy', '.clang-format', 'compile_commands.json', '.git' },
+      })
+
+      vim.lsp.config('html', {
+        cmd = { 'vscode-html-language-server', '--stdio' },
+        filetypes = { 'html' },
+      })
+
+      vim.lsp.config('cssls', {
+        cmd = { 'vscode-css-language-server', '--stdio' },
+        filetypes = { 'css', 'scss', 'less' },
+      })
+
+      vim.lsp.config('copilot', {
+        cmd = { 'copilot-language-server', '--stdio' },
+        filetypes = { '*' },
+      })
+
+      vim.lsp.enable({'tsgo', 'lua_ls', 'gopls', 'bashls', 'rust_analyzer', 'clangd', 'html', 'cssls', 'copilot'})
 
       local cmp = require('cmp')
       local cmp_select = {behavior = cmp.SelectBehavior.Select}
@@ -288,5 +295,5 @@ return {
       }
     end
     end
-  }
+  },
 }

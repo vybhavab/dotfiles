@@ -1,199 +1,100 @@
 return {
   'neovim/nvim-lspconfig',
-  'mfussenegger/nvim-lint',
-  'mhartington/formatter.nvim',
-  {
-    'hrsh7th/nvim-cmp',
-    dependencies = {
-      'hrsh7th/cmp-nvim-lsp',
-      'hrsh7th/cmp-buffer',
-      'hrsh7th/cmp-path',
-      'hrsh7th/cmp-cmdline',
-      'L3MON4D3/LuaSnip',
-      'saadparwaiz1/cmp_luasnip',
-      "onsails/lspkind.nvim",
-    },
-  },
-  'rcarriga/nvim-dap-ui',
-  'mfussenegger/nvim-dap',
-  {
+  dependencies = {
+    'mfussenegger/nvim-lint',
+    'mhartington/formatter.nvim',
+    "onsails/lspkind.nvim",
+    'saghen/blink.cmp',
+    'rcarriga/nvim-dap-ui',
+    'mfussenegger/nvim-dap',
     'j-hui/fidget.nvim',
-    -- dependencies = {
-    --   "supermaven-inc/supermaven-nvim",
-    -- },
-    config = function ()
-      require("fidget").setup({})
+  },
+  config = function ()
+    require("fidget").setup({})
 
-      local cmp_lsp = require('cmp_nvim_lsp')
-      local capabilities = vim.tbl_deep_extend(
-        "force",
-        {},
-        vim.lsp.protocol.make_client_capabilities(),
-        cmp_lsp.default_capabilities()
-      )
+    local lsp_servers = { 'tsgo', 'lua_ls', 'gopls', 'bashls', 'rust_analyzer', 'clangd', 'html', 'cssls', 'tailwindcss' }
 
-      vim.lsp.config('*', {
-        capabilities = capabilities,
-      })
+    vim.lsp.enable(lsp_servers)
 
-      local lsp_servers = { 'tsgo', 'lua_ls', 'gopls', 'bashls', 'rust_analyzer', 'clangd', 'html', 'cssls', 'tailwindcss' }
+    vim.diagnostic.config({
+      update_in_insert = true,
+      float = {
+        focusable = false,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
+      }
+    })
 
-      -- for _, server in ipairs(lsp_servers) do
-      --   local ok, config = pcall(require, 'vybhavab.lsp.' .. server)
-      --   if ok then
-      --     vim.lsp.config(server, config)
-      --   end
-      -- end
-
-      vim.lsp.config('tailwindcss', {
-        workspace_required = false,
-      })
-
-      vim.lsp.enable(lsp_servers)
-
-      local cmp = require('cmp')
-      local cmp_select = {behavior = cmp.SelectBehavior.Select}
-      local lspkind = require('lspkind')
-
-
-      cmp.setup({
-        snippet = {
-          expand = function(args)
-            require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-          end,
-        },
-        mapping = cmp.mapping.preset.insert({
-          ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-          ['<C-f>'] = cmp.mapping.scroll_docs(4),
-          ['<C-p>'] = cmp.mapping.select_prev_item(cmp_select),
-          ['<C-n>'] = cmp.mapping.select_next_item(cmp_select),
-          ['<CR>'] = cmp.mapping.confirm({ behavior= cmp.ConfirmBehavior.Replace, select = false }),
-          ['<C-y>'] = cmp.mapping.confirm({ behavior= cmp.ConfirmBehavior.Replace, select = true }),
-          ["<C-Space>"] = cmp.mapping.complete(),
-        }),
-        sources = cmp.config.sources({
-          { name = 'nvim_lsp' },
-          { name = 'luasnip' },
-          { name = 'supermaven' },
-        }, {
-          { name = 'buffer' },
-        }),
-        formatting = {
-          format = lspkind.cmp_format({
-            mode = 'symbol',
-            maxwidth = {
-              menu = 50,
-              abbr = 50,
-            },
-            symbol_map = {
-              Supermaven = "",
-            },
-            ellipsis_char = '...',
-            show_labelDetails = true,
-            before = function (entry, vim_item)
-              return vim_item
+    local util = require "formatter.util"
+    if require("vybhavab.utils.nodePackageReader").check_xo_dependency() then
+      require("formatter").setup({
+        logging = true,
+        log_level = vim.log.levels.WARN,
+        filetype = {
+          javascript = {
+            function()
+              return {
+                exe = "xo",
+                args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
+                stdin = true
+              }
             end
-          })
-        },
-      })
-
-      -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline({ '/', '?' }, {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = {
-          { name = 'buffer' }
-        }
-      })
-
-      -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-      cmp.setup.cmdline(':', {
-        mapping = cmp.mapping.preset.cmdline(),
-        sources = cmp.config.sources({
-          { name = 'path' }
-        }, {
-          { name = 'cmdline' }
-        })
-      })
-
-      vim.diagnostic.config({
-        update_in_insert = true,
-        float = {
-          focusable = false,
-          style = "minimal",
-          border = "rounded",
-          source = "always",
-          header = "",
-          prefix = "",
-        }
-      })
-
-      local util = require "formatter.util"
-      if require("vybhavab.utils.nodePackageReader").check_xo_dependency() then
-        require("formatter").setup({
-          logging = true,
-          log_level = vim.log.levels.WARN,
-          filetype = {
-            javascript = {
-              function()
-                return {
-                  exe = "xo",
-                  args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
-                  stdin = true
-                }
+          },
+          javascriptreact = {
+            function()
+              return {
+                exe = "xo",
+                args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
+                stdin = true
+              }
+            end
+          },
+          typescript = {
+            function()
+              return {
+                exe = "xo",
+                args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
+                stdin = true
+              }
+            end
+          },
+          typescriptreact = {
+            function()
+              return {
+                exe = "xo",
+                args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
+                stdin = true
+              }
+            end
+          },
+          lua = {
+            require("formatter.filetypes.lua").stylua,
+            function()
+              if util.get_current_buffer_file_name() == "special.lua" then
+                return nil
               end
-            },
-            javascriptreact = {
-              function()
-                return {
-                  exe = "xo",
-                  args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
-                  stdin = true
-                }
-              end
-            },
-            typescript = {
-              function()
-                return {
-                  exe = "xo",
-                  args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
-                  stdin = true
-                }
-              end
-            },
-            typescriptreact = {
-              function()
-                return {
-                  exe = "xo",
-                  args = {"--fix", "--stdin", "--stdin-filename", vim.api.nvim_buf_get_name(0)},
-                  stdin = true
-                }
-              end
-            },
-            lua = {
-              require("formatter.filetypes.lua").stylua,
-              function()
-                if util.get_current_buffer_file_name() == "special.lua" then
-                  return nil
-                end
-                return {
-                  exe = "stylua",
-                  args = {
-                    "--search-parent-directories",
-                    "--stdin-filepath",
-                    util.escape_path(util.get_current_buffer_file_path()),
-                    "--",
-                    "-",
-                  },
-                  stdin = true,
-                }
-              end
-            },
-            ["*"] = {
-              require("formatter.filetypes.any").remove_trailing_whitespace
-            }
+              return {
+                exe = "stylua",
+                args = {
+                  "--search-parent-directories",
+                  "--stdin-filepath",
+                  util.escape_path(util.get_current_buffer_file_path()),
+                  "--",
+                  "-",
+                },
+                stdin = true,
+              }
+            end
+          },
+          ["*"] = {
+            require("formatter.filetypes.any").remove_trailing_whitespace
           }
-        })
-      else
+        }
+      })
+    else
       require("formatter").setup({
         logging = true,
         log_level = vim.log.levels.WARN,
@@ -246,6 +147,5 @@ return {
         typescriptreact = {'eslint_d'},
       }
     end
-    end
-  },
+  end
 }

@@ -23,6 +23,5 @@ return {
       require('ts-error-translator').setup()
     end
   },
-  'sbdchd/neoformat',
   'nvim-lua/plenary.nvim',
 }

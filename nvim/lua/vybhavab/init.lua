@@ -43,16 +43,16 @@ autocmd('LspAttach', {
 
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
-    augroup("__formatter__", { clear = true })
-    autocmd("BufWritePost", {
-      group = "__formatter__",
-      command = ":FormatWrite",
-    })
+    -- Format keybinding
+    vim.keymap.set("n", "<leader>f", function()
+      vim.lsp.buf.format({ async = false, timeout_ms = 2000 })
+    end, opts)
 
-    autocmd({ "BufWritePost" }, {
-      group = VybhavABGroup,
+    -- Auto-format on save
+    autocmd("BufWritePre", {
+      buffer = e.buf,
       callback = function()
-        require("lint").try_lint()
+        vim.lsp.buf.format({ bufnr = e.buf, timeout_ms = 2000 })
       end,
     })
   end

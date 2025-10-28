@@ -15,7 +15,7 @@
   "agent": {
     "gpt-planning-": {
       "mode": "primary",
-      "model": "GPT 5 Codex Medium (ChatGPT Subscription)",
+      "model": "openai/gpt-5-codex-medium",
       "prompt": "Act as a principal engineer agent. Your goal is take the task given to you, break, it down into very small specific steps and then launch as many coding sub agents as you want. The sub agents are very dumb and need very specific detailed instructions. The overall goal is to reduce the amount of tokens you use, and use a lot of cheaper tokens to actually execute tasks. You do not have write access so you must use the coding agents.",
       "tools": {
         "write": false,
@@ -25,7 +25,7 @@
     },
     "code-reviewer": {
       "description": "Reviews code for best practices and potential issues",
-      "model": "anthropic/claude-sonnet-4-5-20250929",
+      "model": "anthropic/claude-sonnet-4-5",
       "mode": "subagent",
       "prompt": "You are in code review mode. Focus on code quality, best practices, potential bugs, edge cases, performance implications, security considerations. Provide constructive feedback with improvements. If improvements are localized, you can launch as many coding subagents as you need to improve the codebase. The coding agents are very dumb and need very specific, details instructions. You do not have write access and must use the coding agents.",
       "tools": {
@@ -37,7 +37,7 @@
     "coding": {
       "description": "A cheap coding agent that will do the exact task you give it.",
       "mode": "subagent",
-      "model": "opencode/kimi-k2",
+      "model": "anthropic/claude-haiku-4-5",
       "prompt": "You are a coding sub-agent being controlled by a primary agent. Do ONLY the task you are given and nothing more. You have been given very specific instructions and theres a very high chance the parent agent will do the remaining work after you are done. Just give a summary of what you did at the end",
       "tools": {
         "write": true,
@@ -46,7 +46,7 @@
       }
     }
   },
-  "provider": {
+"provider": {
     "openai": {
       "options": {
         "reasoningEffort": "medium",
@@ -54,77 +54,116 @@
         "textVerbosity": "medium",
         "include": [
           "reasoning.encrypted_content"
-        ]
+        ],
+        "store": false
       },
       "models": {
-        "GPT 5 Codex Low (ChatGPT Subscription)": {
-          "id": "gpt-5-codex",
+        "gpt-5-codex-low": {
+          "name": "GPT 5 Codex Low (OAuth)",
           "options": {
             "reasoningEffort": "low",
             "reasoningSummary": "auto",
-            "textVerbosity": "medium"
+            "textVerbosity": "medium",
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "store": false
           }
         },
-        "GPT 5 Codex Medium (ChatGPT Subscription)": {
-          "id": "gpt-5-codex",
+        "gpt-5-codex-medium": {
+          "name": "GPT 5 Codex Medium (OAuth)",
           "options": {
             "reasoningEffort": "medium",
             "reasoningSummary": "auto",
-            "textVerbosity": "medium"
+            "textVerbosity": "medium",
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "store": false
           }
         },
-        "GPT 5 Codex High (ChatGPT Subscription)": {
-          "id": "gpt-5-codex",
+        "gpt-5-codex-high": {
+          "name": "GPT 5 Codex High (OAuth)",
           "options": {
             "reasoningEffort": "high",
             "reasoningSummary": "detailed",
-            "textVerbosity": "medium"
+            "textVerbosity": "medium",
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "store": false
           }
         },
-        "GPT 5 Minimal (ChatGPT Subscription)": {
-          "id": "gpt-5",
+        "gpt-5-minimal": {
+          "name": "GPT 5 Minimal (OAuth)",
           "options": {
             "reasoningEffort": "minimal",
             "reasoningSummary": "auto",
-            "textVerbosity": "low"
+            "textVerbosity": "low",
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "store": false
           }
         },
-        "GPT 5 Low (ChatGPT Subscription)": {
-          "id": "gpt-5",
+        "gpt-5-low": {
+          "name": "GPT 5 Low (OAuth)",
           "options": {
             "reasoningEffort": "low",
             "reasoningSummary": "auto",
-            "textVerbosity": "low"
+            "textVerbosity": "low",
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "store": false
           }
         },
-        "GPT 5 Medium (ChatGPT Subscription)": {
-          "id": "gpt-5",
+        "gpt-5-medium": {
+          "name": "GPT 5 Medium (OAuth)",
           "options": {
             "reasoningEffort": "medium",
             "reasoningSummary": "auto",
-            "textVerbosity": "medium"
+            "textVerbosity": "medium",
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "store": false
           }
         },
-        "GPT 5 High (ChatGPT Subscription)": {
-          "id": "gpt-5",
+        "gpt-5-high": {
+          "name": "GPT 5 High (OAuth)",
           "options": {
             "reasoningEffort": "high",
             "reasoningSummary": "detailed",
-            "textVerbosity": "high"
+            "textVerbosity": "high",
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "store": false
           }
         },
         "gpt-5-mini": {
+          "name": "GPT 5 Mini (OAuth)",
           "options": {
             "reasoningEffort": "low",
             "reasoningSummary": "auto",
-            "textVerbosity": "low"
+            "textVerbosity": "low",
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "store": false
           }
         },
         "gpt-5-nano": {
+          "name": "GPT 5 Nano (OAuth)",
           "options": {
             "reasoningEffort": "minimal",
             "reasoningSummary": "auto",
-            "textVerbosity": "low"
+            "textVerbosity": "low",
+            "include": [
+              "reasoning.encrypted_content"
+            ],
+            "store": false
           }
         }
       }

@@ -4,19 +4,45 @@
     "opencode-openai-codex-auth"
   ],
   "mcp": {
+    "Sentry": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "mcp-remote@latest",
+        "https://mcp.sentry.dev/mcp"
+      ]
+    },
     "context7": {
       "type": "remote",
       "url": "https://mcp.context7.com/mcp",
       "headers": {
         "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
       }
+    },
+    "github": {
+      "type": "remote",
+      "url": "https://api.githubcopilot.com/mcp",
+      "headers": {
+        "Authorization": "Bearer {env:GITHUB_TOKEN}"
+      }
     }
   },
   "agent": {
-    "gpt-planning-": {
+    "gpt-planning": {
       "mode": "primary",
-      "model": "openai/gpt-5-codex-medium",
+      "model": "openai/gpt-5-codex-high",
       "prompt": "Act as a principal engineer agent. Your goal is take the task given to you, break, it down into very small specific steps and then launch as many coding sub agents as you want. The sub agents are very dumb and need very specific detailed instructions. The overall goal is to reduce the amount of tokens you use, and use a lot of cheaper tokens to actually execute tasks. You do not have write access so you must use the coding agents.",
+      "tools": {
+        "write": false,
+        "edit": true,
+        "bash": true
+      }
+    },
+    "claude-orchestrator": {
+      "mode": "primary",
+      "model": "anthropic/claude-sonnet-4-5",
+      "prompt": "Act as a principal engineer agent. Your goal is take the task given to you, break, it down into very small specific steps and then launch as many coding sub agents as you want. The sub agents are very dumb and need very specific detailed instructions. The overall goal is to reduce the amount of tokens you use, and use a lot of cheaper tokens to actually execute tasks. You do not have write access so you must use the coding agents. When you need documentation you can use context7 to get it.",
       "tools": {
         "write": false,
         "edit": true,
@@ -37,8 +63,8 @@
     "coding": {
       "description": "A cheap coding agent that will do the exact task you give it.",
       "mode": "subagent",
-      "model": "anthropic/claude-haiku-4-5",
-      "prompt": "You are a coding sub-agent being controlled by a primary agent. Do ONLY the task you are given and nothing more. You have been given very specific instructions and theres a very high chance the parent agent will do the remaining work after you are done. Just give a summary of what you did at the end",
+      "model": "opencode/big-pickle",
+      "prompt": "You are a coding sub-agent being controlled by a primary agent. Do ONLY the task you are given and nothing more. You have been given very specific instructions and theres a very high chance the parent agent will do the remaining work after you are done. Just give a summary of what you did at the end. If you are unsure about implementation, use context7 to understand docs. If you are still unsure, tell your orchestrator you need more information",
       "tools": {
         "write": true,
         "edit": true,
@@ -46,7 +72,7 @@
       }
     }
   },
-"provider": {
+  "provider": {
     "openai": {
       "options": {
         "reasoningEffort": "medium",

@@ -4,6 +4,7 @@ require("vybhavab.lazy_init")
 
 local augroup = vim.api.nvim_create_augroup
 local VybhavABGroup = augroup('VybhavAB', {})
+local LspFormatGroup = augroup('LspFormat', { clear = true })
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
@@ -48,8 +49,10 @@ autocmd('LspAttach', {
       vim.lsp.buf.format({ async = false, timeout_ms = 2000 })
     end, opts)
 
-    -- Auto-format on save
+    -- Auto-format on save (use dedicated group to prevent duplicate autocmds)
+    vim.api.nvim_clear_autocmds({ group = LspFormatGroup, buffer = e.buf })
     autocmd("BufWritePre", {
+      group = LspFormatGroup,
       buffer = e.buf,
       callback = function()
         vim.lsp.buf.format({ bufnr = e.buf, timeout_ms = 2000 })

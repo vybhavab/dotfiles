@@ -4,6 +4,15 @@ background-opacity = 0.9
 background-blur = 20
 bold-is-bright = true
 theme = TokyoNight Night
+
+# Font configuration
 font-family = "Zed Plex Mono"
+font-family-bold = "Zed Plex Mono"
+font-family-italic = "Zed Plex Mono"
+font-size = 14
+
+# Window
+window-padding-x = 4
+window-padding-y = 4
 
 keybind = shift+enter=text:\n

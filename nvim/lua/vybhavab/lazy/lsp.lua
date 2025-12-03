@@ -3,20 +3,47 @@ return {
   dependencies = {
     "onsails/lspkind.nvim",
     'saghen/blink.cmp',
-    'rcarriga/nvim-dap-ui',
-    'mfussenegger/nvim-dap',
     'j-hui/fidget.nvim',
   },
-  config = function ()
+  config = function()
     require("fidget").setup({})
 
-    local lsp_servers = { 'tsgo', 'lua_ls', 'gopls', 'bashls', 'rust_analyzer', 'clangd', 'html', 'cssls', 'tailwindcss', 'biome' }
+    local lspconfig_configs = require('lspconfig.configs')
+
+    local lsp_servers = {
+      'ts_ls',
+      'lua_ls',
+      'gopls',
+      'bashls',
+      'rust_analyzer',
+      'clangd',
+      'html',
+      'cssls',
+      'tailwindcss',
+      'eslint',
+      'biome',
+      'basedpyright',
+      'jsonls'
+    }
 
     for _, server in ipairs(lsp_servers) do
       local config_path = 'vybhavab.lsp.' .. server
       local ok, custom_config = pcall(require, config_path)
       if ok then
-        vim.lsp.config(server, custom_config)
+        local merged = custom_config
+
+        -- Extend the default config shipped by nvim-lspconfig instead of replacing it.
+        local has_builtin = pcall(require, 'lspconfig.configs.' .. server)
+        local defaults = has_builtin
+          and lspconfig_configs[server]
+          and lspconfig_configs[server].document_config
+          and lspconfig_configs[server].document_config.default_config
+
+        if defaults then
+          merged = vim.tbl_deep_extend('force', vim.deepcopy(defaults), custom_config)
+        end
+
+        vim.lsp.config(server, merged)
       end
     end
 

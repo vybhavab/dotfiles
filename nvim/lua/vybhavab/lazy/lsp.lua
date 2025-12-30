@@ -12,6 +12,7 @@ return {
 
     local lsp_servers = {
       'ts_ls',
+      'tsgo',
       'lua_ls',
       'gopls',
       'bashls',

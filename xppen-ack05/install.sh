@@ -15,11 +15,11 @@ cp "$SCRIPT_DIR/bin/ack05" ~/.local/bin/ack05
 chmod +x ~/.local/bin/ack05
 
 # Install LaunchAgent (user level) - generate with correct $HOME path
-sed "s|\$HOME|$HOME|g" "$SCRIPT_DIR/com.vybhavab.xppen-ack05.plist" > ~/Library/LaunchAgents/com.vybhavab.xppen-ack05.plist
+sed "s|\$HOME|$HOME|g" "$SCRIPT_DIR/com.vybhavab.ack05.plist" > ~/Library/LaunchAgents/com.vybhavab.ack05.plist
 
 # Unload if already loaded, then load
-launchctl unload ~/Library/LaunchAgents/com.vybhavab.xppen-ack05.plist 2>/dev/null || true
-launchctl load ~/Library/LaunchAgents/com.vybhavab.xppen-ack05.plist
+launchctl unload ~/Library/LaunchAgents/com.vybhavab.ack05.plist 2>/dev/null || true
+launchctl load ~/Library/LaunchAgents/com.vybhavab.ack05.plist
 
 echo ""
 echo "Done! ACK05 controller installed and running."

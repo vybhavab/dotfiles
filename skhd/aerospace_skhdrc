@@ -49,16 +49,27 @@ alt - 8 : ~/.dotfiles/aerospace/bin/goto.sh 8
 alt - 9 : ~/.dotfiles/aerospace/bin/goto.sh 9
 alt - 0 : ~/.dotfiles/aerospace/bin/goto.sh 10
 
-ctrl + alt - 1 : ~/.dotfiles/aerospace/bin/goto.sh 1
-ctrl + alt - 2 : ~/.dotfiles/aerospace/bin/goto.sh 2
-ctrl + alt - 3 : ~/.dotfiles/aerospace/bin/goto.sh 3
-ctrl + alt - 4 : ~/.dotfiles/aerospace/bin/goto.sh 4
-ctrl + alt - 5 : ~/.dotfiles/aerospace/bin/goto.sh 5
-ctrl + alt - 6 : ~/.dotfiles/aerospace/bin/goto.sh 6
-ctrl + alt - 7 : ~/.dotfiles/aerospace/bin/goto.sh 7
-ctrl + alt - 8 : ~/.dotfiles/aerospace/bin/goto.sh 8
-ctrl + alt - 9 : ~/.dotfiles/aerospace/bin/goto.sh 9
-ctrl + alt - 0 : ~/.dotfiles/aerospace/bin/goto.sh 10
+meh - 1 : ~/.dotfiles/aerospace/bin/goto.sh 1
+meh - 2 : ~/.dotfiles/aerospace/bin/goto.sh 2
+meh - 3 : ~/.dotfiles/aerospace/bin/goto.sh 3
+meh - 4 : ~/.dotfiles/aerospace/bin/goto.sh 4
+meh - 5 : ~/.dotfiles/aerospace/bin/goto.sh 5
+meh - 6 : ~/.dotfiles/aerospace/bin/goto.sh 6
+meh - 7 : ~/.dotfiles/aerospace/bin/goto.sh 7
+meh - 8 : ~/.dotfiles/aerospace/bin/goto.sh 8
+meh - 9 : ~/.dotfiles/aerospace/bin/goto.sh 9
+meh - 0 : ~/.dotfiles/aerospace/bin/goto.sh 10
+
+# ctrl + alt - 1 : ~/.dotfiles/aerospace/bin/goto.sh 1
+# ctrl + alt - 2 : ~/.dotfiles/aerospace/bin/goto.sh 2
+# ctrl + alt - 3 : ~/.dotfiles/aerospace/bin/goto.sh 3
+# ctrl + alt - 4 : ~/.dotfiles/aerospace/bin/goto.sh 4
+# ctrl + alt - 5 : ~/.dotfiles/aerospace/bin/goto.sh 5
+# ctrl + alt - 6 : ~/.dotfiles/aerospace/bin/goto.sh 6
+# ctrl + alt - 7 : ~/.dotfiles/aerospace/bin/goto.sh 7
+# ctrl + alt - 8 : ~/.dotfiles/aerospace/bin/goto.sh 8
+# ctrl + alt - 9 : ~/.dotfiles/aerospace/bin/goto.sh 9
+# ctrl + alt - 0 : ~/.dotfiles/aerospace/bin/goto.sh 10
 
 # Move window to workspace
 alt + shift - 1 : aerospace move-node-to-workspace 1 --focus-follows-window
@@ -72,16 +83,27 @@ alt + shift - 8 : aerospace move-node-to-workspace 8 --focus-follows-window
 alt + shift - 9 : aerospace move-node-to-workspace 9 --focus-follows-window
 alt + shift - 0 : aerospace move-node-to-workspace 10 --focus-follows-window
 
-cmd + ctrl + alt - 1 : aerospace move-node-to-workspace 1 --focus-follows-window
-cmd + ctrl + alt - 2 : aerospace move-node-to-workspace 2 --focus-follows-window
-cmd + ctrl + alt - 3 : aerospace move-node-to-workspace 3 --focus-follows-window
-cmd + ctrl + alt - 4 : aerospace move-node-to-workspace 4 --focus-follows-window
-cmd + ctrl + alt - 5 : aerospace move-node-to-workspace 5 --focus-follows-window
-cmd + ctrl + alt - 6 : aerospace move-node-to-workspace 6 --focus-follows-window
-cmd + ctrl + alt - 7 : aerospace move-node-to-workspace 7 --focus-follows-window
-cmd + ctrl + alt - 8 : aerospace move-node-to-workspace 8 --focus-follows-window
-cmd + ctrl + alt - 9 : aerospace move-node-to-workspace 9 --focus-follows-window
-cmd + ctrl + alt - 0 : aerospace move-node-to-workspace 10 --focus-follows-window
+hyper - 1 : aerospace move-node-to-workspace 1 --focus-follows-window
+hyper - 2 : aerospace move-node-to-workspace 2 --focus-follows-window
+hyper - 3 : aerospace move-node-to-workspace 3 --focus-follows-window
+hyper - 4 : aerospace move-node-to-workspace 4 --focus-follows-window
+hyper - 5 : aerospace move-node-to-workspace 5 --focus-follows-window
+hyper - 6 : aerospace move-node-to-workspace 6 --focus-follows-window
+hyper - 7 : aerospace move-node-to-workspace 7 --focus-follows-window
+hyper - 8 : aerospace move-node-to-workspace 8 --focus-follows-window
+hyper - 9 : aerospace move-node-to-workspace 9 --focus-follows-window
+hyper - 0 : aerospace move-node-to-workspace 10 --focus-follows-window
+
+# cmd + ctrl + alt - 1 : aerospace move-node-to-workspace 1 --focus-follows-window
+# cmd + ctrl + alt - 2 : aerospace move-node-to-workspace 2 --focus-follows-window
+# cmd + ctrl + alt - 3 : aerospace move-node-to-workspace 3 --focus-follows-window
+# cmd + ctrl + alt - 4 : aerospace move-node-to-workspace 4 --focus-follows-window
+# cmd + ctrl + alt - 5 : aerospace move-node-to-workspace 5 --focus-follows-window
+# cmd + ctrl + alt - 6 : aerospace move-node-to-workspace 6 --focus-follows-window
+# cmd + ctrl + alt - 7 : aerospace move-node-to-workspace 7 --focus-follows-window
+# cmd + ctrl + alt - 8 : aerospace move-node-to-workspace 8 --focus-follows-window
+# cmd + ctrl + alt - 9 : aerospace move-node-to-workspace 9 --focus-follows-window
+# cmd + ctrl + alt - 0 : aerospace move-node-to-workspace 10 --focus-follows-window
 
 # Workspace switching
 alt - tab : aerospace workspace-back-and-forth

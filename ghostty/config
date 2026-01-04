@@ -16,3 +16,4 @@ window-padding-x = 4
 window-padding-y = 4
 
 keybind = shift+enter=text:\n
+keybind = global:cmd+backquote=toggle_quick_terminal

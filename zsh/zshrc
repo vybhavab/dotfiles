@@ -49,3 +49,4 @@ export PATH="$HOME/.codeium/windsurf/bin:$PATH"
 
 # Antigravity
 export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+eval "$(mise activate zsh)"

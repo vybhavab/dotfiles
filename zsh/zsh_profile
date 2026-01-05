@@ -12,6 +12,9 @@ export MANPATH="/usr/local/man:$MANPATH"
 # SSH Keys
 export SSH_KEY_PATH="~/.ssh/id_rsa"
 
+# Custom completions
+fpath=("$HOME/.zsh/completions" $fpath)
+
 #Alias
 source ~/.zsh_alias
 autoload -Uz compinit && compinit

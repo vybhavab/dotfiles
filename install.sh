@@ -2,8 +2,9 @@
 #
 # Dotfiles installer
 # Usage:
-#   ./install.sh                     # install everything
-#   FILTER="nvim mise zsh" ./install.sh  # install only specific packages
+#   ./install.sh                          # install everything
+#   ./install.sh -h | --help              # show available packages
+#   FILTER="nvim mise zsh" ./install.sh   # install only specific packages
 #   curl -fsSL https://raw.githubusercontent.com/YOUR_USERNAME/dotfiles/main/install.sh | bash
 #
 set -e
@@ -13,6 +14,94 @@ set -e
 # ============================================================================
 DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
 FILTER="${FILTER:-}"
+
+# ============================================================================
+# AVAILABLE PACKAGES
+# ============================================================================
+ALL_PACKAGES=(
+    git
+    brew
+    mise
+    bun
+    zsh
+    nvim
+    tmux
+    lazygit
+    kitty
+    ghostty
+    alacritty
+    wezterm
+    fzf
+    ripgrep
+    bat
+    jq
+    htop
+    opencode
+    oh_my_opencode
+    aerospace
+    yabai
+    skhd
+    sketchybar
+    i3
+    autorandr
+    scripts
+    screen
+    hyper
+    barik
+    macos_defaults
+    effect_solutions
+)
+
+show_help() {
+    cat << 'EOF'
+Dotfiles Installer
+
+USAGE:
+    ./install.sh                          Install all packages
+    ./install.sh -h | --help              Show this help message
+    FILTER="pkg1 pkg2" ./install.sh       Install only specified packages
+
+AVAILABLE PACKAGES:
+    git              Git (via xcode-select on macOS)
+    brew             Homebrew (macOS only)
+    mise             mise version manager + tools from mise.toml
+    bun              Bun JavaScript runtime
+    zsh              Zsh + Oh My Zsh + plugins
+    nvim             Neovim + config
+    tmux             Tmux + TPM + config
+    lazygit          Lazygit terminal UI for git
+    kitty            Kitty terminal
+    ghostty          Ghostty terminal (macOS only)
+    alacritty        Alacritty terminal
+    wezterm          WezTerm terminal
+    fzf              Fuzzy finder
+    ripgrep          Fast grep alternative
+    bat              Cat with syntax highlighting
+    jq               JSON processor
+    htop             Interactive process viewer
+    opencode         OpenCode AI coding assistant
+    oh_my_opencode   Oh My OpenCode (requires bun, opencode)
+    aerospace        AeroSpace window manager (macOS only)
+    yabai            Yabai window manager (macOS only)
+    skhd             Simple hotkey daemon (macOS only)
+    sketchybar       SketchyBar status bar (macOS only)
+    i3               i3 window manager (Linux only)
+    autorandr        Auto display configuration (Linux only)
+    scripts          Custom scripts to ~/.local/bin
+    screen           GNU Screen + config
+    hyper            Hyper terminal config
+    barik            Barik config (macOS only)
+    macos_defaults   macOS system defaults (macOS only)
+    effect_solutions Effect-TS solutions CLI + source
+
+EXAMPLES:
+    FILTER="nvim zsh tmux" ./install.sh
+    FILTER="mise bun" ./install.sh
+    FILTER="aerospace skhd sketchybar" ./install.sh
+
+EOF
+    exit 0
+}
 
 # ============================================================================
 # HELPERS
@@ -327,6 +416,34 @@ pkg_oh_my_opencode() {
     fi
 }
 
+pkg_effect_solutions() {
+    depends_on bun
+    
+    # Install effect-solutions CLI globally
+    if ! command -v effect-solutions &>/dev/null; then
+        bun add -g effect-solutions
+    else
+        ok "effect-solutions already installed"
+    fi
+    
+    # Zsh completions
+    local COMPLETIONS_DIR="$HOME/.zsh/completions"
+    mkdir -p "$COMPLETIONS_DIR"
+    effect-solutions --completions zsh > "$COMPLETIONS_DIR/_effect-solutions"
+    ok "effect-solutions zsh completions installed"
+    
+    # Clone Effect source repository for AI reference
+    local EFFECT_DIR="$HOME/.local/share/effect-solutions/effect"
+    if [ ! -d "$EFFECT_DIR" ]; then
+        info "cloning Effect source repository..."
+        mkdir -p "$(dirname "$EFFECT_DIR")"
+        git clone --depth 1 https://github.com/Effect-TS/effect.git "$EFFECT_DIR"
+    else
+        ok "Effect source already cloned"
+        (cd "$EFFECT_DIR" && git pull --ff-only 2>/dev/null || true)
+    fi
+}
+
 pkg_aerospace() {
     [ "$PLATFORM" != "macos" ] && return 0
     
@@ -416,41 +533,11 @@ pkg_macos_defaults() {
 # MAIN
 # ============================================================================
 
-# All available packages (order matters for defaults)
-ALL_PACKAGES=(
-    git
-    brew
-    mise
-    bun
-    zsh
-    nvim
-    tmux
-    lazygit
-    kitty
-    ghostty
-    alacritty
-    wezterm
-    fzf
-    ripgrep
-    bat
-    jq
-    htop
-    opencode
-    oh_my_opencode
-    aerospace
-    yabai
-    skhd
-    sketchybar
-    i3
-    autorandr
-    scripts
-    screen
-    hyper
-    barik
-    macos_defaults
-)
-
 main() {
+    case "${1:-}" in
+        -h|--help) show_help ;;
+    esac
+
     echo ""
     echo "┌─────────────────────────────────────┐"
     echo "│         dotfiles installer          │"

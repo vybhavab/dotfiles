@@ -24,10 +24,55 @@ hydrate() {
     fi
 }
 
+list_worktrees() {
+    local search_roots=("$HOME/.dotfiles" "$HOME/projects")
+    local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}"
+    local cache_file="$cache_dir/tmux-sessionizer-worktrees"
+    local cache_ttl=5
+    local now
+    local last
+    local git_roots=()
+    local worktrees=()
+
+    mkdir -p "$cache_dir"
+    now=$(date +%s)
+
+    if [[ -f "$cache_file" ]]; then
+        last=$(stat -f %m "$cache_file" 2>/dev/null || echo 0)
+        if [[ -n "$last" && $((now - last)) -lt $cache_ttl ]]; then
+            cat "$cache_file"
+            return
+        fi
+    fi
+
+    while IFS= read -r -d '' git_entry; do
+        git_roots+=("$(dirname "$git_entry")")
+    done < <(find "${search_roots[@]}" -mindepth 2 -maxdepth 4 \
+        -type d -name ".git" -print0 -prune -o \
+        -type f -name ".git" -print0 -o \
+        -type d \( -name "node_modules" -o -name ".bare" -o -name ".next" -o -name "dist" -o -name "build" -o -name ".turbo" -o -name ".cache" -o -name ".pnpm-store" \) -prune -o \
+        -false 2>/dev/null)
+
+    for repo in "${git_roots[@]}"; do
+        while IFS= read -r line; do
+            if [[ "$line" == worktree\ * ]]; then
+                worktrees+=("${line#worktree }")
+            fi
+        done < <(git -C "$repo" worktree list --porcelain 2>/dev/null)
+    done
+
+    if [[ ${#worktrees[@]} -gt 0 ]]; then
+        printf '%s\n' "${worktrees[@]}" | sort -u | tee "$cache_file"
+        return
+    fi
+
+    find "${search_roots[@]}" -mindepth 1 -maxdepth 2 -type d -not \( -name ".git" -o -name "node_modules" -o -name ".bare" \) 2>/dev/null | tee "$cache_file"
+}
+
 if [[ $# -eq 1 ]]; then
     selected=$1
 else
-    selected=$(find ~/.dotfiles ~/projects -mindepth 1 -maxdepth 2 -type d -not \( -name ".git" -o -name "node_modules" -o -name ".bare" \) | fzf)
+    selected=$(list_worktrees | fzf)
 fi
 
 if [[ -z $selected ]]; then
@@ -35,6 +80,17 @@ if [[ -z $selected ]]; then
 fi
 
 selected_name=$(basename "$selected" | tr . _)
+
+if git -C "$selected" rev-parse --is-inside-work-tree >/dev/null 2>&1; then
+    branch=$(git -C "$selected" rev-parse --abbrev-ref HEAD 2>/dev/null)
+    if [[ -z "$branch" || "$branch" == "HEAD" ]]; then
+        short_sha=$(git -C "$selected" rev-parse --short HEAD 2>/dev/null)
+        branch="detached-${short_sha:-unknown}"
+    fi
+    safe_branch=$(echo "$branch" | tr '/.' '__')
+    selected_name="${selected_name}__${safe_branch}"
+fi
+
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then

@@ -4,6 +4,13 @@ return {
   'kyazdani42/nvim-web-devicons',
   'tpope/vim-fugitive',
   {
+    'ThePrimeagen/git-worktree.nvim',
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('git-worktree').setup()
+    end
+  },
+  {
     'lewis6991/gitsigns.nvim',
     config = function ()
       require('gitsigns').setup({

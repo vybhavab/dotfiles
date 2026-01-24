@@ -11,7 +11,7 @@ return {
     local lspconfig_configs = require('lspconfig.configs')
 
     local lsp_servers = {
-      'ts_ls',
+      --'ts_ls',
       'tsgo',
       'lua_ls',
       'gopls',
@@ -36,9 +36,9 @@ return {
         -- Extend the default config shipped by nvim-lspconfig instead of replacing it.
         local has_builtin = pcall(require, 'lspconfig.configs.' .. server)
         local defaults = has_builtin
-          and lspconfig_configs[server]
-          and lspconfig_configs[server].document_config
-          and lspconfig_configs[server].document_config.default_config
+            and lspconfig_configs[server]
+            and lspconfig_configs[server].document_config
+            and lspconfig_configs[server].document_config.default_config
 
         if defaults then
           merged = vim.tbl_deep_extend('force', vim.deepcopy(defaults), custom_config)

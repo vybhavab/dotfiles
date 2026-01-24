@@ -1,19 +1,13 @@
 clipboard-read = allow
 clipboard-write = allow
-background-opacity = 0.9
-background-blur = 20
-bold-is-bright = true
-theme = TokyoNight Night
+background-opacity = 0.85
+background-blur = 40
+theme = Ayu
 
 # Font configuration
-font-family = "Zed Plex Mono"
+font-family = "Departure Mono"
 font-family-bold = "Zed Plex Mono"
-font-family-italic = "Zed Plex Mono"
 font-size = 14
-
-# Window
-window-padding-x = 4
-window-padding-y = 4
 
 keybind = shift+enter=text:\n
 keybind = global:cmd+backquote=toggle_quick_terminal

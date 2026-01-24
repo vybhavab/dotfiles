@@ -11,6 +11,3 @@ pnpm
 bash-language-server
 ccstatusline
 
-
-typescript typescript-language-server vscode-langservers-extracted @tailwindcss/language-server yarn eslint_d @fsouza/prettierd tldr pnpm @anthropic-ai/claude-code pm2 @typescript/native-preview bash-language-server ccstatusline
-

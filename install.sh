@@ -393,12 +393,7 @@ pkg_opencode() {
     if command -v opencode &>/dev/null; then
         ok "opencode already installed"
     else
-        if [ "$PLATFORM" = "macos" ]; then
-            depends_on brew
-            brew tap sst/tap && brew install opencode
-        else
-            curl -fsSL https://opencode.ai/install | bash
-        fi
+        curl -fsSL https://opencode.ai/install | bash
     fi
     
     mklink "$DOTFILES/opencode" "$HOME/.config/opencode"

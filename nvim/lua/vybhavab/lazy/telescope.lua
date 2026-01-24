@@ -3,6 +3,7 @@ return {
     'nvim-telescope/telescope.nvim',
     config = function ()
       local builtin = require('telescope.builtin')
+      local telescope = require('telescope')
       vim.keymap.set('n', '<leader>pf', builtin.find_files, {})
       vim.keymap.set('n', '<C-p>', function()
         builtin.git_files({
@@ -29,6 +30,16 @@ return {
       vim.keymap.set('n', '<leader>pg', builtin.live_grep, { desc = 'Telescope live grep' })
 
       vim.keymap.set('n', '<leader>ht', builtin.help_tags, {})
+
+      telescope.load_extension('git_worktree')
+
+      vim.keymap.set('n', '<leader>gw', function()
+        telescope.extensions.git_worktree.git_worktrees()
+      end)
+
+      vim.keymap.set('n', '<leader>gW', function()
+        telescope.extensions.git_worktree.create_git_worktree()
+      end)
     end
   },
 }

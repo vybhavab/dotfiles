@@ -3,7 +3,7 @@ export ZSH="$HOME/.oh-my-zsh"
 ZSH_THEME="robbyrussell"
 
 # Light plugins load normally, heavy plugins deferred below
-plugins=(autojump virtualenv last-working-dir asdf direnv git)
+plugins=(autojump virtualenv last-working-dir direnv git)
 
 source $ZSH/oh-my-zsh.sh
 

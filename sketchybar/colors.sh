@@ -1,44 +1,44 @@
 #!/bin/bash
 
-### Ultra Rich Color Theme
+### TokyoNight Night Color Theme
 
-# Deep, saturated base colors
-export BLACK=0xff101014
-export WHITE=0xfff9f9fa
-export RED=0xffff5370
-export GREEN=0xffb9f27c
-export BLUE=0xff82aaff
-export YELLOW=0xffffcb6b
-export ORANGE=0xffff966c
-export MAGENTA=0xffc792ea
-export CYAN=0xff89ddff
-export PURPLE=0xffbb80b3
-export GREY=0xff6c7086
-export LIGHT_GREY=0xffc3c7d1
-export DARK_GREY=0xff232634
+# Base colors
+export BLACK=0xff1a1b26
+export WHITE=0xffc0caf5
+export RED=0xfff7768e
+export GREEN=0xff9ece6a
+export BLUE=0xff7aa2f7
+export YELLOW=0xffe0af68
+export ORANGE=0xffff9e64
+export MAGENTA=0xffbb9af7
+export CYAN=0xff7dcfff
+export TEAL=0xff73daca
+export GREY=0xff565f89
+export LIGHT_GREY=0xffa9b1d6
+export DARK_GREY=0xff24283b
 export TRANSPARENT=0x00000000
 
-# Specialized ultra-rich colors
-export BATTERY_1=0xffb9f27c  # Ultra Rich Green - Full
-export BATTERY_2=0xffffcb6b  # Ultra Rich Yellow - High
-export BATTERY_3=0xffff966c  # Ultra Rich Orange - Medium
-export BATTERY_4=0xffff5370  # Ultra Rich Red - Low
-export BATTERY_5=0xffd7263d  # Ultra Deep Red - Critical
+# Battery level colors
+export BATTERY_1=0xff9ece6a  # Green - Full
+export BATTERY_2=0xffe0af68  # Yellow - High
+export BATTERY_3=0xffff9e64  # Orange - Medium
+export BATTERY_4=0xfff7768e  # Red - Low
+export BATTERY_5=0xffdb4b4b  # Deep Red - Critical
 
 # General bar colors
-export BAR_COLOR=$TRANSPARENT             # Transparent bar
-export BAR_BORDER_COLOR=0xff2a2a2a        # Dark grey border
-export BACKGROUND_1=0xff1e1e1e            # Pure dark grey background for items
-export BACKGROUND_2=0xff2a2a2a            # Slightly lighter dark grey for borders
-export ICON_COLOR=$WHITE                  # Ultra white icons
-export LABEL_COLOR=$WHITE                 # Ultra white labels
-export POPUP_BACKGROUND_COLOR=0xff232634  # Ultra rich dark popup background
-export POPUP_BORDER_COLOR=0xff82aaff      # Ultra rich blue popup border
-export SHADOW_COLOR=$BLACK                # Ultra black shadows
+export BAR_COLOR=$TRANSPARENT
+export BAR_BORDER_COLOR=0xff292e42
+export BACKGROUND_1=0xff24283b
+export BACKGROUND_2=0xff292e42
+export ICON_COLOR=$WHITE
+export LABEL_COLOR=$WHITE
+export POPUP_BACKGROUND_COLOR=0xff24283b
+export POPUP_BORDER_COLOR=0xff7aa2f7
+export SHADOW_COLOR=$BLACK
 
-# Ultra rich accent colors
-export ACCENT_PRIMARY=0xff82aaff          # Ultra Rich Blue
-export ACCENT_SECONDARY=0xffb9f27c        # Ultra Rich Green
-export ACCENT_TERTIARY=0xffff966c         # Ultra Rich Orange
-export ACCENT_QUATERNARY=0xffc792ea       # Ultra Rich Purple
-export ACCENT_PINK=0xffff79c6             # Ultra Rich Pink
+# Accent colors
+export ACCENT_PRIMARY=0xff7aa2f7    # Blue
+export ACCENT_SECONDARY=0xff9ece6a  # Green
+export ACCENT_TERTIARY=0xffff9e64   # Orange
+export ACCENT_QUATERNARY=0xffbb9af7 # Magenta
+export ACCENT_PINK=0xfff7768e       # Red/Pink

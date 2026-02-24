@@ -1,12 +1,12 @@
 #!/bin/bash
 
-# Modern aesthetic sketchybar configuration with aerospace integration
-# Colors and icons are defined in separate files for better organization
+# Simplified sketchybar config with TokyoNight theme + aerospace workspaces
 
 source "$CONFIG_DIR/colors.sh"
 source "$CONFIG_DIR/icons.sh"
 
 PLUGIN_DIR="$CONFIG_DIR/plugins"
+NERD_FONT="Symbols Nerd Font:Regular"
 
 ##### Bar Appearance #####
 sketchybar --bar position=top height=42 \
@@ -19,12 +19,13 @@ sketchybar --bar position=top height=42 \
                  padding_right=16 \
                  shadow=off \
                  sticky=on \
-                 topmost=window
+                 topmost=window \
+                 notch_width=200
 
 ##### Changing Defaults #####
 default=(
   updates=when_shown
-  icon.font="SF Pro:Semibold:15.0"
+  icon.font="$NERD_FONT:15.0"
   icon.color=$ICON_COLOR
   icon.padding_left=6
   icon.padding_right=6
@@ -46,154 +47,48 @@ default=(
 
 sketchybar --default "${default[@]}"
 
-##### Left Side Items #####
+##### Left Side — Aerospace Workspace Indicators #####
 
-# Apple Logo
-sketchybar --add item apple.logo left \
-           --set apple.logo icon=$APPLE \
-                           icon.font="SF Pro:Black:16.0" \
-                           icon.color=$ACCENT_SECONDARY \
-                           padding_right=12 \
-                           padding_left=4 \
-                           label.drawing=off \
-                           click_script="$PLUGIN_DIR/apple.sh"
-
-# Aerospace Display-Aware Workspaces
 sketchybar --add event aerospace_workspace_change
 
-# Monitor 1 Workspace Indicator (Primary - Built-in Display)
-sketchybar --add item monitor_1_workspace left \
-           --subscribe monitor_1_workspace aerospace_workspace_change \
-           --set monitor_1_workspace \
-                 icon="M1:4" \
-                 icon.font="SF Pro:Medium:12.0" \
-                 icon.color=$GREY \
-                 icon.padding_left=8 \
-                 icon.padding_right=8 \
-                 label.drawing=off \
-                 padding_left=4 \
-                 padding_right=4 \
-                 background.color=$BACKGROUND_1 \
-                 background.corner_radius=6 \
-                 background.height=26 \
-                 background.drawing=on \
-                 script="$PLUGIN_DIR/aerospace_display.sh"
+# Build monitor ID mapping: aerospace monitor-id -> sketchybar display ID (NSScreen)
+declare -A monitor_map
+while IFS=" " read -r aero_id nsscreen_id; do
+  monitor_map["$aero_id"]="$nsscreen_id"
+done < <(aerospace list-monitors --format '%{monitor-id} %{monitor-appkit-nsscreen-screens-id}' 2>/dev/null)
 
-# # Monitor 2 Workspace Indicator (External - MAG 274UPF E2)
-# sketchybar --add item monitor_2_workspace left \
-#            --subscribe monitor_2_workspace aerospace_workspace_change \
-#            --set monitor_2_workspace \
-#                  icon="M2:1" \
-#                  icon.font="SF Pro:Medium:12.0" \
-#                  icon.color=$GREY \
-#                  icon.padding_left=8 \
-#                  icon.padding_right=8 \
-#                  label.drawing=off \
-#                  padding_left=4 \
-#                  padding_right=4 \
-#                  background.color=$BACKGROUND_1 \
-#                  background.corner_radius=6 \
-#                  background.height=26 \
-#                  background.drawing=on \
-#                  script="$PLUGIN_DIR/aerospace_display.sh"
+# Create workspace items, assigning each to the correct display
+for aero_monitor_id in $(echo "${!monitor_map[@]}" | tr ' ' '\n' | sort -n); do
+  display_id="${monitor_map[$aero_monitor_id]}"
+  for sid in $(aerospace list-workspaces --monitor "$aero_monitor_id" 2>/dev/null); do
+    sketchybar --add item space.$sid left \
+               --subscribe space.$sid aerospace_workspace_change \
+               --set space.$sid \
+                     display="$display_id" \
+                     icon="$sid" \
+                     icon.font="SF Pro:Bold:13.0" \
+                     icon.color=$GREY \
+                     icon.padding_left=10 \
+                     icon.padding_right=10 \
+                     label.drawing=off \
+                     padding_left=2 \
+                     padding_right=2 \
+                     background.color=$BACKGROUND_1 \
+                     background.corner_radius=6 \
+                     background.height=26 \
+                     background.drawing=on \
+                     background.border_width=0 \
+                     click_script="aerospace workspace $sid" \
+                     script="$PLUGIN_DIR/aerospace.sh $sid"
+  done
+done
 
-# Monitor Connection Watcher (detects when monitors are connected/disconnected)
-sketchybar --add item monitor_watcher left \
-           --set monitor_watcher \
-                 drawing=off \
-                 update_freq=5 \
-                 script="$PLUGIN_DIR/monitor_watcher.sh"
+##### Right Side Items (rightmost first) #####
 
-# Separator
-sketchybar --add item separator left \
-           --set separator icon="󰇙" \
-                          icon.font="SF Pro:Regular:16.0" \
-                          icon.color=$ACCENT_TERTIARY \
-                          padding_left=12 \
-                          padding_right=8 \
-                          label.drawing=off
-
-# Front App
-sketchybar --add item front_app left \
-           --set front_app icon.drawing=on \
-                          icon.font="SF Pro:Semibold:15.0" \
-                          icon.color=$ACCENT_QUATERNARY \
-                          icon.padding_left=6 \
-                          icon.padding_right=8 \
-                          label.font="SF Pro:Medium:13.0" \
-                          label.color=$WHITE \
-                          label.padding_left=4 \
-                          label.padding_right=8 \
-                          padding_left=8 \
-                          padding_right=8 \
-                          script="$PLUGIN_DIR/front_app.sh" \
-           --subscribe front_app front_app_switched
-
-# Calendar Events
-sketchybar --add item calendar right \
-           --set calendar icon.font="SF Pro:Semibold:12.0" \
-                          icon.padding_left=8 \
-                          icon.padding_right=6 \
-                          label.font="SF Pro:Medium:10.0" \
-                          label.padding_left=4 \
-                          label.padding_right=8 \
-                          label.max_chars=25 \
-                          update_freq=300 \
-                          script="$PLUGIN_DIR/calendar.sh" \
-                          background.color=$BACKGROUND_1 \
-                          background.drawing=on \
-                          background.height=26 \
-                          padding_left=4 \
-                          padding_right=4
-
-# Now Playing
-sketchybar --add item now_playing right \
-           --set now_playing icon.font="SF Pro:Semibold:15.0" \
-                            icon.padding_left=8 \
-                            icon.padding_right=6 \
-                            label.font="SF Pro:Medium:12.0" \
-                            label.padding_left=4 \
-                            label.padding_right=8 \
-                            update_freq=2 \
-                            script="$PLUGIN_DIR/now_playing.sh" \
-                            background.color=$BACKGROUND_1 \
-                            background.drawing=on \
-                            drawing=off \
-                            padding_left=4 \
-                            padding_right=4
-
-
-
-# WiFi Status
-sketchybar --add item wifi right \
-           --set wifi icon.font="SF Pro:Semibold:15.0" \
-                      icon.padding_left=8 \
-                      icon.padding_right=8 \
-                      label.drawing=off \
-                      update_freq=10 \
-                      script="$PLUGIN_DIR/wifi.sh" \
-                      background.color=$BACKGROUND_1 \
-                      background.drawing=on \
-                      padding_left=4 \
-                      padding_right=4
-
-# Bluetooth Status
-sketchybar --add item bluetooth right \
-           --set bluetooth icon.font="SF Pro:Semibold:15.0" \
-                          icon.padding_left=9 \
-                          icon.padding_right=9 \
-                          label.drawing=off \
-                          update_freq=10 \
-                          script="$PLUGIN_DIR/bluetooth.sh" \
-                          background.color=$BACKGROUND_1 \
-                          background.drawing=on \
-                          padding_left=4 \
-                          padding_right=4
-
-# Clock
+# Clock (rightmost)
 sketchybar --add item clock right \
            --set clock icon="󰅐" \
-                       icon.font="SF Pro:Semibold:15.0" \
+                       icon.font="$NERD_FONT:15.0" \
                        icon.color=$YELLOW \
                        icon.padding_left=8 \
                        icon.padding_right=6 \
@@ -206,12 +101,29 @@ sketchybar --add item clock right \
                        background.color=$BACKGROUND_1 \
                        background.drawing=on \
                        padding_left=4 \
-                       padding_right=4 \
-                       click_script="$PLUGIN_DIR/clock_click.sh"
+                       padding_right=4
+
+# Battery
+sketchybar --add item battery right \
+           --set battery icon.font="$NERD_FONT:15.0" \
+                        icon.color=$ACCENT_SECONDARY \
+                        icon.padding_left=8 \
+                        icon.padding_right=6 \
+                        label.font="SF Pro:Medium:12.0" \
+                        label.color=$WHITE \
+                        label.padding_left=4 \
+                        label.padding_right=8 \
+                        update_freq=120 \
+                        script="$PLUGIN_DIR/battery.sh" \
+                        background.color=$BACKGROUND_1 \
+                        background.drawing=on \
+                        padding_left=4 \
+                        padding_right=4 \
+           --subscribe battery system_woke power_source_change
 
 # Volume
 sketchybar --add item volume right \
-           --set volume icon.font="SF Pro:Semibold:15.0" \
+           --set volume icon.font="$NERD_FONT:15.0" \
                         icon.color=$ACCENT_PRIMARY \
                         icon.padding_left=10 \
                         icon.padding_right=12 \
@@ -229,39 +141,78 @@ sketchybar --add item volume right \
                         popup.horizontal=on \
            --subscribe volume volume_change
 
-# Battery
-sketchybar --add item battery right \
-           --set battery icon.font="SF Pro:Semibold:15.0" \
-                        icon.color=$ACCENT_SECONDARY \
-                        icon.padding_left=8 \
-                        icon.padding_right=6 \
-                        label.font="SF Pro:Medium:12.0" \
-                        label.color=$WHITE \
-                        label.padding_left=4 \
-                        label.padding_right=8 \
-                        update_freq=120 \
-                        script="$PLUGIN_DIR/battery.sh" \
-                        background.color=$BACKGROUND_1 \
-                        background.drawing=on \
-                        padding_left=4 \
-                        padding_right=4 \
-           --subscribe battery system_woke power_source_change
+# Network (wifi/ethernet)
+sketchybar --add item wifi right \
+           --set wifi icon.font="$NERD_FONT:15.0" \
+                      icon.padding_left=8 \
+                      icon.padding_right=8 \
+                      label.drawing=off \
+                      update_freq=10 \
+                      script="$PLUGIN_DIR/wifi.sh" \
+                      background.color=$BACKGROUND_1 \
+                      background.drawing=on \
+                      padding_left=4 \
+                      padding_right=4
 
-# Weather
-sketchybar --add item weather right \
-           --set weather icon="󰖕" \
-                        icon.font="SF Pro:Semibold:15.0" \
-                        icon.color=$BLUE \
-                        icon.padding_left=8 \
-                        icon.padding_right=6 \
-                        label.padding_left=4 \
-                        label.padding_right=8 \
-                        update_freq=1800 \
-                        script="$PLUGIN_DIR/weather.sh" \
-                        background.color=$BACKGROUND_1 \
-                        background.drawing=on \
-                        padding_left=4 \
-                        padding_right=4
+# Mic
+sketchybar --add item mic right \
+           --subscribe mic mouse.exited.global \
+           --set mic icon.font="$NERD_FONT:15.0" \
+                     icon.padding_left=8 \
+                     icon.padding_right=6 \
+                     label.font="SF Pro:Medium:11.0" \
+                     label.padding_left=4 \
+                     label.padding_right=8 \
+                     update_freq=5 \
+                     script="$PLUGIN_DIR/mic.sh" \
+                     click_script="$PLUGIN_DIR/mic_click.sh" \
+                     background.color=$BACKGROUND_1 \
+                     background.drawing=on \
+                     padding_left=4 \
+                     padding_right=4 \
+                     popup.background.border_width=2 \
+                     popup.background.corner_radius=6 \
+                     popup.background.border_color=$POPUP_BORDER_COLOR \
+                     popup.background.color=$POPUP_BACKGROUND_COLOR
+
+# Calendar Events
+sketchybar --add item calendar right \
+           --subscribe calendar mouse.exited.global \
+           --set calendar icon.font="$NERD_FONT:16.0" \
+                          icon.padding_left=8 \
+                          icon.padding_right=6 \
+                          label.font="SF Pro:Medium:13.0" \
+                          label.padding_left=4 \
+                          label.padding_right=10 \
+                          label.max_chars=40 \
+                          update_freq=60 \
+                          script="$PLUGIN_DIR/calendar.sh" \
+                          click_script="$PLUGIN_DIR/calendar_click.sh" \
+                          popup.background.border_width=2 \
+                          popup.background.corner_radius=8 \
+                          popup.background.border_color=$POPUP_BORDER_COLOR \
+                          popup.background.color=$POPUP_BACKGROUND_COLOR \
+                          background.color=$BACKGROUND_1 \
+                          background.drawing=on \
+                          background.height=26 \
+                          padding_left=4 \
+                          padding_right=4
+
+# Now Playing (leftmost of right side)
+sketchybar --add item now_playing right \
+           --set now_playing icon.font="$NERD_FONT:15.0" \
+                            icon.padding_left=8 \
+                            icon.padding_right=6 \
+                            label.font="SF Pro:Medium:12.0" \
+                            label.padding_left=4 \
+                            label.padding_right=8 \
+                            update_freq=2 \
+                            script="$PLUGIN_DIR/now_playing.sh" \
+                            background.color=$BACKGROUND_1 \
+                            background.drawing=on \
+                            drawing=on \
+                            padding_left=4 \
+                            padding_right=4
 
 ##### Finalize Setup #####
 sketchybar --update

@@ -15,12 +15,30 @@ has_session() {
 }
 
 hydrate() {
-    if [ -f $2/.tmux-sessionizer ]; then
-        echo "sourcing $2/.tmux-sessionizer"
-        tmux send-keys -t $1 "source $2/.tmux-sessionizer" c-M
-    elif [ -f $HOME/.tmux-sessionizer ]; then
-        echo "sourcing $HOME/.tmux-sessionizer"
-        tmux send-keys -t $1 "source $HOME/.tmux-sessionizer" c-M
+    local session=$1
+    local dir=$2
+    local script=""
+
+    if [ -f "$dir/.tmux-sessionizer" ]; then
+        script="$dir/.tmux-sessionizer"
+    elif [ -f "$HOME/.tmux-sessionizer" ]; then
+        script="$HOME/.tmux-sessionizer"
+    fi
+
+    if [ -n "$script" ]; then
+        echo "sourcing $script"
+        # Wait for shell prompt to be ready (up to 5 seconds)
+        local max_wait=50
+        local i=0
+        while [ $i -lt $max_wait ]; do
+            # Check if pane has content (prompt has appeared)
+            if [ -n "$(tmux capture-pane -t "$session" -p 2>/dev/null | tr -d '[:space:]')" ]; then
+                break
+            fi
+            sleep 0.1
+            i=$((i + 1))
+        done
+        tmux send-keys -t "$session" "source $script" c-M
     fi
 }
 

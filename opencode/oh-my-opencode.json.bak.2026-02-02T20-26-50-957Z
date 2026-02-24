@@ -5,7 +5,7 @@
     "default_builder_enabled": true
   },
   "agents": {
-    "sisyphus": {
+    "Sisyphus": {
       "model": "openai/gpt-5.2"
     },
     "librarian": {

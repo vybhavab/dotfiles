@@ -4,6 +4,11 @@
 after-login-command = []
 start-at-login = true
 
+# Notify sketchybar on workspace change
+exec-on-workspace-change = ['/bin/bash', '-c',
+    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
 # Normalizations
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
@@ -25,7 +30,7 @@ inner.horizontal = 6
 inner.vertical = 6
 outer.left = 6
 outer.bottom = 6
-outer.top = [{ monitor."^built-in retina display$" = 10 }, 6]
+outer.top = [{ monitor."^built-in retina display$" = 10 }, 38]
 outer.right = 6
 
 # Main binding mode (keybindings handled via skhd)
@@ -52,3 +57,22 @@ if.app-id = "com.mitchellh.ghostty"
 run = [
   "layout tiling",
 ]
+
+# Messaging apps → workspace 5
+[[on-window-detected]]
+if.app-id = 'org.whispersystems.signal-desktop'
+run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.MobileSMS'
+run = 'move-node-to-workspace 5'
+
+# Spotify → workspace 6
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = 'move-node-to-workspace 6'
+
+# Notion Calendar → workspace 7
+[[on-window-detected]]
+if.app-id = 'com.cron.electron'
+run = 'move-node-to-workspace 7'

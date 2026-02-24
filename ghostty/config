@@ -2,12 +2,14 @@ clipboard-read = allow
 clipboard-write = allow
 background-opacity = 0.85
 background-blur = 40
-theme = Ayu
+theme = TokyoNight
 
 # Font configuration
-font-family = "Departure Mono"
-font-family-bold = "Zed Plex Mono"
+# font-family = "Departure Mono"
+# font-family-bold = "Zed Plex Mono"
+font-family = "Geist Mono"
 font-size = 14
 
 keybind = shift+enter=text:\n
 keybind = global:cmd+backquote=toggle_quick_terminal
+auto-update-channel = tip

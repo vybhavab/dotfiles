@@ -22,7 +22,7 @@ default-root-container-orientation = 'auto'
 key-mapping.preset = 'qwerty'
 
 # Mouse follows focus when focused monitor changes
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center', 'exec-and-forget /bin/bash -c "sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)"']
 
 # Gaps between windows and monitor edges
 [gaps]

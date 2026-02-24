@@ -51,11 +51,45 @@ sketchybar --default "${default[@]}"
 
 sketchybar --add event aerospace_workspace_change
 
-# Build monitor ID mapping: aerospace monitor-id -> sketchybar display ID (NSScreen)
+# Build correct monitor mapping: aerospace monitor-id -> sketchybar arrangement-id
+# NSScreen ordering (used by aerospace) != sketchybar display ordering
+# Bridge them via CGDirectDisplayID which both APIs share
+
+# Step 1: sketchybar arrangement-id -> CGDirectDisplayID
+declare -A cg_to_arrangement
+while read -r arr_id cg_id; do
+  cg_to_arrangement["$cg_id"]="$arr_id"
+done < <(sketchybar --query displays 2>/dev/null | python3 -c "
+import sys, json
+for d in json.load(sys.stdin):
+    print(d['arrangement-id'], d['DirectDisplayID'])
+")
+
+# Step 2: NSScreen index (1-based, as aerospace reports) -> CGDirectDisplayID
+declare -A nsscreen_to_cg
+while read -r ns_idx cg_id; do
+  nsscreen_to_cg["$ns_idx"]="$cg_id"
+done < <(swift -e '
+import Cocoa
+for (i, screen) in NSScreen.screens.enumerated() {
+    let id = screen.deviceDescription[NSDeviceDescriptionKey("NSScreenNumber")] as! UInt32
+    print("\(i + 1) \(id)")
+}' 2>/dev/null)
+
+# Step 3: aerospace monitor-id -> sketchybar arrangement-id
 declare -A monitor_map
 while IFS=" " read -r aero_id nsscreen_id; do
-  monitor_map["$aero_id"]="$nsscreen_id"
+  cg_id="${nsscreen_to_cg[$nsscreen_id]}"
+  monitor_map["$aero_id"]="${cg_to_arrangement[$cg_id]:-1}"
 done < <(aerospace list-monitors --format '%{monitor-id} %{monitor-appkit-nsscreen-screens-id}' 2>/dev/null)
+
+# Cache NSScreen -> arrangement mapping for plugins (aerospace.sh)
+: > /tmp/sketchybar_nsscreen_to_display
+for ns_id in "${!nsscreen_to_cg[@]}"; do
+  cg_id="${nsscreen_to_cg[$ns_id]}"
+  arr_id="${cg_to_arrangement[$cg_id]}"
+  [ -n "$arr_id" ] && echo "$ns_id $arr_id" >> /tmp/sketchybar_nsscreen_to_display
+done
 
 # Create workspace items, assigning each to the correct display
 for aero_monitor_id in $(echo "${!monitor_map[@]}" | tr ' ' '\n' | sort -n); do

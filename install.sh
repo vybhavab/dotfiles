@@ -276,6 +276,7 @@ pkg_zsh() {
         git clone https://github.com/zsh-users/zsh-autosuggestions.git "$ZSH_CUSTOM/plugins/zsh-autosuggestions"
     
     # Links
+    mklink "$DOTFILES/zsh/zprofile" "$HOME/.zprofile"
     mklink "$DOTFILES/zsh/zshrc" "$HOME/.zshrc"
     mklink "$DOTFILES/zsh/zsh_profile" "$HOME/.zsh_profile"
     mklink "$DOTFILES/zsh/zsh_alias" "$HOME/.zsh_alias"

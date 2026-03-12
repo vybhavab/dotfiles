@@ -248,5 +248,13 @@ sketchybar --add item now_playing right \
                             padding_left=4 \
                             padding_right=4
 
+##### Monitor Change Detection #####
+# Restart sketchybar when displays are connected/disconnected
+# so the monitor mapping gets recomputed
+sketchybar --add item display_change_listener left \
+           --set display_change_listener drawing=off \
+                                         script="$CONFIG_DIR/restart.sh" \
+           --subscribe display_change_listener display_change
+
 ##### Finalize Setup #####
 sketchybar --update

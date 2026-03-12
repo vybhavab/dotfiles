@@ -1,3 +1,8 @@
+if [[ -n "${DOTFILES_ZSH_PROFILE_LOADED:-}" ]]; then
+  return 0
+fi
+typeset -g DOTFILES_ZSH_PROFILE_LOADED=1
+
 case "$OSTYPE" in
   darwin*)
   export SSH_AUTH_SOCK=~/Library/Group\ Containers/2BUA8C4S2C.com.1password/t/agent.sock
@@ -15,16 +20,6 @@ export SSH_KEY_PATH="~/.ssh/id_rsa"
 # Custom completions
 fpath=("$HOME/.zsh/completions" $fpath)
 
-#Alias
-source ~/.zsh_alias
-autoload -Uz compinit && compinit
-
-if command -v kitty 1>/dev/null 2>&1; then
-	eval "kitty + complete setup zsh | source /dev/stdin"
-fi
-
-#FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f ~/.env ] && source ~/.env
 
 ## Extra Functions
@@ -46,7 +41,6 @@ export PATH="/opt/homebrew/opt/libpq/bin:$PATH"
 export PATH="${ASDF_DATA_DIR:-$HOME/.asdf}/shims:$PATH"
 [ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-bindkey -s ^f "tmux-sessionizer\n"
 export EDITOR="nvim"
 export GIT_EDITOR="nvim"
 

@@ -2,13 +2,12 @@
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
     "opencode-antigravity-auth@1.6.0",
-    "opencode-openai-codex-auth@4.2.0"
+    "opencode-openai-codex-auth@4.2.0",
+    "@plannotator/opencode@latest"
   ],
   "autoupdate": true,
-  "tui": {
-    "scroll_acceleration": {
-      "enabled": true
-    }
+  "experimental": {
+    "batch_tool": true
   },
   "mcp": {
     "Sentry": {

@@ -1,0 +1,37 @@
+export DOTFILES="$HOME/.dotfiles"
+
+# Ensure user-managed binaries are available before any tool activation.
+export PATH="$HOME/.local/bin:$PATH"
+
+[ -f "$DOTFILES/zsh/zsh_profile" ] && source "$DOTFILES/zsh/zsh_profile"
+
+# pnpm
+export PNPM_HOME="$HOME/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# opencode
+export PATH="$HOME/.opencode/bin:$PATH"
+
+# Windsurf
+export PATH="$HOME/.codeium/windsurf/bin:$PATH"
+
+# Antigravity
+export PATH="$HOME/.antigravity/antigravity/bin:$PATH"
+
+if [ -x /opt/homebrew/bin/brew ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
+
+# Ensure no duplicate PATH entries.
+typeset -U path PATH

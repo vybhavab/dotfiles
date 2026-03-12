@@ -108,6 +108,7 @@ hyper - 0 : aerospace move-node-to-workspace 10 --focus-follows-window
 # Workspace switching
 alt - tab : aerospace workspace-back-and-forth
 alt + shift - tab : aerospace move-workspace-to-monitor --wrap-around next
+hyper - tab : aerospace move-workspace-to-monitor --wrap-around next
 
 # Service mode
 alt + shift - 0x29 : aerospace mode service

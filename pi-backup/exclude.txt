@@ -1,0 +1,10 @@
+.DS_Store
+Lightroom
+Lightroom Library.lrlibrary
+MegaPhotos
+Photos Library.photoslibrary
+Photo Booth Library
+Catalogs
+.backup-config
+immich-library
+imports

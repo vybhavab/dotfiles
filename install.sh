@@ -50,6 +50,7 @@ ALL_PACKAGES=(
     barik
     macos_defaults
     effect_solutions
+    pi_backup
 )
 
 show_help() {
@@ -93,6 +94,7 @@ AVAILABLE PACKAGES:
     barik            Barik config (macOS only)
     macos_defaults   macOS system defaults (macOS only)
     effect_solutions Effect-TS solutions CLI + source
+    pi_backup        Photo backup to Raspberry Pi (macOS only)
 
 EXAMPLES:
     FILTER="nvim zsh tmux" ./install.sh
@@ -511,6 +513,19 @@ pkg_barik() {
 }
 
 # macOS defaults (not really a package, but fits the pattern)
+pkg_pi_backup() {
+    [ "$PLATFORM" != "macos" ] && return 0
+
+    # Script is linked by pkg_scripts, just set up launchd + logs dir
+    mkdir -p "$HOME/.local/share/pi-backup"
+    mklink "$DOTFILES/pi-backup/com.vybhavab.photos-backup.plist" "$HOME/Library/LaunchAgents/com.vybhavab.photos-backup.plist"
+
+    # Load the launchd agent
+    launchctl unload "$HOME/Library/LaunchAgents/com.vybhavab.photos-backup.plist" 2>/dev/null || true
+    launchctl load "$HOME/Library/LaunchAgents/com.vybhavab.photos-backup.plist"
+    ok "photo backup scheduled daily at 2am"
+}
+
 pkg_macos_defaults() {
     [ "$PLATFORM" != "macos" ] && return 0
     

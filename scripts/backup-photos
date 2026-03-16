@@ -1,0 +1,69 @@
+#!/bin/bash
+# Sync photos from Raspberry Pi to Mac (Pi = source of truth)
+# Runs daily via launchd — only when on home network via ethernet
+# Parallelizes across top-level directories for speed
+
+PI_HOST="vybhavab-pi-5.local"
+PI_SRC="vybhavab@${PI_HOST}:/mnt/photos"
+DOTFILES="${DOTFILES:-$HOME/.dotfiles}"
+LOG="$HOME/.local/share/pi-backup/backup.log"
+EXCLUDES="$DOTFILES/pi-backup/exclude.txt"
+DEST="$HOME/Pictures"
+MAX_PARALLEL=4
+
+mkdir -p "$(dirname "$LOG")"
+
+# Check if active interface is ethernet (not Wi-Fi en0)
+ACTIVE_IF=$(route -n get default 2>/dev/null | awk '/interface:/ {print $2}')
+if [ "$ACTIVE_IF" = "en0" ] || [ -z "$ACTIVE_IF" ]; then
+    echo "$(date): Skipped — not on ethernet (active: ${ACTIVE_IF:-none})" >> "$LOG"
+    exit 0
+fi
+
+# Check if Pi is reachable
+if ! ping -c 1 -W 2 "$PI_HOST" &>/dev/null; then
+    echo "$(date): Skipped — Pi not reachable" >> "$LOG"
+    exit 0
+fi
+
+echo "=== Sync started: $(date) (via $ACTIVE_IF) ===" >> "$LOG"
+
+# Get list of directories from Pi
+DIRS=$(ssh "vybhavab@${PI_HOST}" "ls -d /mnt/photos/*/ 2>/dev/null" | while read -r dir; do basename "$dir"; done)
+
+# Sync top-level directories in parallel
+sync_dir() {
+    local dirname="$1"
+    rsync -avW --delete \
+        --exclude-from="$EXCLUDES" \
+        "$PI_SRC/$dirname/" "$DEST/$dirname/" \
+        >> "$LOG" 2>&1
+}
+
+JOBS=0
+for dirname in $DIRS; do
+    # Skip excluded dirs
+    grep -qxF "$dirname" "$EXCLUDES" && continue
+
+    sync_dir "$dirname" &
+    JOBS=$((JOBS + 1))
+
+    # Throttle to MAX_PARALLEL
+    if [ "$JOBS" -ge "$MAX_PARALLEL" ]; then
+        wait -n 2>/dev/null || wait
+        JOBS=$((JOBS - 1))
+    fi
+done
+
+# Sync top-level files
+rsync -avW --delete \
+    --exclude-from="$EXCLUDES" \
+    --exclude='*/' \
+    "$PI_SRC/" "$DEST/" \
+    >> "$LOG" 2>&1
+
+# Wait for remaining parallel jobs
+wait
+
+echo "=== Sync finished: $(date) ===" >> "$LOG"
+echo "" >> "$LOG"

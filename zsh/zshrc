@@ -33,7 +33,12 @@ fi
 bindkey -s ^f "tmux-sessionizer\n"
 
 # FZF
-[ -f "$HOME/.fzf.zsh" ] && source "$HOME/.fzf.zsh"
+# FZF
+if [[ -f "$HOME/.fzf.zsh" ]]; then
+  source "$HOME/.fzf.zsh"
+fi
 
 # bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
+if [[ -s "$HOME/.bun/_bun" ]]; then
+  source "$HOME/.bun/_bun"
+fi

@@ -10,4 +10,5 @@ pnpm
 @typescript/native-preview
 bash-language-server
 ccstatusline
+chrome-devtools-mcp
 

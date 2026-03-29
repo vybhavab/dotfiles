@@ -30,7 +30,7 @@ inner.horizontal = 6
 inner.vertical = 6
 outer.left = 6
 outer.bottom = 6
-outer.top = [{ monitor."^built-in retina display$" = 10 }, 38]
+outer.top = 6 #[{ monitor."^built-in retina display$" = 10 }, 38]
 outer.right = 6
 
 # Main binding mode (keybindings handled via skhd)
@@ -54,9 +54,7 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = "com.mitchellh.ghostty"
-run = [
-  "layout tiling",
-]
+run = 'move-node-to-workspace 3'
 
 # Messaging apps → workspace 5
 [[on-window-detected]]

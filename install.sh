@@ -516,14 +516,13 @@ pkg_barik() {
 pkg_pi_backup() {
     [ "$PLATFORM" != "macos" ] && return 0
 
-    # Script is linked by pkg_scripts, just set up launchd + logs dir
+    # Script is linked by pkg_scripts, just set up logs dir
     mkdir -p "$HOME/.local/share/pi-backup"
-    mklink "$DOTFILES/pi-backup/com.vybhavab.photos-backup.plist" "$HOME/Library/LaunchAgents/com.vybhavab.photos-backup.plist"
 
-    # Load the launchd agent
+    # Disable the launchd agent if it was previously loaded
     launchctl unload "$HOME/Library/LaunchAgents/com.vybhavab.photos-backup.plist" 2>/dev/null || true
-    launchctl load "$HOME/Library/LaunchAgents/com.vybhavab.photos-backup.plist"
-    ok "photo backup scheduled daily at 2am"
+    rm -f "$HOME/Library/LaunchAgents/com.vybhavab.photos-backup.plist"
+    ok "photo backup agent disabled (run backup-photos manually if needed)"
 }
 
 pkg_macos_defaults() {

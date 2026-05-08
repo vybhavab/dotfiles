@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Using Primeagesn's setup for sessionizer
+# Using Primeagens' setup for sessionizer
 
 switch_to() {
     if [[ -z $TMUX ]]; then
@@ -19,11 +19,17 @@ hydrate() {
     local dir=$2
     local script=""
 
-    if [ -f "$dir/.tmux-sessionizer" ]; then
-        script="$dir/.tmux-sessionizer"
-    elif [ -f "$HOME/.tmux-sessionizer" ]; then
-        script="$HOME/.tmux-sessionizer"
-    fi
+    # Walk up from $dir to $HOME looking for .tmux-sessionizer
+    local search="$dir"
+    while [ "$search" != "/" ] && [ ${#search} -ge ${#HOME} ]; do
+      echo "looking for sessionizer"
+      echo $search
+        if [ -f "$search/.tmux-sessionizer" ]; then
+            script="$search/.tmux-sessionizer"
+            break
+        fi
+        search="$(dirname "$search")"
+    done
 
     if [ -n "$script" ]; then
         echo "sourcing $script"
@@ -43,7 +49,7 @@ hydrate() {
 }
 
 list_worktrees() {
-    local search_roots=("$HOME/.dotfiles" "$HOME/projects")
+    local search_roots=("$HOME/.dotfiles" "$HOME/projects" "$HOME/work")
     local cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}"
     local cache_file="$cache_dir/tmux-sessionizer-worktrees"
     local cache_ttl=5
@@ -112,8 +118,9 @@ fi
 tmux_running=$(pgrep tmux)
 
 if [[ -z $TMUX ]] && [[ -z $tmux_running ]]; then
-    tmux new-session -s $selected_name -c $selected
+    tmux new-session -ds $selected_name -c $selected
     hydrate $selected_name $selected
+    tmux attach-session -t $selected_name
     exit 0
 fi
 

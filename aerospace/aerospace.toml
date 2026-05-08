@@ -59,11 +59,15 @@ run = 'move-node-to-workspace 3'
 # Messaging apps → workspace 5
 [[on-window-detected]]
 if.app-id = 'org.whispersystems.signal-desktop'
-run = 'move-node-to-workspace 5'
+run = ['move-node-to-workspace 5', 'exec-and-forget /Users/vybhavab/.dotfiles/aerospace/layout-messaging-workspace.sh']
 
 [[on-window-detected]]
 if.app-id = 'com.apple.MobileSMS'
-run = 'move-node-to-workspace 5'
+run = ['move-node-to-workspace 5', 'exec-and-forget /Users/vybhavab/.dotfiles/aerospace/layout-messaging-workspace.sh']
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = ['move-node-to-workspace 5', 'exec-and-forget /Users/vybhavab/.dotfiles/aerospace/layout-messaging-workspace.sh']
 
 # Spotify → workspace 6
 [[on-window-detected]]
@@ -74,3 +78,14 @@ run = 'move-node-to-workspace 6'
 [[on-window-detected]]
 if.app-id = 'com.cron.electron'
 run = 'move-node-to-workspace 7'
+
+# Helium browser → workspace by profile
+[[on-window-detected]]
+if.app-id = 'net.imput.helium'
+if.window-title-regex-substring = 'Helium - Personal'
+run = 'move-node-to-workspace 10'
+
+[[on-window-detected]]
+if.app-id = 'net.imput.helium'
+if.window-title-regex-substring = 'Helium - Work'
+run = 'move-node-to-workspace 1'

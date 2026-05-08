@@ -41,7 +41,7 @@ ALL_PACKAGES=(
     aerospace
     yabai
     skhd
-    sketchybar
+    # sketchybar
     i3
     autorandr
     scripts
@@ -468,14 +468,14 @@ pkg_skhd() {
     mklink "$DOTFILES/skhd/aerospace_skhdrc" "$HOME/.config/skhd/skhdrc"
 }
 
-pkg_sketchybar() {
-    [ "$PLATFORM" != "macos" ] && return 0
-    
-    depends_on brew
-    brew tap FelixKratz/formulae
-    brew install sketchybar
-    mklink "$DOTFILES/sketchybar" "$HOME/.config/sketchybar"
-}
+# pkg_sketchybar() {
+#     [ "$PLATFORM" != "macos" ] && return 0
+#     
+#     depends_on brew
+#     brew tap FelixKratz/formulae
+#     brew install sketchybar
+#     mklink "$DOTFILES/sketchybar" "$HOME/.config/sketchybar"
+# }
 
 pkg_i3() {
     [ "$PLATFORM" != "linux" ] && return 0

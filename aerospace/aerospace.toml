@@ -4,11 +4,6 @@
 after-login-command = []
 start-at-login = true
 
-# Notify sketchybar on workspace change
-exec-on-workspace-change = ['/bin/bash', '-c',
-    'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
-]
-
 # Normalizations
 enable-normalization-flatten-containers = true
 enable-normalization-opposite-orientation-for-nested-containers = true
@@ -22,7 +17,7 @@ default-root-container-orientation = 'auto'
 key-mapping.preset = 'qwerty'
 
 # Mouse follows focus when focused monitor changes
-on-focused-monitor-changed = ['move-mouse monitor-lazy-center', 'exec-and-forget /bin/bash -c "sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$(aerospace list-workspaces --focused)"']
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
 
 # Gaps between windows and monitor edges
 [gaps]

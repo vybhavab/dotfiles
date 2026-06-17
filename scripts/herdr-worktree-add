@@ -1,0 +1,168 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+HERDR_WORKTREE_ADD_PATH_FILE=""
+
+usage() {
+  cat <<'USAGE'
+usage:
+  herdr-worktree-add [options] [branch] [base] [path]
+
+Creates a git worktree through `git wt add`, which copies .worktreeinclude files
+and runs inferred setup, then opens the created worktree in Herdr.
+
+options:
+  --no-open       Create/setup only; do not open in Herdr
+  --no-setup      Passed to git wt add
+  --no-copy       Passed to git wt add
+  --no-mise       Passed to git wt add
+  --no-install    Passed to git wt add
+  --no-direnv     Passed to git wt add
+USAGE
+}
+
+info() {
+  printf '\033[1;34m==>\033[0m %s\n' "$*"
+}
+
+fail() {
+  printf '\033[1;31merror:\033[0m %s\n' "$*" >&2
+  exit 1
+}
+
+prompt_branch() {
+  local selected=""
+
+  if command -v fzf >/dev/null 2>&1; then
+    selected="$(
+      git wt __complete-branches 2>/dev/null |
+        fzf --print-query --prompt 'worktree branch> ' --height 40% --reverse || true
+    )"
+    selected="$(printf '%s\n' "$selected" | sed '/^[[:space:]]*$/d' | tail -n 1)"
+  else
+    printf 'worktree branch> ' >&2
+    IFS= read -r selected
+  fi
+
+  if [[ -z "$selected" ]]; then
+    exit 0
+  fi
+
+  printf '%s\n' "$selected"
+}
+
+label_for() {
+  local worktree_path="$1"
+  local selected_name
+  local branch
+
+  selected_name="$(basename "$worktree_path" | tr . _)"
+  branch="$(git -C "$worktree_path" rev-parse --abbrev-ref HEAD 2>/dev/null || true)"
+
+  if [[ -z "$branch" || "$branch" == "HEAD" ]]; then
+    local short_sha
+    short_sha="$(git -C "$worktree_path" rev-parse --short HEAD 2>/dev/null || true)"
+    branch="detached-${short_sha:-unknown}"
+  fi
+
+  printf '%s__%s\n' "$selected_name" "$(printf '%s' "$branch" | tr '/.' '__')"
+}
+
+open_in_herdr() {
+  local source_root="$1"
+  local worktree_path="$2"
+  local label="$3"
+
+  if herdr status server >/dev/null 2>&1; then
+    if herdr worktree open --cwd "$source_root" --path "$worktree_path" --label "$label" --focus >/dev/null 2>&1; then
+      info "Opened Herdr worktree workspace: $label"
+      return
+    fi
+
+    herdr workspace create --cwd "$worktree_path" --label "$label" --focus >/dev/null
+    info "Opened Herdr workspace: $label"
+    return
+  fi
+
+  if [[ -z "${HERDR_SOCKET_PATH:-}" ]]; then
+    cd "$worktree_path"
+    exec herdr
+  fi
+}
+
+main() {
+  local no_open=false
+  local -a git_wt_options=()
+  local -a positional=()
+  local source_root
+  local branch
+  local path_file
+  local worktree_path
+  local label
+
+  while (( $# )); do
+    case "$1" in
+      -h | --help)
+        usage
+        return 0
+        ;;
+      --no-open)
+        no_open=true
+        ;;
+      --no-setup | --no-copy | --no-mise | --no-install | --no-direnv)
+        git_wt_options+=("$1")
+        ;;
+      --)
+        shift
+        while (( $# )); do
+          positional+=("$1")
+          shift
+        done
+        break
+        ;;
+      -*)
+        fail "Unknown option: $1"
+        ;;
+      *)
+        positional+=("$1")
+        ;;
+    esac
+    shift
+  done
+
+  if (( ${#positional[@]} > 3 )); then
+    usage >&2
+    return 64
+  fi
+
+  source_root="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+  if [[ -z "$source_root" ]]; then
+    fail "Run this from inside a Git repository."
+  fi
+
+  branch="${positional[0]:-$(prompt_branch)}"
+  if [[ -z "$branch" ]]; then
+    exit 0
+  fi
+
+  path_file="$(mktemp "${TMPDIR:-/tmp}/herdr-worktree-add.XXXXXX")"
+  HERDR_WORKTREE_ADD_PATH_FILE="$path_file"
+  trap '[[ -n "${HERDR_WORKTREE_ADD_PATH_FILE:-}" ]] && command -v trash >/dev/null 2>&1 && trash "$HERDR_WORKTREE_ADD_PATH_FILE" >/dev/null 2>&1 || true' EXIT
+
+  git wt add --path-file "$path_file" "${git_wt_options[@]}" "$branch" "${positional[@]:1}"
+
+  worktree_path="$(cat "$path_file")"
+  if [[ -z "$worktree_path" || ! -d "$worktree_path" ]]; then
+    fail "Could not determine created worktree path."
+  fi
+
+  label="$(label_for "$worktree_path")"
+
+  if [[ "$no_open" == "false" ]]; then
+    open_in_herdr "$source_root" "$worktree_path" "$label"
+  fi
+
+  info "Ready: $worktree_path"
+}
+
+main "$@"

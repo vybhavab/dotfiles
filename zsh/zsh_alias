@@ -6,3 +6,4 @@ fi
 
 alias tasks="taskell ~/taskell.md"
 alias notes="nvim ~/projects/notes.md"
+alias rm="trash"

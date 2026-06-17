@@ -3,3 +3,6 @@ bun = "latest"
 go = "latest"
 node = "latest"
 jujutsu = "latest"
+
+[settings]
+npm.package_manager = "pnpm"

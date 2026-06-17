@@ -1,0 +1,553 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+usage() {
+  cat <<'USAGE'
+usage:
+  git wt add [options] <branch> [base] [path]
+  git wt remove [options] <worktree>
+  git wt rm [options] <worktree>
+  git wt list
+  git wt prune
+
+add options:
+  --no-setup      Skip inferred setup
+  --no-copy       Skip .worktreeinclude copy
+  --no-mise       Skip mise trust/install
+  --no-install    Skip package install
+  --no-direnv     Skip direnv allow
+  --path-file FILE Write created worktree path to FILE
+
+remove options:
+  -f, --force     Pass --force to git worktree remove
+
+git config overrides:
+  wt.parent       Parent directory for inferred worktree paths
+  wt.base         Default base branch for new worktrees
+  wt.setup        true/false, default true
+  wt.copy         true/false, default true
+  wt.mise         true/false, default true
+  wt.install      true/false, default true
+  wt.direnv       true/false, default true
+  wt.afterAdd     Repeatable shell command run after inferred setup
+
+examples:
+  git wt add vybhavab/my-feature
+  git wt add vybhavab/my-feature main ../my-feature
+  git wt remove my-feature
+  git config wt.parent ~/work/monorepo
+USAGE
+}
+
+info() {
+  printf '\033[1;34m==>\033[0m %s\n' "$*"
+}
+
+warn() {
+  printf '\033[1;33mwarning:\033[0m %s\n' "$*" >&2
+}
+
+fail() {
+  printf '\033[1;31merror:\033[0m %s\n' "$*" >&2
+  exit 1
+}
+
+has_command() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+config_get() {
+  git config --get "$1" 2>/dev/null || true
+}
+
+config_bool() {
+  local key="$1"
+  local default_value="$2"
+  local value
+
+  value="$(git config --type=bool --get "$key" 2>/dev/null || true)"
+  if [[ -z "$value" ]]; then
+    printf '%s\n' "$default_value"
+  else
+    printf '%s\n' "$value"
+  fi
+}
+
+expand_path() {
+  local path="$1"
+  local base="${2:-$PWD}"
+
+  case "$path" in
+    "~")
+      path="$HOME"
+      ;;
+    "~/"*)
+      path="$HOME/${path#~/}"
+      ;;
+  esac
+
+  case "$path" in
+    /*)
+      printf '%s\n' "$path"
+      ;;
+    *)
+      printf '%s\n' "$base/$path"
+      ;;
+  esac
+}
+
+normalize_new_path() {
+  local path="$1"
+  local directory
+  local basename
+
+  directory="$(dirname "$path")"
+  basename="$(basename "$path")"
+  mkdir -p "$directory"
+  directory="$(cd "$directory" && pwd -P)"
+  printf '%s/%s\n' "$directory" "$basename"
+}
+
+branch_slug() {
+  local branch="$1"
+  branch="${branch#refs/heads/}"
+  branch="${branch#origin/}"
+  printf '%s\n' "${branch//\//-}"
+}
+
+default_base() {
+  local configured
+  configured="$(config_get wt.base)"
+  if [[ -n "$configured" ]]; then
+    printf '%s\n' "$configured"
+  elif git show-ref --verify --quiet refs/heads/main; then
+    printf 'main\n'
+  elif git show-ref --verify --quiet refs/remotes/origin/main; then
+    printf 'origin/main\n'
+  elif git show-ref --verify --quiet refs/heads/master; then
+    printf 'master\n'
+  elif git show-ref --verify --quiet refs/remotes/origin/master; then
+    printf 'origin/master\n'
+  else
+    printf 'HEAD\n'
+  fi
+}
+
+default_parent() {
+  local source_root="$1"
+  local configured
+
+  configured="$(config_get wt.parent)"
+  if [[ -n "$configured" ]]; then
+    expand_path "$configured" "$source_root"
+  else
+    dirname "$source_root"
+  fi
+}
+
+copy_worktree_include() {
+  local source_root="$1"
+  local destination_root="$2"
+  local include_file="$source_root/.worktreeinclude"
+
+  if [[ ! -s "$include_file" ]]; then
+    return
+  fi
+
+  if ! has_command rsync; then
+    fail "rsync is required to copy .worktreeinclude files"
+  fi
+
+  info "Copying ignored files from .worktreeinclude"
+  git -C "$source_root" ls-files -o -i --exclude-from="$include_file" -z |
+    rsync -a --from0 --files-from=- --relative --ignore-existing "$source_root"/ "$destination_root"/
+}
+
+run_command_if_available() {
+  local command_name="$1"
+  shift
+
+  if ! has_command "$command_name"; then
+    warn "Skipping '$*' because '$command_name' is not installed."
+    return
+  fi
+
+  info "Running: $*"
+  "$@"
+}
+
+package_has_prepare() {
+  [[ -f package.json ]] && grep -q '"prepare"[[:space:]]*:' package.json
+}
+
+run_inferred_setup() {
+  local source_root="$1"
+  local destination_root="$2"
+  local run_mise="$3"
+  local run_install="$4"
+  local run_direnv="$5"
+
+  (
+    cd "$destination_root"
+
+    if [[ "$run_mise" == "true" && ( -f mise.toml || -f .mise.toml ) ]]; then
+      run_command_if_available mise mise trust
+      run_command_if_available mise mise install
+    fi
+
+    if [[ "$run_install" == "true" ]]; then
+      if [[ -f pnpm-lock.yaml || -f pnpm-workspace.yaml ]]; then
+        run_command_if_available pnpm pnpm install
+        if package_has_prepare; then
+          run_command_if_available pnpm pnpm prepare
+        fi
+      elif [[ -f package-lock.json ]]; then
+        run_command_if_available npm npm install
+        if package_has_prepare; then
+          run_command_if_available npm npm run prepare --if-present
+        fi
+      elif [[ -f yarn.lock ]]; then
+        run_command_if_available yarn yarn install
+      fi
+    fi
+
+    if [[ "$run_direnv" == "true" && -f .envrc ]]; then
+      run_command_if_available direnv direnv allow
+    fi
+
+    while IFS= read -r command_to_run; do
+      [[ -z "$command_to_run" ]] && continue
+      info "Running wt.afterAdd: $command_to_run"
+      bash -lc "$command_to_run"
+    done < <(git -C "$source_root" config --get-all wt.afterAdd 2>/dev/null || true)
+  )
+}
+
+worktree_records() {
+  git worktree list --porcelain | awk '
+    function emit() {
+      if (path != "") {
+        print path "\034" branch "\034" flags
+      }
+    }
+
+    /^worktree / {
+      emit()
+      path = substr($0, 10)
+      branch = ""
+      flags = ""
+      next
+    }
+
+    /^branch / {
+      branch = substr($0, 8)
+      sub(/^refs\/heads\//, "", branch)
+      next
+    }
+
+    /^detached$/ {
+      flags = flags " detached"
+      next
+    }
+
+    /^prunable/ {
+      flags = flags " prunable"
+      next
+    }
+
+    /^locked/ {
+      flags = flags " locked"
+      next
+    }
+
+    END {
+      emit()
+    }
+  '
+}
+
+cmd_list() {
+  local path
+  local branch
+  local flags
+
+  printf '%-36s  %-38s  %s\n' "WORKTREE" "BRANCH" "STATE"
+  worktree_records | while IFS=$'\034' read -r path branch flags; do
+    printf '%-36s  %-38s  %s\n' "${path##*/}" "${branch:--}" "${flags:-ok}"
+  done
+}
+
+complete_branches() {
+  git for-each-ref --format='%(refname:short)' refs/heads refs/remotes 2>/dev/null |
+    sed '/^origin\/HEAD$/d; s#^origin/##' |
+    sort -u
+}
+
+complete_remove() {
+  local current_root
+  local path
+  local branch
+  local flags
+  local base
+
+  current_root="$(git rev-parse --show-toplevel 2>/dev/null || true)"
+  worktree_records | while IFS=$'\034' read -r path branch flags; do
+    [[ "$path" == "$current_root" ]] && continue
+    [[ "$flags" == *" prunable"* ]] && continue
+
+    base="${path##*/}"
+    if [[ -n "$branch" ]]; then
+      printf '%s\t%s\n' "$branch" "$path"
+    fi
+    printf '%s\t%s\n' "$base" "$path"
+    printf '%s\t%s\n' "$path" "${branch:-worktree}"
+  done | awk -F '\t' '!seen[$1]++'
+}
+
+resolve_worktree_target() {
+  local target="$1"
+  local current_root
+  local expanded_target=""
+  local path
+  local branch
+  local flags
+  local base
+  local -a matches
+  local -a labels
+
+  current_root="$(git rev-parse --show-toplevel)"
+
+  case "$target" in
+    "~"* | "." | ".." | ./* | ../* | /*)
+      expanded_target="$(expand_path "$target" "$PWD")"
+      ;;
+  esac
+
+  while IFS=$'\034' read -r path branch flags; do
+    [[ "$path" == "$current_root" ]] && continue
+    [[ "$flags" == *" prunable"* ]] && continue
+
+    base="${path##*/}"
+    if [[ "$target" == "$path" ||
+      ( -n "$expanded_target" && "$expanded_target" == "$path" ) ||
+      "$target" == "$base" ||
+      ( -n "$branch" && "$target" == "$branch" ) ]]; then
+      matches+=("$path")
+      labels+=("${branch:-$base} -> $path")
+    fi
+  done < <(worktree_records)
+
+  if (( ${#matches[@]} == 0 )); then
+    fail "No removable worktree matched '$target'. Run 'git wt list' to inspect worktrees."
+  fi
+
+  if (( ${#matches[@]} > 1 )); then
+    warn "Multiple worktrees matched '$target':"
+    printf '  %s\n' "${labels[@]}" >&2
+    fail "Use the full path or a more specific branch/basename."
+  fi
+
+  printf '%s\n' "${matches[0]}"
+}
+
+cmd_add() {
+  local invocation_pwd="$PWD"
+  local run_setup
+  local run_copy
+  local run_mise
+  local run_install
+  local run_direnv
+  local path_file=""
+  local -a positional=()
+
+  run_setup="$(config_bool wt.setup true)"
+  run_copy="$(config_bool wt.copy true)"
+  run_mise="$(config_bool wt.mise true)"
+  run_install="$(config_bool wt.install true)"
+  run_direnv="$(config_bool wt.direnv true)"
+
+  while (( $# )); do
+    case "$1" in
+      -h | --help)
+        usage
+        return 0
+        ;;
+      --no-setup)
+        run_setup=false
+        ;;
+      --no-copy)
+        run_copy=false
+        ;;
+      --no-mise)
+        run_mise=false
+        ;;
+      --no-install)
+        run_install=false
+        ;;
+      --no-direnv)
+        run_direnv=false
+        ;;
+      --path-file)
+        shift
+        if (( $# == 0 )); then
+          fail "--path-file requires a file path"
+        fi
+        path_file="$1"
+        ;;
+      --)
+        shift
+        while (( $# )); do
+          positional+=("$1")
+          shift
+        done
+        break
+        ;;
+      -*)
+        fail "Unknown add option: $1"
+        ;;
+      *)
+        positional+=("$1")
+        ;;
+    esac
+    shift
+  done
+
+  if (( ${#positional[@]} < 1 || ${#positional[@]} > 3 )); then
+    usage >&2
+    return 64
+  fi
+
+  local branch="${positional[0]}"
+  local base="${positional[1]:-$(default_base)}"
+  local source_root
+  local parent
+  local destination_root
+  local local_branch="$branch"
+
+  source_root="$(git rev-parse --show-toplevel)"
+
+  if (( ${#positional[@]} == 3 )); then
+    destination_root="$(expand_path "${positional[2]}" "$invocation_pwd")"
+  else
+    parent="$(default_parent "$source_root")"
+    destination_root="$parent/$(branch_slug "$branch")"
+  fi
+  destination_root="$(normalize_new_path "$destination_root")"
+
+  info "Creating worktree at $destination_root"
+  if git -C "$source_root" show-ref --verify --quiet "refs/heads/$branch"; then
+    git -C "$source_root" worktree add "$destination_root" "$branch"
+  elif git -C "$source_root" show-ref --verify --quiet "refs/remotes/$branch"; then
+    local_branch="${branch#*/}"
+    git -C "$source_root" worktree add -b "$local_branch" "$destination_root" "$branch"
+  elif git -C "$source_root" show-ref --verify --quiet "refs/remotes/origin/$branch"; then
+    git -C "$source_root" worktree add -b "$branch" "$destination_root" "origin/$branch"
+  else
+    git -C "$source_root" worktree add -b "$branch" "$destination_root" "$base"
+  fi
+
+  if [[ "$run_copy" == "true" ]]; then
+    copy_worktree_include "$source_root" "$destination_root"
+  fi
+
+  if [[ "$run_setup" == "true" ]]; then
+    run_inferred_setup "$source_root" "$destination_root" "$run_mise" "$run_install" "$run_direnv"
+  else
+    warn "Skipping setup."
+  fi
+
+  info "Ready: $destination_root"
+
+  if [[ -n "$path_file" ]]; then
+    printf '%s\n' "$destination_root" >"$path_file"
+  fi
+}
+
+cmd_remove() {
+  local force=false
+  local -a positional=()
+
+  while (( $# )); do
+    case "$1" in
+      -h | --help)
+        usage
+        return 0
+        ;;
+      -f | --force)
+        force=true
+        ;;
+      --)
+        shift
+        while (( $# )); do
+          positional+=("$1")
+          shift
+        done
+        break
+        ;;
+      -*)
+        fail "Unknown remove option: $1"
+        ;;
+      *)
+        positional+=("$1")
+        ;;
+    esac
+    shift
+  done
+
+  if (( ${#positional[@]} != 1 )); then
+    usage >&2
+    return 64
+  fi
+
+  local target_path
+  target_path="$(resolve_worktree_target "${positional[0]}")"
+
+  info "Removing worktree: $target_path"
+  if [[ "$force" == "true" ]]; then
+    git worktree remove --force "$target_path"
+  else
+    git worktree remove "$target_path"
+  fi
+}
+
+cmd_prune() {
+  git worktree prune "$@"
+}
+
+main() {
+  local command="${1:-}"
+
+  case "$command" in
+    -h | --help | help)
+      usage
+      ;;
+    add)
+      shift
+      cmd_add "$@"
+      ;;
+    remove | rm)
+      shift
+      cmd_remove "$@"
+      ;;
+    list | ls)
+      shift
+      cmd_list "$@"
+      ;;
+    prune)
+      shift
+      cmd_prune "$@"
+      ;;
+    __complete-branches)
+      complete_branches
+      ;;
+    __complete-remove)
+      complete_remove
+      ;;
+    *)
+      usage >&2
+      return 64
+      ;;
+  esac
+}
+
+main "$@"

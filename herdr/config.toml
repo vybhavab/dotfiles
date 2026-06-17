@@ -1,0 +1,97 @@
+onboarding = false
+
+[theme]
+name = "terminal"
+
+[terminal]
+shell_mode = "auto"
+new_cwd = "follow"
+
+[update]
+channel = "stable"
+
+[keys]
+prefix = "ctrl+a"
+
+detach = "prefix+q"
+reload_config = "prefix+shift+r"
+workspace_picker = "prefix+w"
+goto = "prefix+g"
+new_workspace = "prefix+shift+n"
+new_worktree = "prefix+alt+shift+g"
+open_worktree = "prefix+shift+o"
+rename_workspace = "prefix+shift+w"
+close_workspace = "prefix+shift+d"
+previous_workspace = ["prefix+shift+left", "prefix+alt+h"]
+next_workspace = ["prefix+shift+right", "prefix+alt+l"]
+
+new_tab = "prefix+c"
+previous_tab = ["prefix+p", "prefix+ctrl+h"]
+next_tab = ["prefix+n", "prefix+ctrl+l"]
+switch_tab = ["prefix+1..9", "alt+1..9"]
+close_tab = "prefix+shift+x"
+
+focus_pane_left = "prefix+h"
+focus_pane_down = "prefix+j"
+focus_pane_up = "prefix+k"
+focus_pane_right = "prefix+l"
+cycle_pane_next = "prefix+tab"
+cycle_pane_previous = "prefix+shift+tab"
+last_pane = "prefix+backtick"
+split_vertical = "prefix+v"
+split_horizontal = "prefix+minus"
+close_pane = "prefix+x"
+zoom = "prefix+z"
+resize_mode = "prefix+r"
+toggle_sidebar = "prefix+b"
+
+navigate_pane_left = "h"
+navigate_pane_down = "j"
+navigate_pane_up = "k"
+navigate_pane_right = "l"
+navigate_workspace_up = "up"
+navigate_workspace_down = "down"
+
+[[keys.command]]
+key = "prefix+shift+g"
+type = "pane"
+command = "herdr-worktree-add"
+
+[[keys.command]]
+key = "ctrl+f"
+type = "pane"
+command = "herdr-sessionizer"
+
+[[keys.command]]
+key = "ctrl+y"
+type = "pane"
+command = "lazygit"
+
+[[keys.command]]
+key = "ctrl+comma"
+type = "pane"
+command = "taskell ~/taskell.md"
+
+[worktrees]
+directory = "~/work/herdr-worktrees"
+
+[ui]
+sidebar_width = 32
+sidebar_min_width = 18
+sidebar_max_width = 40
+mouse_capture = true
+confirm_close = true
+prompt_new_tab_name = false
+agent_panel_scope = "all"
+accent = "cyan"
+
+[ui.toast]
+delivery = "terminal"
+delay_seconds = 1
+
+[ui.toast.clipboard]
+enabled = true
+position = "bottom-center"
+
+[ui.sound]
+enabled = false

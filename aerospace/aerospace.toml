@@ -84,3 +84,14 @@ run = 'move-node-to-workspace 10'
 if.app-id = 'net.imput.helium'
 if.window-title-regex-substring = 'Helium - Work'
 run = 'move-node-to-workspace 1'
+
+# Dia browser → workspace by profile
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.dia'
+if.window-title-regex-substring = 'Personal:'
+run = 'move-node-to-workspace 10'
+
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.dia'
+if.window-title-regex-substring = 'Work:'
+run = 'move-node-to-workspace 1'

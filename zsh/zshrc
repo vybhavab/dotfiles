@@ -6,6 +6,9 @@ ZSH_THEME="robbyrussell"
 # Light plugins load normally, heavy plugins deferred below
 plugins=(autojump virtualenv last-working-dir direnv git)
 
+fpath=("$HOME/.local/share/zsh/site-functions" "$HOME/.zsh/completions" $fpath)
+zstyle ':completion:*:*:git:*' user-commands wt:'personal worktree helper'
+
 source $ZSH/oh-my-zsh.sh
 
 [ -f "$DOTFILES/zsh/zsh_profile" ] && source "$DOTFILES/zsh/zsh_profile"
@@ -30,7 +33,7 @@ if command -v kitty 1>/dev/null 2>&1; then
 	eval "kitty + complete setup zsh | source /dev/stdin"
 fi
 
-bindkey -s ^f "tmux-sessionizer\n"
+bindkey -s ^f "herdr-sessionizer\n"
 
 # FZF
 # FZF
@@ -43,5 +46,18 @@ if [[ -s "$HOME/.bun/_bun" ]]; then
   source "$HOME/.bun/_bun"
 fi
 
-# sentry
-fpath=("/Users/vybhavab/.local/share/zsh/site-functions" $fpath)
+# pnpm
+export PNPM_HOME="/Users/vybhavab/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME/bin:"*) ;;
+  *) export PATH="$PNPM_HOME/bin:$PATH" ;;
+esac
+# pnpm end
+
+# Re-activate mise after late interactive PATH edits so repo-local tool
+# versions from mise.toml win over older per-runtime binaries.
+if command -v mise >/dev/null 2>&1; then
+  eval "$(mise activate zsh)"
+fi
+
+typeset -U fpath path PATH

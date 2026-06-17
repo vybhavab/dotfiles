@@ -25,6 +25,7 @@ ALL_PACKAGES=(
     bun
     zsh
     nvim
+    herdr
     tmux
     lazygit
     kitty
@@ -69,6 +70,7 @@ AVAILABLE PACKAGES:
     bun              Bun JavaScript runtime
     zsh              Zsh + Oh My Zsh + plugins
     nvim             Neovim + config
+    herdr            Herdr agent multiplexer + config
     tmux             Tmux + TPM + config
     lazygit          Lazygit terminal UI for git
     kitty            Kitty terminal
@@ -283,6 +285,10 @@ pkg_zsh() {
     mklink "$DOTFILES/zsh/zsh_profile" "$HOME/.zsh_profile"
     mklink "$DOTFILES/zsh/zsh_alias" "$HOME/.zsh_alias"
     [ -f "$DOTFILES/zsh/.env" ] && mklink "$DOTFILES/zsh/.env" "$HOME/.env"
+
+    if [ -f "$DOTFILES/zsh/site-functions/_git-wt" ]; then
+        mklink "$DOTFILES/zsh/site-functions/_git-wt" "$HOME/.local/share/zsh/site-functions/_git-wt"
+    fi
 }
 
 pkg_nvim() {
@@ -304,6 +310,16 @@ pkg_tmux() {
     
     mklink "$DOTFILES/tmux/tmux.conf" "$HOME/.tmux.conf"
     mklink "$DOTFILES/tmux/global-sessionizer-defaults.sh" "$HOME/.tmux-sessionizer"
+}
+
+pkg_herdr() {
+    depends_on git
+
+    if ! command -v herdr &>/dev/null; then
+        install_pkg herdr "" "" ""
+    fi
+
+    mklink "$DOTFILES/herdr/config.toml" "$HOME/.config/herdr/config.toml"
 }
 
 pkg_lazygit() {

@@ -34,7 +34,9 @@ vim.keymap.set("n", "<leader>Y", [["+Y]])
 vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<C-f>", "<cmd>silent !herdr-sessionizer<CR>")
 
-vim.keymap.set("n", "<leader>f", vim.lsp.buf.format)
+vim.keymap.set("n", "<leader>f", function()
+  require("conform").format({ async = true, lsp_format = "fallback" })
+end)
 
 vim.keymap.set("n", "<C-n>", "<cmd>cnext<CR>zz")
 vim.keymap.set("n", "<C-b>", "<cmd>cprev<CR>zz")

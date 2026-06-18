@@ -1,10 +1,10 @@
 require("vybhavab.sets")
 require("vybhavab.remap")
-require("vybhavab.lazy_init")
+require("vybhavab.pack_init")
+require("vybhavab.treesitter")
 
 local augroup = vim.api.nvim_create_augroup
 local VybhavABGroup = augroup('VybhavAB', {})
-local LspFormatGroup = augroup('LspFormat', { clear = true })
 
 local autocmd = vim.api.nvim_create_autocmd
 local yank_group = augroup('HighlightYank', {})
@@ -44,20 +44,9 @@ autocmd('LspAttach', {
 
     vim.keymap.set("i", "<C-h>", function() vim.lsp.buf.signature_help() end, opts)
 
-    -- Format keybinding
     vim.keymap.set("n", "<leader>f", function()
-      vim.lsp.buf.format({ async = false, timeout_ms = 2000 })
+      require("conform").format({ async = true, lsp_format = "fallback" })
     end, opts)
-
-    -- Auto-format on save (use dedicated group to prevent duplicate autocmds)
-    vim.api.nvim_clear_autocmds({ group = LspFormatGroup, buffer = e.buf })
-    autocmd("BufWritePre", {
-      group = LspFormatGroup,
-      buffer = e.buf,
-      callback = function()
-        vim.lsp.buf.format({ bufnr = e.buf, timeout_ms = 2000 })
-      end,
-    })
   end
 })
 

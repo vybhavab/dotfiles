@@ -28,9 +28,9 @@ ALL_PACKAGES=(
     herdr
     tmux
     lazygit
-    kitty
+#    kitty
     ghostty
-    alacritty
+#    alacritty
     wezterm
     fzf
     ripgrep
@@ -38,9 +38,9 @@ ALL_PACKAGES=(
     jq
     htop
     opencode
-    oh_my_opencode
+#    oh_my_opencode
     aerospace
-    yabai
+#    yabai
     skhd
     # sketchybar
     i3
@@ -51,7 +51,7 @@ ALL_PACKAGES=(
     barik
     macos_defaults
     effect_solutions
-    pi_backup
+#    pi_backup
 )
 
 show_help() {
@@ -260,6 +260,7 @@ pkg_mise() {
 }
 
 pkg_zsh() {
+    depends_on brew
     # Install zsh if not present
     if ! command -v zsh &>/dev/null; then
         install_pkg zsh zsh zsh zsh
@@ -289,6 +290,9 @@ pkg_zsh() {
     if [ -f "$DOTFILES/zsh/site-functions/_git-wt" ]; then
         mklink "$DOTFILES/zsh/site-functions/_git-wt" "$HOME/.local/share/zsh/site-functions/_git-wt"
     fi
+
+    brew install autojump 2>/dev/null || true
+    brew install direnv 2>/dev/null || true
 }
 
 pkg_nvim() {

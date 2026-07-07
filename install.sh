@@ -74,6 +74,7 @@ AVAILABLE PACKAGES:
     herdr            Herdr agent multiplexer + config
     tmux             Tmux + TPM + config
     lazygit          Lazygit terminal UI for git
+    cursor           Cursor settings + VSCodeVim keybindings
     kitty            Kitty terminal
     ghostty          Ghostty terminal (macOS only)
     alacritty        Alacritty terminal
@@ -342,6 +343,23 @@ pkg_lazygit() {
     fi
     
     mklink "$DOTFILES/lazygit/config.yml" "$HOME/.config/lazygit/config.yml"
+}
+
+pkg_cursor() {
+    [ "$PLATFORM" != "macos" ] && return 0
+
+    local cursor_user_dir="$HOME/Library/Application Support/Cursor/User"
+    mkdir -p "$cursor_user_dir"
+
+    if command -v cursor &>/dev/null; then
+        cursor --install-extension vscodevim.vim >/dev/null 2>&1 || \
+            warn "failed to install vscodevim.vim; install it from Cursor extensions"
+    else
+        warn "cursor CLI not found; install Cursor or run 'Shell Command: Install cursor command in PATH'"
+    fi
+
+    mklink "$DOTFILES/cursor/settings.json" "$cursor_user_dir/settings.json"
+    mklink "$DOTFILES/cursor/keybindings.json" "$cursor_user_dir/keybindings.json"
 }
 
 pkg_kitty() {

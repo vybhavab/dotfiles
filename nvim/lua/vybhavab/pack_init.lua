@@ -53,6 +53,7 @@ vim.pack.add({
   gh("folke/tokyonight.nvim"),
   gh("nvim-telescope/telescope.nvim"),
   gh("neovim/nvim-lspconfig"),
+  gh("nvim-treesitter/nvim-treesitter"),
   { src = gh("saghen/blink.cmp"), version = vim.version.range("1") },
   gh("j-hui/fidget.nvim"),
   gh("folke/snacks.nvim"),
@@ -172,6 +173,7 @@ require("blink.cmp").setup({
 local lspconfig_configs = require("lspconfig.configs")
 local lsp_servers = {
   "tsgo",
+  "ts_ls",
   "lua_ls",
   "gopls",
   "bashls",

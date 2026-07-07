@@ -1,8 +1,20 @@
-return {
-  root_dir = function(bufnr, on_dir)
-    local root_markers = { 'tsconfig.json', 'package.json', 'pnpm-workspace.yaml', '.git' }
-    local project_root = vim.fs.root(bufnr, root_markers) or vim.fn.getcwd()
+local node = require("vybhavab.utils.node")
+local typescript = require("vybhavab.lsp.typescript")
 
-    on_dir(project_root)
+return {
+  cmd = function(dispatchers, config)
+    local cmd = "tsgo"
+    if config and config.root_dir then
+      cmd = node.find_local_bin(config.root_dir, "tsgo") or cmd
+    end
+
+    return vim.lsp.rpc.start({ cmd, "--lsp", "--stdio" }, dispatchers)
+  end,
+  root_dir = function(bufnr, on_dir)
+    local project_root = typescript.root_dir(bufnr)
+
+    if typescript.uses_native_preview(project_root) then
+      on_dir(project_root)
+    end
   end,
 }

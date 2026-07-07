@@ -47,11 +47,12 @@ ALL_PACKAGES=(
     autorandr
     scripts
     screen
-    hyper
-    barik
+#    hyper
+#    barik
     macos_defaults
     effect_solutions
 #    pi_backup
+    asimov
 )
 
 show_help() {
@@ -291,8 +292,8 @@ pkg_zsh() {
         mklink "$DOTFILES/zsh/site-functions/_git-wt" "$HOME/.local/share/zsh/site-functions/_git-wt"
     fi
 
-    brew install autojump 2>/dev/null || true
-    brew install direnv 2>/dev/null || true
+    install_pkg autojump autojump autojump autojump
+    install_pkg direnv direnv direnv direnv
 }
 
 pkg_nvim() {
@@ -557,6 +558,17 @@ pkg_macos_defaults() {
     defaults write com.apple.screencapture type jpg
     
     killall Dock 2>/dev/null || true
+}
+
+pkg_asimov() {
+    depends_on brew
+    [ "$PLATFORM" != "macos" ] && return 0
+    
+    # Install Asimov
+    install_pkg asimov
+    
+    # Install Asimov plugins
+    sudo brew services start asimov
 }
 
 # ============================================================================
